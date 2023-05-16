@@ -11,14 +11,15 @@
 div {
   position: sticky;
   height: 50px;
-  border-bottom: 1px solid #ebebeb;
+  background-color: #c5dae3;
+  /* border-bottom: 1px solid #ebebeb; */
 }
 .float-right {
     position: sticky;}
 
 .logo {
-  width: 240px; /* 로고 이미지의 너비 */
-  height: auto; /* 로고 이미지의 높이를 자동으로 조정 */
+  width: 280px; /* 로고 이미지의 너비 */
+  height: 50px; /* 로고 이미지의 높이를 자동으로 조정 */
   margin-right: 10px; /* 로고 이미지 오른쪽 여백 */
   /* align-items: center; */
 }

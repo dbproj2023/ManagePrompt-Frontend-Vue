@@ -1,6 +1,6 @@
 <template>
-  <div class="nav-bar bg-dark">
-    <nav class="navbar-dark bg-dark"> 
+  <div class="nav-bar">
+    <nav class="navbar"> 
       <ul class="navbar-nav mr-auto">
         <b-navbar-nav class>
             <b-nav-item href="/">메인(임시페이지)</b-nav-item>
@@ -19,7 +19,7 @@ div {
   flex: 150px;
 }
 .wrapper{
-  background-color: white;
+  background-color: #f5f8f9;
 }
 </style>
 

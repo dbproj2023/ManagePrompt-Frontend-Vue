@@ -258,7 +258,7 @@ li {
   left: 280px;
   top: 50px;
   padding: 30px;
-  background-color: #eee;
+  background-color: #f5f8f9;
   /* overflow: auto; 수직 스크롤 생성 */
 }
 
@@ -274,7 +274,7 @@ li {
 }
 .card-warpper2{
   position: absolute;
-  background-color: #eee;
+  background-color: #f5f8f9;
   overflow-y: scroll;
 }
 

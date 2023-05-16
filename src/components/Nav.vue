@@ -1,29 +1,29 @@
 <template>
-    <div class="nav white--text">
+    <div class="nav #B0BEC5--text">
       <ul>
       <b-navbar-nav>
          <b-nav-item href="/">
-           <font color="white"> &nbsp;&nbsp;메인(임시페이지)</font>
+           <font color="#B0BEC5"> &nbsp;&nbsp;메인(임시페이지)</font>
         </b-nav-item>
 
         <b-nav-item href="/Project">
           <img src="./img/theme/project-management.png" height="30px" width="30px" class="d-inline-block align-center" alt="Kitten">
-          <font color="white"> &nbsp;&nbsp;프로젝트 관리</font>
+          <font color="#B0BEC5"> &nbsp;&nbsp;프로젝트 관리</font>
         </b-nav-item>
           
           <b-nav-item href="/Emloyee">
             <img src="./img/theme/division.png" height="30px" width="30px" class="d-inline-block align-center" alt="Kitten">
-            <font color="white"> &nbsp; 직원 관리</font>
+            <font color="#B0BEC5"> &nbsp; 직원 관리</font>
           </b-nav-item>
 
           <b-nav-item href="/Evaluation">
             <img src="./img/theme/satisfaction.png" height="30px" width="30px" class="d-inline-block align-center" alt="Kitten">
-            <font color="white">&nbsp; &nbsp;평가</font>
+            <font color="#B0BEC5">&nbsp; &nbsp;평가</font>
           </b-nav-item>
 
           <b-nav-item href="/Mypage">
             <img src="./img/theme/avatar.png" height="30px" width="30px" class="d-inline-block align-center" alt="Kitten">
-            <font color="white">&nbsp;마이페이지</font>
+            <font color="#B0BEC5">&nbsp;마이페이지</font>
           </b-nav-item>
       </b-navbar-nav>
     </ul>
@@ -65,7 +65,8 @@
   width:280px;
   height: 100%;
   flex: 4;
-  background-color: #333333 ;  
+  border: 1px;
+  background-color: #f5f8f9;
 }
 
 </style>

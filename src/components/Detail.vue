@@ -3,8 +3,9 @@
     <div class="card-warpper">
       <div class="card-warpper1"> 
         <div>
-          <b-card class="table-card" title="프로젝트 참여 직원" style="width: 560px; height: 340px;">
-          <p>{{ project.title }}</p>
+        <b-card class="table-card" title="프로젝트 참여 직원" style="width: 560px; height: 340px;">
+        console.log(project)
+        <p>{{ project.title }}</p>
         <p>발주금액: {{ project.발주금액 }}</p>
         <p>참여인원: {{ project.참여인원 }}</p>
         <p>PM: {{ project.PM }}</p>
@@ -141,7 +142,7 @@ li {
   left: 280px;
   top: 50px;
   padding: 30px;
-  background-color: #eee;
+  background-color: #f5f8f9;;
   /* overflow: auto; 수직 스크롤 생성 */
 }
 
@@ -157,12 +158,14 @@ li {
 }
 .card-warpper2{
   position: absolute;
-  background-color: #eee;
+  background-color: #f5f8f9;
   overflow-y: scroll;
 }
 
 .wrapper{
   height: 100%;
+  background-color: #f5f8f9;
+
 }
 
 .option {
@@ -269,10 +272,10 @@ export default {
       }
   },
   mounted(){
-    this.$router.getMatchedComponents(`/Project/detail/{this.$route.params.id}`).the((res)=>{
-
-    })
-  },
+    const projectId = parseInt(this.$route.params.id);
+    this.project = this.projects.find((project) => project.id === projectId);
+    }
+  ,
 
   methods: {
     onChange(e) {

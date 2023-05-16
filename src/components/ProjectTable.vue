@@ -1,8 +1,7 @@
 <template>
   <div>
     <div>
-      <hr style="border: solid 1px">
-      
+      <hr style="border: solid 1px">  
       <!-- 검색창 -->
       <b-container class="bv-example-row">
         <b-row>
@@ -65,8 +64,9 @@
     
 
   
-    <!-- 프로젝트 테이블 -->
-    <b-card no-body>
+    <!-- 프로젝트 테이블 -->   
+
+    <b-card class="ProjectTableCard">
         <el-table v-if="filteredProjects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="filteredProjects" >
             <el-table-column label="Project" min-width="200px" prop="name">
                 <template v-slot="{row}">
@@ -274,5 +274,6 @@ computed: {
   box-shadow: none;
   border-color: #aaa;
 }
+
 
 </style>
