@@ -1,15 +1,11 @@
 <template>
-  <div>
-    <b-nav>
-      <b-nav-item-dropdown class="float-right">
-      <!-- Using 'button-content' slot -->
-      <template #button-content><em>User</em></template>
-      <b-dropdown-item href="#">Profile</b-dropdown-item>
-      <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-nav>
+  <div class="header">
+    <img src="./img/theme/logo.png" alt="로고" class="logo">
+    <!-- 나머지 헤더 내용 -->
   </div>
 </template>
+
+
 
 <style scoped>
 div {
@@ -19,6 +15,13 @@ div {
 }
 .float-right {
     position: sticky;}
+
+.logo {
+  width: 240px; /* 로고 이미지의 너비 */
+  height: auto; /* 로고 이미지의 높이를 자동으로 조정 */
+  margin-right: 10px; /* 로고 이미지 오른쪽 여백 */
+  /* align-items: center; */
+}
 </style>
 
 <script>

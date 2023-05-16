@@ -1,9 +1,11 @@
 <template>
-  
-  <div id="project">
+  <div class="wrapper">
+    <h3>프로젝트 관리</h3>
     <div class="project-table">
       <ProjectTable/> 
     </div>
+
+    <b-button a href="/project_detail">프로젝트 데테일(임시버튼)</b-button>
   </div>
 </template>
 
@@ -22,19 +24,15 @@ export default {
   },
   data() {
     return
-    // items: [
-    //         { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-    //         { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-    //         { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-    //         { age: 38, first_name: 'Jami', last_name: 'Carney' }
-    //       ]
   }
 };
 </script>
 
 <style scoped>
 h3 {
-  margin: 40px 0 0;
+  left: 500px;
+  margin: 30px;
+
 }
 ul {
   list-style-type: none;
@@ -44,9 +42,7 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
-  color: #42b983;
-}
+
 .search-bar{
   position: absolute;
   width: 1167.73px;
@@ -70,12 +66,21 @@ a {
 
   color: #000000;
 }
-
 .project-table{
-  position: absolute;
+  position: center;
   width: 1167.73px;
   height: 514.6px;
-  left: 280px;
-  top: 100px;
+  margin: 30px;
+  top: 50px;
 }
+
+.wrapper{
+  position: absolute;
+  width: 100%;
+  height: 1000px;
+  left: 280px;
+  top: 50px;
+  background-color: #eee;
+}
+
 </style>
