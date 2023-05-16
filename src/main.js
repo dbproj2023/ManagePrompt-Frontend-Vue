@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-// import router from 'vue-router'
 import router from './router'
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -14,6 +13,14 @@ Vue.use(ElementUI)
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+import VuetifulBoard from 'vuetiful-board'
+Vue.use(VuetifulBoard)
+
+import { BCard } from 'bootstrap-vue'
+Vue.component('b-card', BCard)
+
+// import './components/app.scss'
 
 Vue.config.productionTip = false
 

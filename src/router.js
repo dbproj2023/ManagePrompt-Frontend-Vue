@@ -7,8 +7,11 @@ import Employee from './components/Employee.vue'
 import Project from './components/Project.vue'
 import Evaluation from './components/Evaluation.vue'
 import Mypage from './components/Mypage.vue'
-
+import Detail from './components/Detail.vue'
 // import page2 from './components/.vue'
+import Project_detail from './components/Project_detail.vue'
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -41,6 +44,14 @@ export default new Router({
         {
             path: '/Mypage',
             component: Mypage
+        },
+        {
+            path: '/Project/detail/:id',
+            component: Detail
+        },
+        {
+            path: '/Project_detail',
+            component: Project_detail
         }
     ]
 })

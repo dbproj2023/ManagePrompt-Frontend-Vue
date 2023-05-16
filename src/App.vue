@@ -3,7 +3,7 @@
     <Header/>
     <div class="wrap">
       <div class="menu-wrap bg-dark">
-        <Menu/>
+        <Nav/>
       </div>
       <router-view/>
     </div>
@@ -13,13 +13,13 @@
 <script>
 // import Nav from './views/nav';
 import HelloWorld from './components/Main.vue'
-import Menu from './components/Menu.vue'
+import Nav from './components/Nav.vue'
 import Header from './components/Header.vue'
 
 export default {
   name: 'App',
   components: {
-    Menu, 
+    Nav, 
     Header
   }
 }
