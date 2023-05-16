@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <h3>프로젝트 관리</h3>
+    <h3 class="title">프로젝트 관리</h3>
     <div class="project-table">
       <ProjectTable/> 
     </div>
@@ -49,7 +49,6 @@ li {
   height: 100px;
   left: 300px;
   top: 150px;
-  background-color:  #42b983;
   flex-wrap: nowrap;
 }
 
@@ -80,7 +79,11 @@ li {
   height: 1000px;
   left: 280px;
   top: 50px;
-  background-color: #eee;
+  background-color: #f5f8f9;
+}
+
+.title { 
+  font-family: 'ONE-Mobile-Title', 'Sans-serif'; 
 }
 
 </style>

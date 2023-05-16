@@ -56,7 +56,6 @@
     height: 100px;
     left: 300px;
     top: 150px;
-    background-color:  #42b983;
     flex-wrap: nowrap;
   }
 
