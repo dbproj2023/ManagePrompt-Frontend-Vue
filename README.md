@@ -1,5 +1,7 @@
 # manageprompt
 
+안녕 나는 양슬빈이야 
+
 ## Project setup
 ```
 npm install
