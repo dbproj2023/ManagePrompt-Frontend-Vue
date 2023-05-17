@@ -60,39 +60,51 @@
       </b-container>
       <hr/>
     </div>
-
     
 
   
     <!-- 프로젝트 테이블 -->   
-
     <b-card class="ProjectTableCard">
         <el-table v-if="filteredProjects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="filteredProjects" >
-            <el-table-column label="Project" min-width="200px" prop="name">
+            <!-- <el-table-column label="Project Id" min-width="100px" prop="name">
                 <template v-slot="{row}">
-                  <span class="font-weight-600 name mb-0 text-sm ">{{row.title}}</span>
+                  <span class="font-weight-600 name mb-0 text-sm ">{{row.proId}}</span>
                 </template>
+            </el-table-column> -->
+
+            <el-table-column label="프로젝트 이름"
+                             prop="proName"
+                             min-width="150px">
             </el-table-column>
 
             <el-table-column label="기간"
-                             prop="기간"
-                             min-width="180px">
+                             prop="startDate"
+                             min-width="200px">
             </el-table-column>
 
-            <el-table-column label="발주금액"
-                             prop="발주금액"
+            <el-table-column label="기간"
+                             prop="endDate"
+                             min-width="200px">
+            </el-table-column>
+
+            <!-- <el-table-column label="기간" prop="기간" min-width="200px">
+              <template v-slot="{row}">
+                <span>{{ formattedStartDate[row.index] }}</span>
+              </template>
+            </el-table-column> -->
+
+
+            <el-table-column label="예산"
+                             prop="budget"
                              min-width="140px">
             </el-table-column>
 
-            <el-table-column label="참여인원"
-                             prop="참여인원"
+
+            <el-table-column label="발주처명"
+                             prop="clientName"
                              min-width="140px">
             </el-table-column>
 
-            <el-table-column label="PM"
-                             prop="PM"
-                             min-width="140px">
-            </el-table-column>
 
             <el-table-column label="Status"
                              min-width="200px"
@@ -112,7 +124,7 @@
                     alt="Image placeholder"
                     height="30px"
                     src="./img/theme/more.png"
-                    @click="navigateToDetail(scope.row.id)"
+                    @click="navigateToDetail(scope.row.proId)"
                     style="cursor: pointer"
                   >
                 </div>
@@ -133,17 +145,19 @@
 //  import projects from 'projects'
 // import RangeDatePicker from 'vue-easy-range-date-picker'; 
  import { Table, TableColumn} from 'element-ui'
-//  import axios from "axios";
+import axios from "axios"; // http 통신을 위한 라이브러리
+const HOST =  "http://localhost:8080";
+
 
  export default {
-  name: 'light-table',
+  name: 'ProjectTable',
     components: {
       [Table.name]: Table,
       [TableColumn.name]: TableColumn
     },
     data() {
       return {
-        projects: [
+        project: [
     {
       id: 1,
       title: '프람택솔루션1 ',
@@ -200,7 +214,9 @@
   searchProject: '',
   selectedStatus: '',
   filteredSearchType: '',
-  selectedYear: ''
+  selectedYear: '',
+  responsePosts: [],
+  projects: []
   }
 },
 computed: {
@@ -219,10 +235,7 @@ computed: {
           return true; 
         }
       }
-
       );
-
-   
     }  if (this.selectedStatus) {
       return this.projects.filter(project => {
         if (this.searchType != ''){
@@ -239,7 +252,15 @@ computed: {
 
     return this.projects;
 
-  }
+  },
+  // formattedStartDate() {
+  //   return this.filteredProjects.map(project => {
+  //     const startDate = project.startDate.slice(0, 10);
+  //     // const endDate = project.기간.slice(11, 21);
+  //     return `${startDate}`;
+  //   });
+  // }
+
 },
   methods: {
     navigateToDetail(id) {
@@ -250,9 +271,24 @@ computed: {
       console.log(this.searchType)
       this.searchProject = ''; // Reset search value when search type changes
     }
+  },
+  mounted() {
+  const apiUrl = `${HOST}/api/v1/proj/lists`;
+  console.log("여기  !!!!!")
+  try {
+    const url = new URL(apiUrl);
+    console.log('URL:', url);
+    axios.get(apiUrl).then((res) => {
+      console.log('API response:', res.data);
+      this.projects = res.data;
+    });
+  } catch (error) {
+    console.error('Invalid API URL:', apiUrl);
+    console.error(error);
   }
- }
+}
 
+}
 </script>
 
 <style>

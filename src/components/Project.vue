@@ -83,7 +83,7 @@ li {
 }
 
 .title { 
-  font-family: 'ONE-Mobile-Title', 'Sans-serif'; 
+  font-family: 'KimjungchulGothic-Bold', 'Sans-serif'; 
 }
 
 </style>
