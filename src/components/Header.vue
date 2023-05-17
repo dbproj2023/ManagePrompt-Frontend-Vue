@@ -11,7 +11,7 @@
 div {
   position: sticky;
   height: 50px;
-  background-color: #c5dae3;
+  background-color: white;
   /* border-bottom: 1px solid #ebebeb; */
 }
 .float-right {
@@ -20,6 +20,7 @@ div {
 .logo {
   width: 280px; /* 로고 이미지의 너비 */
   height: 50px; /* 로고 이미지의 높이를 자동으로 조정 */
+  margin-top: 5px;
   margin-right: 10px; /* 로고 이미지 오른쪽 여백 */
   /* align-items: center; */
 }
