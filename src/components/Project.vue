@@ -79,7 +79,8 @@ li {
   height: 1000px;
   left: 280px;
   top: 50px;
-  background-color: #f5f8f9;
+  background-color: white;
+  /* #f5f8f9; */
 }
 
 .title { 
