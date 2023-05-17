@@ -4,42 +4,77 @@
       <div class="card-warpper1"> 
         <div>
         <b-card class="table-card" title="프로젝트 참여 직원" style="width: 560px; height: 340px;">
-        console.log(project)
-        <p>{{ project.title }}</p>
-        <p>발주금액: {{ project.발주금액 }}</p>
-        <p>참여인원: {{ project.참여인원 }}</p>
+        <!-- <p>{{ project.proName}}</p>
+        <p>발주금액: {{ project.budget }}원</p>
+        <p>참여인원: {{ project.numOfParicipant}}</p>
         <p>PM: {{ project.PM }}</p>
-        <p>기간: {{ project.기간 }}</p>
+        <p>기간: {{ project.startDate.slice(0,10) }} ~ {{ project.endDate.slice(0,10) }}</p>
         <p>상태: {{ project.status }}</p>
-        <p>완료율: {{ project.completion }}%</p>
+        <p>발주처 이름: {{ project.clientName }}</p> -->
+        <div class="flex-table" style="margin-top: 20px;">
+        <div class="flex-row">
+          <div class="flex-cell flex-header">프로젝트 이름</div>
+          <div class="flex-cell">{{project.proName}}</div>
+          <div class="flex-cell flex-header">프로젝트 매니저</div>
+          <div class="flex-cell">{{ project.PM }}</div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-cell flex-header">프로젝트 </div>
+          <div class="flex-cell">{{ project.startDate.slice(0,10) }} ~ {{ project.endDate.slice(0,10)  }}</div>
+          <div class="flex-cell flex-header">프로젝트 참여 인원</div>
+          <div class="flex-cell">{{ project.numOfParicipant}}</div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-cell flex-header"> 예산</div>
+          <div class="flex-cell">{{ project.budget }}원</div>
+          <div class="flex-cell flex-header">발주처명</div>
+          <div class="flex-cell">{{ project.clientName }}</div>
+        </div>
+
+        <div class="flex-row">
+          <div class="flex-cell flex-header">발주처 담당자명</div>
+          <div class="flex-cell">{{ project.clientEmpName }}원</div>
+          <div class="flex-cell flex-header">발주처 전화번호</div>
+          <div class="flex-cell">{{project.clientEmpPh}}</div>
+        </div>
+    </div>
+    <div class="button-container">
+
+     <b-button style ="margin-top:10px">수정</b-button>
+    </div>
+
         </b-card>
     </div>
      <!-- 1-2번 card -->
      <div style="margin-top: 20px;">
           <b-card class="table-card" title="프로젝트 참여 직원" style="width: 560px; height: 340px; overflow: auto;">
-            <el-table class="table-responsive table text-center" header-row-class-name="thead-light"  :data="projects" >
+            <el-table class="table-responsive table text-center" header-row-class-name="thead-light"  :data="project.participantList" >
             <el-table-column type="selection" width="60"></el-table-column>
 
             <el-table-column label="사번" min-width="100px" prop="name">
                 <template v-slot="{row}">
-                  <span class="font-weight-600 name mb-0 text-sm ">{{row.PM}}</span>
+                  <span class="font-weight-600 name mb-0 text-sm ">{{row.employee.empId}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column label="이름"
-                             prop="PM"
-                             min-width="100px">
+            <el-table-column label="이름" min-width="80px" prop="name">
+                <template v-slot="{row}">
+                  <span class="font-weight-600 name mb-0 text-sm ">{{row.employee.empName}}</span>
+                </template>
             </el-table-column>
 
-            <el-table-column label="직무"
-                             prop="PM"
-                             min-width="100px">
+            <el-table-column label="직무" min-width="80px" prop="name">
+                <template v-slot="{row}">
+                  <span class="font-weight-600 name mb-0 text-sm ">{{ row.roleId.roleName }}</span>
+                </template>
             </el-table-column>
 
-            <el-table-column label="참여기간"
-                             prop="기간"
-                             min-width="200px">
+            <el-table-column label="참여기간" min-width="200px" prop="name">
+                <template v-slot="{row}">
+                  <span class="font-weight-600 name mb-0 text-sm ">{{row.startDate.slice(0,10)}}~{{row.endDate.slice(0,10)}}</span>
+                </template>
             </el-table-column>
+
             </el-table>
             <div class="button-container">
               
@@ -146,6 +181,10 @@ li {
   /* overflow: auto; 수직 스크롤 생성 */
 }
 
+.table{
+  font-size: small;
+}
+
 
 /* .card {
     background: white;
@@ -218,11 +257,41 @@ li {
   border-color: #aaa;
 }
 
+.flex-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  font-size: small;
+}
+
+.flex-row {
+  display: flex;
+  height: 50px;
+  text-align: center;
+}
+
+.flex-header{
+  /* font-weight: bold; */
+  background-color: #f0f0f0;
+}
+
+.flex-cell {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  white-space: pre-wrap;
+  text-align: center;
+}
+
 </style>
 
 
 <script>
 import ProjectTable from './ProjectTable.vue';
+import axios from "axios"; // http 통신을 위한 라이브러리
+const HOST =  "http://localhost:8080";
+
 export default {
   name: "Detail",
     data() {
@@ -289,8 +358,21 @@ export default {
       }
   },
   mounted(){
-    const projectId = parseInt(this.$route.params.id);
-    this.project = this.projects.find((project) => project.id === projectId);
+    const apiUrl = `${HOST}/api/v1/proj/${this.$route.params.id}`;
+    console.log("여기  !!!!!")
+    try {
+    const url = new URL(apiUrl);
+    console.log('URL:', url);
+    axios.get(apiUrl).then((res) => {
+      console.log('API response:', res.data);
+      console.log(res.data.participantList[0])
+      this.project = res.data;
+    });
+  } catch (error) {
+    console.error('Invalid API URL:', apiUrl);
+    console.error(error);
+  }
+    // this.project = this.projects.find((project) => project.id === projectId);
     }
   ,
 

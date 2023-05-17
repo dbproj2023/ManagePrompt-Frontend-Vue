@@ -61,11 +61,12 @@
       <hr/>
     </div>
     
+    
 
   
     <!-- 프로젝트 테이블 -->   
     <b-card class="ProjectTableCard">
-        <el-table v-if="filteredProjects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="filteredProjects" >
+        <el-table v-if="this.projects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="this.projects" >
             <!-- <el-table-column label="Project Id" min-width="100px" prop="name">
                 <template v-slot="{row}">
                   <span class="font-weight-600 name mb-0 text-sm ">{{row.proId}}</span>
@@ -74,24 +75,14 @@
 
             <el-table-column label="프로젝트 이름"
                              prop="proName"
-                             min-width="150px">
+                             min-width="100px">
             </el-table-column>
 
-            <el-table-column label="기간"
-                             prop="startDate"
-                             min-width="200px">
+            <el-table-column label="참여기간" min-width="150px" prop="name">
+                <template v-slot="{row}">
+                  <span class="font-weight-600 name mb-0 text-sm ">{{row.startDate.slice(0,10)}} ~ {{row.endDate.slice(0,10)}}</span>
+                </template>
             </el-table-column>
-
-            <el-table-column label="기간"
-                             prop="endDate"
-                             min-width="200px">
-            </el-table-column>
-
-            <!-- <el-table-column label="기간" prop="기간" min-width="200px">
-              <template v-slot="{row}">
-                <span>{{ formattedStartDate[row.index] }}</span>
-              </template>
-            </el-table-column> -->
 
 
             <el-table-column label="예산"
@@ -106,15 +97,13 @@
             </el-table-column>
 
 
-            <el-table-column label="Status"
-                             min-width="200px"
-                             prop="status">
-                <template v-slot="{row}">
-                    <badge class="badge-dot mr-4" type="">
-                        <i :class="`bg-${row.statusType}`"></i>
-                        <span class="status" :class="`text-${row.statusType}`">{{row.status}}</span>
-                    </badge>
-                </template>
+            <el-table-column label="Status" min-width="200px" prop="status">
+              <template v-slot="{ row }">          
+                <badge class="badge-dot mr-4" type="">
+                  <i :class="`bg-${projectStatus(row)[1]}`"></i>
+                  <span class="status" :class="`text-${projectStatus(row)[1]}`">{{ projectStatus(row)[0] }}</span>
+                </badge>
+              </template>
             </el-table-column>
        
             <el-table-column min-width="50px">
@@ -136,6 +125,7 @@
               해당 프로젝트가 없습니다.
         </div>
     </b-card>
+
   </div>
 
   
@@ -157,109 +147,47 @@ const HOST =  "http://localhost:8080";
     },
     data() {
       return {
-        project: [
-    {
-      id: 1,
-      title: '프람택솔루션1 ',
-      발주금액: '$2500 USD',
-      참여인원: 10,
-      PM: '정은',
-      기간:'2023/03/01-2023/10/01',
-      status: '취소',
-      statusType: 'info',
-          },
-    {
-      id: 2,
-      title: '프람택솔루션2',
-      발주금액: '$1800 USD',
-      참여인원: 8,
-      PM: '정은',
-      기간:'2022/03/01-2022/10/01',
-      status: '완료',
-      statusType: 'success',
-      
-    },
-    {
-      id: 3,
-      title: '프람택솔루션3',
-      발주금액: '$3150 USD',
-      참여인원: 5,
-      PM: '김현중',
-      기간:'2022/03/01-2023/10/01',
-      status: '예정',
-      statusType: 'danger',
-          },
-    {
-      id: 4,
-      title: '프람택솔루션4',
-      발주금액: '$4400 USD',
-      참여인원: 2,
-      PM: '봉현수',
-      기간:'2023/03/01-2023/10/01',
-      status: '진행중',
-      statusType: 'warning',
-      },
-    {
-      id: 5,
-      title: '프람택솔루션5',
-      발주금액: '$2200 USD',
-      참여인원: 2,
-      PM: '양슬빈',
-      기간:'2023/03/01-2023/05/01',
-      status: '완료',
-      statusType: 'success',
-      
-    },
-  ],
-  searchProject: '',
-  selectedStatus: '',
-  filteredSearchType: '',
-  selectedYear: '',
-  responsePosts: [],
-  projects: []
-  }
-},
-computed: {
-  filteredProjects() {
-
-    if (this.searchProject) {
-      const searchProjectLowercase = this.searchProject.toLowerCase();
-      return this.projects.filter(project => {
-        if (this.searchType === '프로젝트명') {
-          console.log(project)
-          return project.title.includes(searchProjectLowercase);
-        } else if (this.searchType === '발주처명') {
-          return project.PM.includes(searchProjectLowercase);
-        } 
-        else{
-          return true; 
+        searchProject: '',
+        selectedStatus: '',
+        filteredSearchType: '',
+        selectedYear: '',
+        responsePosts: [],
+        projects: []
         }
-      }
-      );
-    }  if (this.selectedStatus) {
-      return this.projects.filter(project => {
-        if (this.searchType != ''){
-        return project.status === this.selectedStatus
-      }
-    });
-  } if (this.selectedYear) {
-      return this.projects.filter(project => {
-        if (this.searchType != ''){
-          console.log( parseInt(project.기간.slice(0,4)))
-        return project.기간.slice(0,4) === this.selectedYear
-      }
-    });}
-
-    return this.projects;
-
-  },
-  // formattedStartDate() {
-  //   return this.filteredProjects.map(project => {
-  //     const startDate = project.startDate.slice(0, 10);
-  //     // const endDate = project.기간.slice(11, 21);
-  //     return `${startDate}`;
+    },
+computed: {
+  // filteredProjects() {
+  //   if (this.searchProject) {
+  //     const searchProjectLowercase = this.searchProject.toLowerCase();
+  //     return this.projects.filter(project => {
+  //       if (this.searchType === '프로젝트명') {
+  //         console.log(project)
+  //         return project.title.includes(searchProjectLowercase);
+  //       } else if (this.searchType === '발주처명') {
+  //         return project.PM.includes(searchProjectLowercase);
+  //       } 
+  //       else{
+  //         return true; 
+  //       }
+  //     }
+  //     );
+  //   }  if (this.selectedStatus) {
+  //     return this.projects.filter(project => {
+  //       if (this.searchType != ''){
+  //       return project.status === this.selectedStatus
+  //     }
   //   });
-  // }
+  // } if (this.selectedYear) {
+  //     return this.projects.filter(project => {
+  //       if (this.searchType != ''){
+  //         console.log( parseInt(project.기간.slice(0,4)))
+  //       return project.기간.slice(0,4) === this.selectedYear
+  //     }
+  //   });}
+
+  //   return this.projects;
+
+  // },
 
 },
   methods: {
@@ -270,8 +198,21 @@ computed: {
       this.searchType = e.target.value;
       console.log(this.searchType)
       this.searchProject = ''; // Reset search value when search type changes
-    }
+    },
+    projectStatus(row) {
+      const currentDate = new Date();
+      const startDate = new Date(row.startDate.slice(0,10));
+      const endDate = new Date(row.endDate.slice(0,10));
+
+      if (currentDate < startDate) {
+        return ["예정",'danger'];
+      } else if (currentDate > endDate) {
+        return ["완료","success"];
+      } else {
+        return ["진행중",'warning'];
+      }
   },
+},
   mounted() {
   const apiUrl = `${HOST}/api/v1/proj/lists`;
   console.log("여기  !!!!!")

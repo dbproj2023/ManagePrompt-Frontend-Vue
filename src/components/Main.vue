@@ -38,4 +38,8 @@ li {
 a {
   color: #42b983;
 }
+.div{
+  background-color: white;
+  /* F7F4FC */
+}
 </style>

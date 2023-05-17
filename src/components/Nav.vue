@@ -65,8 +65,8 @@
   width:280px;
   height: 100%;
   flex: 4;
-  border: 1px;
-  background-color: #f5f8f9;
+  /* border: 1px solid #ccc; */
+  background-color: white;
 }
 
 </style>
