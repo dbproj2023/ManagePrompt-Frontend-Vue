@@ -146,6 +146,22 @@ li {
   /* overflow: auto; 수직 스크롤 생성 */
 }
 
+
+/* .card {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    margin: 10px;
+    padding: 20px;
+    box-shadow: 0 20px 40px 0 rgba(204, 204, 204, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    position: relative;
+} */
+
 .button-container {
   display: flex;
   justify-content: flex-end;
@@ -155,6 +171,7 @@ li {
 .card-warpper1{
   padding-right: 40px;
   overflow-y: scroll;
+  
 }
 .card-warpper2{
   position: absolute;
