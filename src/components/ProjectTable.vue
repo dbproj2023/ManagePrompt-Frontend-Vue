@@ -8,9 +8,9 @@
         <b-row style="width:1050px">
           <b-col class="col-7" style="display: flex; align-items: center;">
           <div style="margin-right: 10px;">일정</div>
-            <b-form-datepicker class="input-data" v-model="startDate" placeholder="시작일시" style="width:250px; margin-right: 5px;"></b-form-datepicker>
+          <b-form-datepicker class="input-data" v-model="startDate" placeholder="시작일시" style="width:250px; margin-right: 5px;"  @input="handleDateInput"></b-form-datepicker>
             ~ 
-            <b-form-datepicker class="input-data" v-model="endDate" placeholder="종료일시" style="width:250px; margin-left: 5px;"></b-form-datepicker>
+          <b-form-datepicker class="input-data" v-model="endDate" placeholder="종료일시" style="width:250px; margin-left: 5px;"></b-form-datepicker>
         </b-col>
         
           <b-col class="col-2" style="display: flex; align-items: center;" >
@@ -77,13 +77,15 @@
     </div>
     
     
+    <div class="spinner-div" v-if="isLoading">
+      로딩중 !
 
-  
+    </div>
+
+    <div v-else style="padding-top: 20px;">
     <!-- 프로젝트 테이블 -->   
     <b-card class="ProjectTableCard">
-        <el-table v-if="this.projects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="this.projects" >
-
-
+      <el-table v-if="projects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="projects">
             <el-table-column label="프로젝트 이름"
                              prop="proName"
                              min-width="100px">
@@ -136,7 +138,7 @@
               해당 프로젝트가 없습니다.
         </div>
     </b-card>
-
+  </div>
   </div>
 
   
@@ -146,13 +148,14 @@
 //  import projects from 'projects'
 // import RangeDatePicker from 'vue-easy-range-date-picker'; 
  import { Table, TableColumn} from 'element-ui'
+
 import axios from "axios"; // http 통신을 위한 라이브러리
 const HOST =  "http://localhost:8080";
 
 
  export default {
   name: 'ProjectTable',
-    components: {
+      components: {
       [Table.name]: Table,
       [TableColumn.name]: TableColumn
     },
@@ -163,8 +166,9 @@ const HOST =  "http://localhost:8080";
         clientName: '',
         startDate: '',
         endDate: '',
-        responsePosts: [],
-        projects: []
+        // responsePosts: [],
+        projects: [],
+        isLoading: true
         }
     },
 computed: {
@@ -204,8 +208,13 @@ computed: {
 },
   methods: {
       sendData() {
+        this.isLoading = true;
         const apiUrl = `${HOST}/api/v1/proj/lists/search`;
         console.log("나 여기")
+
+        console.log(this.clientName)
+        console.log(this.startDate)
+        console.log(this.endDate)
 
         const params = {
         period_start: this.startDate,
@@ -218,11 +227,13 @@ computed: {
         size: 30,
         sort: "emp_id,desc",
       };
+      
       axios.get(apiUrl, {params})
         .then((res) => {
           console.log(apiUrl, { params })
           console.log('API response:', res.data);
           this.projects = res.data;
+          this.isLoading = false
         })
         .catch((error) => {
           console.error('Failed to fetch data:', error);
@@ -235,6 +246,12 @@ computed: {
       this.searchType = e.target.value;
       console.log(this.searchType)
       this.searchProject = ''; // Reset search value when search type changes
+    },
+    handleDateInput(newValue) {
+      if (newValue === this.value) {
+        // Same date is selected, reset the value
+        this.value = null;
+      }
     },
     projectStatus(row) {
       const currentDate = new Date();
@@ -261,6 +278,7 @@ computed: {
     axios.get(apiUrl).then((res) => {
       console.log('API response:', res.data);
       this.projects = res.data;
+      this.isLoading = false
     });
   } catch (error) {
     console.error('Invalid API URL:', apiUrl);
