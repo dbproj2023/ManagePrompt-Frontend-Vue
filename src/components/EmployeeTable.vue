@@ -18,13 +18,6 @@
                     <option value="디자이너"></option>
                 </datalist>
 
-                <!-- <select v-model="selectedYear" name="cards_id" @change="onChange($event)" class="form-select form-control" style="width: 130px;">
-                <option value="">년도</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-              </select> -->
-
                 <span>프로젝트 명: </span>
                 <input type="text" v-model="searchProjValue">
 
