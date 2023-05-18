@@ -293,6 +293,12 @@ li {
   text-align: center;
 }
 
+.table-card{
+  max-width: 800px;
+  overflow-y: scroll;
+}
+
+
 </style>
 
 

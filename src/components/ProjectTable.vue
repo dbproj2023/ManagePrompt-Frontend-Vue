@@ -211,24 +211,31 @@ const HOST =  "http://localhost:8080";
       console.log(this.searchType)
       this.searchProject = ''; // Reset search value when search type changes
     },
-  //   projectStatus(row) {
-  //     const currentDate = new Date();
-  //     const startDate = new Date(row.startDate.slice(0,10));
-  //     const endDate = new Date(row.endDate.slice(0,10));
+    handleDateInput(newValue) {
+      if (newValue === this.value) {
+        // Same date is selected, reset the value
+        this.value = null;
+      }
+    },
+    projectStatus(row) {
+      const currentDate = new Date();
+      const startDate = new Date(row.startDate.slice(0,10));
+      const endDate = new Date(row.endDate.slice(0,10));
 
-  //     if (currentDate < startDate) {
-  //       return ["예정",'danger'];
-  //     } else if (currentDate > endDate) {
-  //       return ["완료","success"];
-  //     } else if (currentDate = endDate){
-  //       return ["취소", 'secondary']
-  //     } else {
-  //       return ["진행중",'warning'];
-  //     }
-  // },
+      if (currentDate < startDate) {
+        return ["예정",'danger'];
+      } else if (currentDate > endDate) {
+        return ["완료","success"];
+      } else if (currentDate = endDate){
+        return ["취소", 'secondary']
+      } else {
+        return ["진행중",'warning'];
+      }
+  },
 },
   mounted() {
   const apiUrl = `${HOST}/api/v1/proj/lists`;
+  console.log("여기  !!!!!")
   try {
     const url = new URL(apiUrl);
     console.log('URL:', url);
@@ -266,12 +273,9 @@ const HOST =  "http://localhost:8080";
   border-color: #aaa;
 }
 
-.ProjectTableCard {
-  max-height: 700px; /* Set the maximum height of the table container */
-  overflow-y: auto;
+.ProtectTableCard {
+  overflow-y: scroll;
 }
-
-
 
 b-form-datepicker {
   width: 150px;
