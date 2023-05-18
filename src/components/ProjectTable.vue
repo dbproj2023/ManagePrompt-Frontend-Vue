@@ -6,26 +6,21 @@
       <b-container class="bv-example-row" style="display: flex">
         <div>
         <b-row style="width:1050px">
-          <b-col class="col-7" style="display: flex; align-items: center;">
+          <b-col class="col-6.3" style="display: flex; align-items: center;">
           <div style="margin-right: 10px;">일정</div>
           <b-form-datepicker class="input-data" v-model="startDate" placeholder="시작일시" style="width:250px; margin-right: 5px;"  @input="handleDateInput"></b-form-datepicker>
             ~ 
           <b-form-datepicker class="input-data" v-model="endDate" placeholder="종료일시" style="width:250px; margin-left: 5px;"></b-form-datepicker>
         </b-col>
         
-          <b-col class="col-2" style="display: flex; align-items: center;" >
+          <b-col class="col-5" style="display: flex; align-items: center;" >
             <div class="search-type" style="margin-right: 10px;">
-              상태
+              발주금액
             </div>
-            <div>
-              <select v-model="selectedStatus"  @change="onChange($event)" class="form-select form-control" style="width: 130px;">
-              <option value="">상태</option>
-              <option value="진행중">진행중</option>
-              <option value="완료">완료</option>
-              <option value="예정">예정</option>
-              <option value="취소">취소</option>
-            </select>
-            </div>
+              <b-form-input type="number" v-model="budge_start" placeholder="최소 예산" style="width: 150px; margin-right: 5px;"/>
+              ~
+              <b-form-input type="number" v-model="budge_end" placeholder="최대 예산" style="width: 150px;  margin-left: 5px; margin-right:5px" />
+              원
           </b-col>
         </b-row>
 
@@ -166,63 +161,32 @@ const HOST =  "http://localhost:8080";
         clientName: '',
         startDate: '',
         endDate: '',
+        budge_start: '',
+        budge_end: '',
         // responsePosts: [],
         projects: [],
         isLoading: true
         }
     },
-computed: {
-  // filteredProjects() {
-  //   if (this.searchProject) {
-  //     const searchProjectLowercase = this.searchProject.toLowerCase();
-  //     return this.projects.filter(project => {
-  //       if (this.searchType === '프로젝트명') {
-  //         console.log(project)
-  //         return project.title.includes(searchProjectLowercase);
-  //       } else if (this.searchType === '발주처명') {
-  //         return project.PM.includes(searchProjectLowercase);
-  //       } 
-  //       else{
-  //         return true; 
-  //       }
-  //     }
-  //     );
-  //   }  if (this.selectedStatus) {
-  //     return this.projects.filter(project => {
-  //       if (this.searchType != ''){
-  //       return project.status === this.selectedStatus
-  //     }
-  //   });
-  // } if (this.selectedYear) {
-  //     return this.projects.filter(project => {
-  //       if (this.searchType != ''){
-  //         console.log( parseInt(project.기간.slice(0,4)))
-  //       return project.기간.slice(0,4) === this.selectedYear
-  //     }
-  //   });}
-
-  //   return this.projects;
-
-  // },
-
-},
+  computed: {
+  },
   methods: {
       sendData() {
         this.isLoading = true;
         const apiUrl = `${HOST}/api/v1/proj/lists/search`;
         console.log("나 여기")
 
-        console.log(this.clientName)
-        console.log(this.startDate)
-        console.log(this.endDate)
+        // console.log(this.clientName)
+        // console.log(this.startDate)
+        // console.log(this.budge_start)
 
         const params = {
         period_start: this.startDate,
         period_end: this.endDate,
         pro_name: this.proName,
         client_name: this.clientName,
-        budge_start: 100,
-        budge_end: 10000000,
+        budge_start: this.budge_start,
+        budge_end: this.budge_end,
         page: 0,
         size: 30,
         sort: "emp_id,desc",

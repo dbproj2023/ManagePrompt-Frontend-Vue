@@ -62,12 +62,7 @@ export default {
   },
   data() {
     return {
-      displayDetail: false
-    }
-  },
-  methods: {
-    handleCloseDetail() {
-      this.displayDetail = false;
+    
     }
   }
 };
