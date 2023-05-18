@@ -23,7 +23,14 @@ export default {
     ProjectTable
   },
   data() {
-    return
+    return {
+      displayDetail: false
+    }
+  },
+  methods: {
+    handleCloseDetail() {
+      this.displayDetail = false;
+    }
   }
 };
 </script>

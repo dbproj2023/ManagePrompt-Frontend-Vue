@@ -1,5 +1,10 @@
 <template>
 <div class="wrapper">
+  <div class="spinner-div" v-if="isLoading">
+          로딩중 !
+  </div>
+
+  <div v-else>
     <div class="card-warpper">
       <div class="card-warpper1"> 
         <div>
@@ -94,44 +99,47 @@
       <div class="card-wrapper2">
         <b-card class="table-card" title="직원 정보 조회" style="width: 560px; height: 700px;">
           <div class="employee-search-bar" style="display:flex; align-items: center;">
-            <div style="margin-right: 10px;">
-              <select name="cards_id" @change="onChange($event)" class="form-select form-control">
+            <div style="margin-right: 10px; width: 150px">
+              <select name="cards_id"  class="form-select form-control"  v-model="selectedValue">
                 <option value="">선택하세요</option>
-                <option value="all">전체</option>
-                <option value="PM">PM</option>
-                <option value="id">사번</option>
-                <option value="skill">스킬</option>
+                <option value="emp_id">사번</option>
+                <option value="emp_name">이름</option>
+                <option value="emp_skill">스킬</option>
               </select>
             </div>
-            <div class="col-9">  
+            <div class="col-7">  
               <b-form-input v-model="searchValue" placeholder="Enter your name"></b-form-input>
+            </div>
+            <div>         
+              <b-button @click="sendData" style="margin-left: 5px; width:80px;"> 검색 </b-button>
             </div>
           </div>
           <div>
-            <el-table v-if="filteredProjects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="filteredProjects" >
+            <el-table v-if="employees.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="employees" >
               <el-table-column type="selection" width="60"></el-table-column>
             
               <el-table-column label="사번" min-width="90px" prop="name">
                 <template v-slot="{row}">
-                  <span class="font-weight-600 name mb-0 text-sm ">{{row.id}}</span>
+                  <span class="font-weight-600 name mb-0 text-sm ">{{row.empId}}</span>
                 </template>
             </el-table-column>
 
-
             <el-table-column label="이름"
-                             prop="PM"
+                             prop="empName"
                              min-width="100px">
             </el-table-column>
 
-            <el-table-column label="직무"
-                             prop="statusType"
-                             min-width="100px">
-            </el-table-column>
-
-            <el-table-column label="참여기간"
-                             prop="기간"
+            <el-table-column label="스킬"
+                             prop="empSkill"
                              min-width="200px">
             </el-table-column>
+
+
+            <el-table-column label=""
+                             prop=""
+                             min-width="100px">
+            </el-table-column>
+
             </el-table>
 
             <div v-else style="padding-top: 20px;">
@@ -148,6 +156,7 @@
               </b-modal>
             </div>
         </b-card>
+      </div>
       </div>
       </div>
       </div>
@@ -296,65 +305,14 @@ export default {
   name: "Detail",
     data() {
       return {
-        projects: [
-    {
-      id: 1,
-      title: 'Argon Design System',
-      발주금액: '$2500 USD',
-      참여인원: 10,
-      PM: '정은',
-      기간:'2023/03/01-2023/10/01',
-      status: 'pending',
-      statusType: 'warning',
-      completion: 60
-    },
-    {
-      id: 2,
-      title: 'Angular Now UI Kit PRO',
-      발주금액: '$1800 USD',
-      참여인원: 8,
-      PM: '정은',
-      기간:'2023/03/01-2023/10/01',
-      status: 'completed',
-      statusType: 'success',
-      completion: 100
-    },
-    {
-      id: 3,
-      title: 'Black Dashboard',
-      발주금액: '$3150 USD',
-      참여인원: 5,
-      PM: '양슬빈',
-      기간:'2023/03/01-2023/10/01',
-      status: 'delayed',
-      statusType: 'danger',
-      completion: 72
-    },
-    {
-      id: 4,
-      title: 'React Material Dashboard',
-      발주금액: '$4400 USD',
-      참여인원: 2,
-      PM: '양슬빈',
-      기간:'2023/03/01-2023/10/01',
-      status: 'on schedule',
-      statusType: 'info',
-      completion: 90
-    },
-    {
-      id: 5,
-      title: 'Vue Paper UI Kit PRO',
-      발주금액: '$2200 USD',
-      참여인원: 2,
-      PM: '정은',
-      기간:'2023/03/01-2023/10/01',
-      status: 'completed',
-      statusType: 'success',
-      completion: 100
-    }
-    ],
+        isLoading: true,
+        employees: "",
         project: "",
-        searchValue: ''
+        searchValue: '',
+        selectedValue: '',
+        emp_id: '',
+        emp_skill: '',
+        emp_name: ''
       }
   },
   mounted(){
@@ -367,50 +325,65 @@ export default {
       console.log('API response:', res.data);
       console.log(res.data.participantList[0])
       this.project = res.data;
+      this.isLoading = false;
     });
   } catch (error) {
     console.error('Invalid API URL:', apiUrl);
     console.error(error);
   }
+}
     // this.project = this.projects.find((project) => project.id === projectId);
-    }
-  ,
-
-  methods: {
+    ,
     onChange(e) {
       this.searchType = e.target.value;
       console.log(this.searchType)
       this.searchValue = ''; // Reset search value when search type changes
-    }}
-    ,
-    computed: {
-  filteredProjects() {
-    if (this.searchValue) {
-      const searchValueLowercase = this.searchValue.toLowerCase();
-      return this.projects.filter(project => {
-        if (this.searchType === 'PM') {
-          return project.PM.includes(searchValueLowercase);
-        } else if (this.searchType === 'id') {
-          const searchValue = parseInt(this.searchValue);
-          return project.id === searchValue;
-        } else if (this.searchType === 'skill') {
-          return project.statusType.includes(searchValueLowercase);
-        } else if (this.searchType === 'all') {
-          for (const key in project) {
-            if (key === 'id' || key === 'skill') {
-              return project.statusType.includes(searchValueLowercase) || project.PM.includes(searchValueLowercase); 
-            } else if  (key === 'id') {
-              return project.id ===  parseInt(this.searchValue);
-            }
-          }
-          return false;
-        } else{
-          return true; 
-        }
-      });
+    },
+    methods: {
+  sendData() {
+    const apiUrl = `${HOST}/api/v1/user/search/`;
+    console.log("나 여기");
+    console.log(this.selectedValue);
+    console.log(this.searchValue);
+
+    if (this.selectedValue === "emp_id") {
+      this.emp_id = this.searchValue;
+    } else if (this.selectedValue === "emp_name") {
+      this.emp_name = this.searchValue;
+    } else if (this.selectedValue === "emp_skill") {
+      this.emp_skill = this.searchValue;
     }
-    return this.projects;
+
+
+    const params = {
+      emp_id: this.emp_id,
+      emp_name:  this.emp_name,
+      emp_skill: this.emp_skill
+    };
+
+    console.log(apiUrl, params);
+
+    axios
+      .get(apiUrl, { params })
+      .then((res) => {
+        console.log(apiUrl, { params });
+        console.log('API response:', res.data);
+        this.employees = res.data;
+      })
+      .catch((error) => {
+        console.error('Failed to fetch data:', error);
+      });
+
+      params = {
+        emp_id: "",
+        emp_name: "",
+        emp_skill: ""
+      };
   }
 }
-};
+
+
+
+  }
+;
 </script>

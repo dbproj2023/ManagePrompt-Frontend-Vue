@@ -3,42 +3,23 @@
     <div>
       <hr style="border: solid 1px">  
       <!-- 검색창 -->
-      <b-container class="bv-example-row">
-        <b-row>
-          <b-col  class="col-2" style="display: flex; align-items: center;" >
-            <div style="margin-right: 10px;">
-              년도
-            </div>
-            <div>
-              <select v-model="selectedYear" name="cards_id" @change="onChange($event)" class="form-select form-control" style="width: 130px;">
-                <option value="">년도</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-              </select>
-            </div>
-          </b-col>
-          <b-col class="col-2" style="display: flex; align-items: center;" >
-            <div>
-              일정
-            </div>
-            <div>
-              <!-- <RangeDatePicker v-model="dates"/> -->
-            </div>
-          </b-col>
+      <b-container class="bv-example-row" style="display: flex">
+        <b-row style="width:1050px">
+          <b-col class="col-7" style="display: flex; align-items: center;">
+          <div style="margin-right: 10px;">일정</div>
+            <b-form-datepicker class="input-data" v-model="startDate" placeholder="시작일시" style="width:250px; margin-right: 5px;"></b-form-datepicker>
+            ~ 
+            <b-form-datepicker class="input-data" v-model="endDate" placeholder="종료일시" style="width:250px; margin-left: 5px;"></b-form-datepicker>
+        </b-col>
+        
           <b-col class="col-2" style="display: flex; align-items: center;" >
             <div class="search-type" style="margin-right: 10px;">
-              상태
+              발주금액
             </div>
-            <div>
-              <select v-model="selectedStatus"  @change="onChange($event)" class="form-select form-control" style="width: 130px;">
-              <option value="">상태</option>
-              <option value="진행중">진행중</option>
-              <option value="완료">완료</option>
-              <option value="예정">예정</option>
-              <option value="취소">취소</option>
-            </select>
-            </div>
+              <b-form-input type="number" v-model="budge_start" placeholder="최소 예산" style="width: 150px; margin-right: 5px;"/>
+              ~
+              <b-form-input type="number" v-model="budge_end" placeholder="최대 예산" style="width: 150px;  margin-left: 5px; margin-right:5px" />
+              원
           </b-col>
           <b-col class="col-6.8" style="display: flex; align-items: center;">
             <div style="margin-right: 10px;">
@@ -62,16 +43,16 @@
     </div>
     
     
+    <div class="spinner-div" v-if="isLoading">
+      로딩중 !
 
-  
+    </div>
+
+    <div v-else style="padding-top: 20px;">
     <!-- 프로젝트 테이블 -->   
     <b-card class="ProjectTableCard">
         <el-table v-if="this.projects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="this.projects" >
-            <!-- <el-table-column label="Project Id" min-width="100px" prop="name">
-                <template v-slot="{row}">
-                  <span class="font-weight-600 name mb-0 text-sm ">{{row.proId}}</span>
-                </template>
-            </el-table-column> -->
+
 
             <el-table-column label="프로젝트 이름"
                              prop="proName"
@@ -125,7 +106,7 @@
               해당 프로젝트가 없습니다.
         </div>
     </b-card>
-
+  </div>
   </div>
 
   
@@ -135,13 +116,14 @@
 //  import projects from 'projects'
 // import RangeDatePicker from 'vue-easy-range-date-picker'; 
  import { Table, TableColumn} from 'element-ui'
+
 import axios from "axios"; // http 통신을 위한 라이브러리
 const HOST =  "http://localhost:8080";
 
 
  export default {
   name: 'ProjectTable',
-    components: {
+      components: {
       [Table.name]: Table,
       [TableColumn.name]: TableColumn
     },
@@ -149,48 +131,41 @@ const HOST =  "http://localhost:8080";
       return {
         searchProject: '',
         selectedStatus: '',
-        filteredSearchType: '',
-        selectedYear: '',
+        clientName: '',
+        startDate: '',
+        endDate: '',
         responsePosts: [],
         projects: []
         }
     },
-computed: {
-  // filteredProjects() {
-  //   if (this.searchProject) {
-  //     const searchProjectLowercase = this.searchProject.toLowerCase();
-  //     return this.projects.filter(project => {
-  //       if (this.searchType === '프로젝트명') {
-  //         console.log(project)
-  //         return project.title.includes(searchProjectLowercase);
-  //       } else if (this.searchType === '발주처명') {
-  //         return project.PM.includes(searchProjectLowercase);
-  //       } 
-  //       else{
-  //         return true; 
-  //       }
-  //     }
-  //     );
-  //   }  if (this.selectedStatus) {
-  //     return this.projects.filter(project => {
-  //       if (this.searchType != ''){
-  //       return project.status === this.selectedStatus
-  //     }
-  //   });
-  // } if (this.selectedYear) {
-  //     return this.projects.filter(project => {
-  //       if (this.searchType != ''){
-  //         console.log( parseInt(project.기간.slice(0,4)))
-  //       return project.기간.slice(0,4) === this.selectedYear
-  //     }
-  //   });}
-
-  //   return this.projects;
-
-  // },
-
-},
+  computed: {
+  },
   methods: {
+      sendData() {
+        const apiUrl = `${HOST}/api/v1/proj/lists/search`;
+        console.log("나 여기")
+
+        const params = {
+        period_start: this.startDate,
+        period_end: this.endDate,
+        pro_name: this.proName,
+        client_name: this.clientName,
+        budge_start: 100,
+        budge_end: 10000000,
+        page: 0,
+        size: 30,
+        sort: "emp_id,desc",
+      };
+      axios.get(apiUrl, {params})
+        .then((res) => {
+          console.log(apiUrl, { params })
+          console.log('API response:', res.data);
+          this.projects = res.data;
+        })
+        .catch((error) => {
+          console.error('Failed to fetch data:', error);
+        });
+    },
     navigateToDetail(id) {
       this.$router.push(`/Project/detail/${id}`);
     },
@@ -198,6 +173,12 @@ computed: {
       this.searchType = e.target.value;
       console.log(this.searchType)
       this.searchProject = ''; // Reset search value when search type changes
+    },
+    handleDateInput(newValue) {
+      if (newValue === this.value) {
+        // Same date is selected, reset the value
+        this.value = null;
+      }
     },
     projectStatus(row) {
       const currentDate = new Date();
@@ -222,6 +203,7 @@ computed: {
     axios.get(apiUrl).then((res) => {
       console.log('API response:', res.data);
       this.projects = res.data;
+      this.isLoading = false
     });
   } catch (error) {
     console.error('Invalid API URL:', apiUrl);

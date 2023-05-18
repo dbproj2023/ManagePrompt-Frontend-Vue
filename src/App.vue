@@ -12,7 +12,6 @@
 
 <script>
 // import Nav from './views/nav';
-import HelloWorld from './components/Main.vue'
 import Nav from './components/Nav.vue'
 import Header from './components/Header.vue'
 
