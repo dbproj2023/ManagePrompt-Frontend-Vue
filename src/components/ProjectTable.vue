@@ -4,7 +4,6 @@
       <hr style="border: solid 1px">  
       <!-- 검색창 -->
       <b-container class="bv-example-row" style="display: flex">
-        <div>
         <b-row style="width:1050px">
           <b-col class="col-7" style="display: flex; align-items: center;">
           <div style="margin-right: 10px;">일정</div>
