@@ -1,16 +1,14 @@
 <template>
-    <div id="login">
+    <div id="change_pw">
         <div>
-            <h2>로그인</h2>
+            <h2>비밀번호 변경</h2>
         </div>
         <hr>
-        <form class="form-inputs" name="login_form" method="get">
-            <input type="text" id="emp_id" name="emp_id" size="15" v-model="input.emp_id" placeholder="아이디"/>
-            <input type="password" id="emp_pw" name="emp_pw" size="15" v-model="input.emp_pw" placeholder="비밀번호"/>
-            <input type="submit" value="로그인" @click="login()">
-            <div>
-                <a id="find_account" :href="find_account"><strong>아이디/비밀번호 찾기</strong></a>
-            </div>
+        <form class="form-inputs" name="change_pw_form" method="get">
+            <input type="password" id="pre_emp_pw" name="pre_emp_pw" size="15" v-model="input.pre_emp_pw" placeholder="이전 비밀번호"/>
+            <input type="password" id="new_emp_pw" name="new_emp_pw" size="15" v-model="input.new_emp_pw" placeholder="새로운 비밀번호"/>
+            <input type="password" id="new_emp_pw_check" name="new_emp_pw_check" size="15" v-model="input.new_emp_pw_check" placeholder="비밀번호 확인"/>
+            <input type="submit" value="변경" @click="change()">
         </form>
     </div>
 </template>
@@ -20,23 +18,23 @@ export default {
     data() {
         return {
             input: {
-                emp_id: "",
-                emp_pw: ""
-            },
-            find_account: "/FindAccount"
+                pre_emp_pw: "",
+                new_emp_pw: "",
+                new_emp_pw_check: ""
+            }
         }
     },
     methods: {
-        login() {
-            if(this.input.emp_id != "" && this.input.emp_pw != "") {
-                if(this.input.emp_id == this.$parent.mockAccount.emp_id && this.input.emp_pw == this.$parent.mockAccount.emp_pw) {
+        change() {
+            if(this.input.pre_emp_pw != "" && this.input.new_emp_pw != "" && this.input.new_emp_pw_change != "") {
+                if(this.input.pre_emp_pw == this.$parent.mockAccount.pre_emp_pw) {
                     this.$emit("authenticated", true);
                     // this.$router.replace({ name: "Secure" });
                 } else {
-                    console.log("아이디/비밀번호가 일치하지 않습니다.");
+                    console.log("비밀번호가 일치하지 않습니다");
                 }
             } else {
-                console.log("아이디와 비밀번호가 있어야 합니다.");
+                console.log("모두 입력해야 합니다");
             }
         }
     },

@@ -10,6 +10,9 @@ import Mypage from './components/Mypage.vue'
 import Detail from './components/Detail.vue'
 // import page2 from './components/.vue'
 import Project_detail from './components/Project_detail.vue'
+import Change_pw from './components/Change_pw.vue'
+import Access from './components/Access.vue'
+import FindAccount from './components/FindAccount.vue'
 
 
 Vue.use(Router)
@@ -52,6 +55,18 @@ export default new Router({
         {
             path: '/Project_detail',
             component: Project_detail
+        },
+        {
+            path: '/ChangePW',
+            component: Change_pw
+        },
+        {
+            path: '/Access/:id',
+            component: Access
+        },
+        {
+            path: '/FindAccount',
+            component: FindAccount
         }
     ]
 })
