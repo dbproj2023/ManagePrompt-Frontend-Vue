@@ -19,9 +19,9 @@
         <div class="flex-table" style="margin-top: 20px;">
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트 이름</div>
-          <div class="flex-cell">{{project.proname}}</div>
+          <div class="flex-cell">{{project.proName}}</div>
           <div class="flex-cell flex-header">프로젝트 매니저</div>
-          <div class="flex-cell">{{ project.PM }}</div>
+          <div class="flex-cell">{{ project.proId }}</div>
         </div>
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트 </div>
@@ -53,8 +53,8 @@
      <!-- 1-2번 card -->
      <div style="margin-top: 20px;">
           <b-card class="table-card" title="프로젝트 참여 직원" style="width: 560px; height: 340px; overflow: auto;">
-            <el-table class="table-responsive table text-center" header-row-class-name="thead-light"  :data="project.participantList" >
-            <el-table-column type="selection" width="60"></el-table-column>
+            <el-table class="table-responsive table text-center" header-row-class-name="thead-light"  :data="project.participantList" @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width="20px"></el-table-column>
 
             <el-table-column label="사번" min-width="100px" prop="name">
                 <template v-slot="{row}">
@@ -70,25 +70,32 @@
 
             <el-table-column label="직무" min-width="80px" prop="name">
                 <template v-slot="{row}">
-                  <span class="font-weight-600 name mb-0 text-sm ">{{ row.roleId.roleName }}</span>
+                  <span class="font-weight-600 name mb-0 text-sm" @click="editRole(row)">{{ row.roleId.roleName }}</span>
+                <el-input v-model="row.editing" v-show="row.isEditing" @blur="saveRole(row)" ref="roleInput"></el-input>
+                  <!-- <span class="font-weight-600 name mb-0 text-sm ">{{ row.roleId.roleName }}</span> -->
                 </template>
             </el-table-column>
 
-            <el-table-column label="참여기간" min-width="200px" prop="name">
+            <!-- <el-table-column label="참여기간" min-width="200px" prop="name">
                 <template v-slot="{row}">
                   <span class="font-weight-600 name mb-0 text-sm ">{{row.startDate.slice(0,10)}}~{{row.endDate.slice(0,10)}}</span>
                 </template>
+            </el-table-column> -->
+            <el-table-column label="참여기간" min-width="200px" prop="name">
+              <template v-slot="{ row }">
+                <span class="font-weight-600 name mb-0 text-sm" @click="editPeriod(row)">{{ row.startDate.slice(0, 10) }}~{{ row.endDate.slice(0, 10) }}</span>
+                <el-input v-model="row.editing" v-show="row.isEditing" @blur="savePeriod(row)" ref="periodInput"></el-input>
+              </template>
             </el-table-column>
+
 
             </el-table>
             <div class="button-container">
               
-              <b-button>수정</b-button>
-               
-              <b-button v-b-modal.modal-1  style="margin-left: 10px;">삭제</b-button>
-              <b-modal id="modal-1" title="프로젝트 직원 관리">
-                <p class="my-4">해당 직원을 프로젝트에서 삭제하시겠습니까?</p>
-              </b-modal>
+              <b-button @click="modifyRow">수정</b-button>
+                <b-modal id="modal-1" title="프로젝트 직원 관리">
+                  <p class="my-4">해당 직원을 프로젝트에서 수정하시겠습니까?</p>
+                </b-modal>
 
             </div>
           </b-card>
@@ -97,7 +104,7 @@
         
          <!-- 2번 card -->
       <div class="card-wrapper2">
-        <b-card class="table-card" title="직원 정보 조회" style="width: 680px; height: 680px;">
+        <b-card class="table-card" title="직원 정보 조회" style="width: 670px; height: 685px;">
           <div class="employee-search-bar" style="display:flex; align-items: center;">
             <div style="margin-right: 10px; width: 150px">
               <select name="cards_id"  class="form-select form-control"  v-model="selectedValue">
@@ -143,8 +150,8 @@
 
             <el-table-column label="기간" prop="job">
               <template v-slot="{ row }">
-                <el-input  type="date" v-model="row.startdate" @input="handleDateRangeInput" placeholder="YY-MM-DD ~ YY-MM-DD"></el-input>
-                <el-input  type="date" v-model="row.enddate" @input="handleDateRangeInput" placeholder="YY-MM-DD ~ YY-MM-DD"></el-input>
+                <el-input  type="date" v-model="row.startDate" placeholder="YY-MM-DD ~ YY-MM-DD"></el-input>
+                <el-input  type="date" v-model="row.endDate" placeholder="YY-MM-DD ~ YY-MM-DD"></el-input>
 
               </template>
             </el-table-column>
@@ -172,6 +179,217 @@
 </template>
 
 
+<script>
+import ProjectTable from './ProjectTable.vue';
+import axios from "axios"; // http 통신을 위한 라이브러리
+const HOST =  "http://localhost:8080";
+
+export default {
+  name: "Detail",
+    data() {
+      return {
+        isLoading: true,
+        employees: "",
+        project: "",
+        searchValue: '',
+        selectedValue: '',
+        emp_id: '',
+        emp_skill: '',
+        emp_name: '',
+        startDate: '',
+        endDate: '',
+        selectedRows: []
+      }
+  },
+  mounted(){
+    const apiUrl = `${HOST}/api/v1/proj/${this.$route.params.id}`;
+    console.log("여기  !!!!!")
+    try {
+    const url = new URL(apiUrl);
+    console.log('URL:', url);
+    axios.get(apiUrl).then((res) => {
+      console.log('API response:', res.data);
+      console.log(res.data.participantList[0])
+      this.project = res.data;
+      this.isLoading = false;
+    });
+  } catch (error) {
+    console.error('Invalid API URL:', apiUrl);
+    console.error(error);
+  }
+}
+    // this.project = this.projects.find((project) => project.id === projectId);
+    ,
+    onChange(e) {
+      this.searchType = e.target.value;
+      console.log(this.searchType)
+      this.searchValue = ''; // Reset search value when search type changes
+    },
+    methods: {
+      editPeriod(row) {
+        this.$set(row, 'isEditing', true);
+        this.$set(row, 'editing', `${row.startDate.slice(0, 10)}~${row.endDate.slice(0, 10)}`);
+        this.$nextTick(() => {
+          const inputEl = this.$refs.periodInput.$refs.input;
+          inputEl.focus();
+        });
+      },
+      savePeriod(row) {
+        this.$set(row, 'isEditing', false);
+        // Extract the start and end dates from the edited value
+        const [start, end] = row.editing.split('~');
+        // Perform any necessary validation or formatting on the dates
+        // ...
+        // Update the row's start and end dates
+        row.startDate = start;
+        row.endDate = end;
+      }, 
+      editRole(row) {
+        this.$set(row, 'isEditing', true);
+        this.$set(row, 'editing', `${row.roleId.roleName}`);
+        this.$nextTick(() => {
+          const inputEl = this.$refs.roleInput.$refs.input;
+          inputEl.focus();
+        });
+      },
+      saveRole(row) {
+        this.$set(row, 'isEditing', false);
+        // Extract the start and end dates from the edited value
+        const role = row.editing;
+        // console.log(row)
+        // Perform any necessary validation or formatting on the dates
+        // ...
+        // Update the row's start and end dates
+        row.roleId.roleName = role;
+        row.roleId.roleId = 8;
+        // row.roleId = role;
+      },
+      sendData() {
+        const apiUrl = `${HOST}/api/v1/user/search/`;
+        console.log("나 여기");
+        console.log(this.selectedValue);
+        console.log(this.searchValue);
+
+        if (this.selectedValue === "emp_id") {
+          this.emp_id = this.searchValue;
+        } else if (this.selectedValue === "emp_name") {
+          this.emp_name = this.searchValue;
+        } else if (this.selectedValue === "emp_skill") {
+          this.emp_skill = this.searchValue;
+        }
+
+        const params = {
+          emp_id: this.emp_id,
+          emp_name:  this.emp_name,
+          emp_skill: this.emp_skill
+        };
+
+      console.log(apiUrl, params);
+
+      axios
+        .get(apiUrl, { params })
+        .then((res) => {
+          console.log(apiUrl, { params });
+          console.log('API response:', res.data);
+          this.employees = res.data;
+        })
+        .catch((error) => {
+          console.error('Failed to fetch data:', error);
+        });
+
+        params = {
+          emp_id: "",
+          emp_name: "",
+          emp_skill: ""
+        };
+    },
+    handleSelectionChange(selection) {
+      this.selectedRows = selection;
+    },
+    logSelectedData() {
+      for (const row of this.selectedRows) {
+        console.log('Selected Job:', row.job, row.startDate, row.endDate);
+        console.log(row.empName, row.empId);
+
+        const formData = new FormData();
+
+        console.log(this.project.proId)
+
+        formData.append("pro_id", this.project.proId);
+        formData.append("emp_id", row.empId);
+        formData.append("start_date", row.startDate);
+        formData.append("end_date", row.endDate);
+        formData.append("role_id", 2);
+        formData.append("emp_name", row.empName);
+
+
+        try {
+          axios
+            .post(`${HOST}/api/v1/proj/member/add`, formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                console.log("프로젝트 등록 업데이트 성공!");
+                console.log(res);
+              }
+            });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    
+    },
+    modifyRow() {
+      console.log("dksjlskjkl")
+    for (const row of this.selectedRows) {
+      console.log(row.employee.empId);
+      console.log(row.startDate);
+      console.log(row.endDate);
+      console.log(this.project.proName)
+      console.log(row.employee.empName)
+      console.log(row.roleId);
+      console.log(this.project.proId)
+
+      const formData = new FormData();
+
+
+      formData.append("pro_name", this.project.proName);
+      formData.append("emp_id", row.employee.empId);
+      formData.append("start_date", row.startDate);
+      formData.append("end_date", row.endDate);
+      formData.append("role_id", row.roleId.roleId);
+      formData.append("emp_name", row.employee.empName);
+
+
+
+      for (const [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+
+      try {
+          axios
+            .patch(`${HOST}/api/v1/proj/member/update`, formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                console.log("프로젝트 참여 직원 업데이트 성공!");
+                console.log(res);
+              }
+            });
+        } catch (error) {
+          console.log(error);
+        }
+
+    }
+      // Perform any necessary modifications to the row here
+    
+  }
+    }
+  }
+;
+</script>
 
 <style scoped>
 
@@ -313,104 +531,3 @@ li {
 
 </style>
 
-
-<script>
-import ProjectTable from './ProjectTable.vue';
-import axios from "axios"; // http 통신을 위한 라이브러리
-const HOST =  "http://localhost:8080";
-
-export default {
-  name: "Detail",
-    data() {
-      return {
-        isLoading: true,
-        employees: "",
-        project: "",
-        searchValue: '',
-        selectedValue: '',
-        emp_id: '',
-        emp_skill: '',
-        emp_name: '',
-        startDate: '',
-        endDate: ''
-      }
-  },
-  mounted(){
-    const apiUrl = `${HOST}/api/v1/proj/${this.$route.params.id}`;
-    console.log("여기  !!!!!")
-    try {
-    const url = new URL(apiUrl);
-    console.log('URL:', url);
-    axios.get(apiUrl).then((res) => {
-      console.log('API response:', res.data);
-      console.log(res.data.participantList[0])
-      this.project = res.data;
-      this.isLoading = false;
-    });
-  } catch (error) {
-    console.error('Invalid API URL:', apiUrl);
-    console.error(error);
-  }
-}
-    // this.project = this.projects.find((project) => project.id === projectId);
-    ,
-    onChange(e) {
-      this.searchType = e.target.value;
-      console.log(this.searchType)
-      this.searchValue = ''; // Reset search value when search type changes
-    },
-    methods: {
-      sendData() {
-        const apiUrl = `${HOST}/api/v1/user/search/`;
-        console.log("나 여기");
-        console.log(this.selectedValue);
-        console.log(this.searchValue);
-
-        if (this.selectedValue === "emp_id") {
-          this.emp_id = this.searchValue;
-        } else if (this.selectedValue === "emp_name") {
-          this.emp_name = this.searchValue;
-        } else if (this.selectedValue === "emp_skill") {
-          this.emp_skill = this.searchValue;
-        }
-
-
-        const params = {
-          emp_id: this.emp_id,
-          emp_name:  this.emp_name,
-          emp_skill: this.emp_skill
-        };
-
-      console.log(apiUrl, params);
-
-      axios
-        .get(apiUrl, { params })
-        .then((res) => {
-          console.log(apiUrl, { params });
-          console.log('API response:', res.data);
-          this.employees = res.data;
-        })
-        .catch((error) => {
-          console.error('Failed to fetch data:', error);
-        });
-
-        params = {
-          emp_id: "",
-          emp_name: "",
-          emp_skill: ""
-        };
-    },
-    handleSelectionChange(selectedRows) {
-      this.selectedEmployees = selectedRows;
-    },
-    logSelectedData() {
-      for (const employee of this.selectedEmployees) {
-        console.log('Start Date:', this.startDate);
-        console.log('End Date:', this.endDate);
-        console.log(employee.empId, this.project.proId, employee.empName);
-      }
-    },
-  }
-}
-;
-</script>
