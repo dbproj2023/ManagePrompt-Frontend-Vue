@@ -19,7 +19,7 @@
         <div class="flex-table" style="margin-top: 20px;">
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트 이름</div>
-          <div class="flex-cell">{{project.proName}}</div>
+          <div class="flex-cell">{{project.proname}}</div>
           <div class="flex-cell flex-header">프로젝트 매니저</div>
           <div class="flex-cell">{{ project.PM }}</div>
         </div>
@@ -97,7 +97,7 @@
         
          <!-- 2번 card -->
       <div class="card-wrapper2">
-        <b-card class="table-card" title="직원 정보 조회" style="width: 560px; height: 700px;">
+        <b-card class="table-card" title="직원 정보 조회" style="width: 680px; height: 680px;">
           <div class="employee-search-bar" style="display:flex; align-items: center;">
             <div style="margin-right: 10px; width: 150px">
               <select name="cards_id"  class="form-select form-control"  v-model="selectedValue">
@@ -115,10 +115,10 @@
             </div>
           </div>
           <div>
-            <el-table v-if="employees.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="employees" >
-              <el-table-column type="selection" width="60"></el-table-column>
+            <el-table v-if="employees.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="employees" @selection-change="handleSelectionChange">
+              <el-table-column type="selection" width="20px"></el-table-column>
             
-              <el-table-column label="사번" min-width="90px" prop="name">
+              <el-table-column label="사번" min-width="43px" prop="name">
                 <template v-slot="{row}">
                   <span class="font-weight-600 name mb-0 text-sm ">{{row.empId}}</span>
                 </template>
@@ -126,18 +126,27 @@
 
             <el-table-column label="이름"
                              prop="empName"
-                             min-width="100px">
+                             min-width="38px">
             </el-table-column>
 
             <el-table-column label="스킬"
                              prop="empSkill"
-                             min-width="200px">
+                             min-width="40px">
             </el-table-column>
 
 
-            <el-table-column label=""
-                             prop=""
-                             min-width="100px">
+            <el-table-column label="직무" prop="job" min-width="60px">
+              <template v-slot="{ row }">
+                <el-input v-model="row.job" placeholder="직무 입력"></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column label="기간" prop="job">
+              <template v-slot="{ row }">
+                <el-input  type="date" v-model="row.startdate" @input="handleDateRangeInput" placeholder="YY-MM-DD ~ YY-MM-DD"></el-input>
+                <el-input  type="date" v-model="row.enddate" @input="handleDateRangeInput" placeholder="YY-MM-DD ~ YY-MM-DD"></el-input>
+
+              </template>
             </el-table-column>
 
             </el-table>
@@ -149,7 +158,7 @@
 
 
             <div class="button-container">
-              <b-button v-b-modal.modal-2>추가</b-button>
+              <b-button @click="logSelectedData" v-b-modal.modal-2 >추가</b-button>
 
               <b-modal id="modal-2" title="프로젝트 직원 관리">
                 <p class="my-4">해당 직원을 프로젝트에 추가하시겠습니까?</p>
@@ -183,7 +192,7 @@ li {
   position: absolute;
   width: 100%;
   height: 100%;
-  left: 280px;
+  left: 200px;
   top: 50px;
   padding: 30px;
   background-color: #f5f8f9;;
@@ -298,6 +307,9 @@ li {
   overflow-y: scroll;
 }
 
+.wrapper{
+  flex: 1200px;
+}
 
 </style>
 
@@ -318,7 +330,9 @@ export default {
         selectedValue: '',
         emp_id: '',
         emp_skill: '',
-        emp_name: ''
+        emp_name: '',
+        startDate: '',
+        endDate: ''
       }
   },
   mounted(){
@@ -346,50 +360,57 @@ export default {
       this.searchValue = ''; // Reset search value when search type changes
     },
     methods: {
-  sendData() {
-    const apiUrl = `${HOST}/api/v1/user/search/`;
-    console.log("나 여기");
-    console.log(this.selectedValue);
-    console.log(this.searchValue);
+      sendData() {
+        const apiUrl = `${HOST}/api/v1/user/search/`;
+        console.log("나 여기");
+        console.log(this.selectedValue);
+        console.log(this.searchValue);
 
-    if (this.selectedValue === "emp_id") {
-      this.emp_id = this.searchValue;
-    } else if (this.selectedValue === "emp_name") {
-      this.emp_name = this.searchValue;
-    } else if (this.selectedValue === "emp_skill") {
-      this.emp_skill = this.searchValue;
-    }
+        if (this.selectedValue === "emp_id") {
+          this.emp_id = this.searchValue;
+        } else if (this.selectedValue === "emp_name") {
+          this.emp_name = this.searchValue;
+        } else if (this.selectedValue === "emp_skill") {
+          this.emp_skill = this.searchValue;
+        }
 
 
-    const params = {
-      emp_id: this.emp_id,
-      emp_name:  this.emp_name,
-      emp_skill: this.emp_skill
-    };
+        const params = {
+          emp_id: this.emp_id,
+          emp_name:  this.emp_name,
+          emp_skill: this.emp_skill
+        };
 
-    console.log(apiUrl, params);
+      console.log(apiUrl, params);
 
-    axios
-      .get(apiUrl, { params })
-      .then((res) => {
-        console.log(apiUrl, { params });
-        console.log('API response:', res.data);
-        this.employees = res.data;
-      })
-      .catch((error) => {
-        console.error('Failed to fetch data:', error);
-      });
+      axios
+        .get(apiUrl, { params })
+        .then((res) => {
+          console.log(apiUrl, { params });
+          console.log('API response:', res.data);
+          this.employees = res.data;
+        })
+        .catch((error) => {
+          console.error('Failed to fetch data:', error);
+        });
 
-      params = {
-        emp_id: "",
-        emp_name: "",
-        emp_skill: ""
-      };
+        params = {
+          emp_id: "",
+          emp_name: "",
+          emp_skill: ""
+        };
+    },
+    handleSelectionChange(selectedRows) {
+      this.selectedEmployees = selectedRows;
+    },
+    logSelectedData() {
+      for (const employee of this.selectedEmployees) {
+        console.log('Start Date:', this.startDate);
+        console.log('End Date:', this.endDate);
+        console.log(employee.empId, this.project.proId, employee.empName);
+      }
+    },
   }
 }
-
-
-
-  }
 ;
 </script>

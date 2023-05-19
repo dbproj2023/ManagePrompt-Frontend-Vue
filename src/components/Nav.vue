@@ -62,9 +62,9 @@
      
 <style>
 .nav{
-  width:280px;
+  width:200px;
   height: 100%;
-  flex: 4;
+  flex: 3;
   /* border: 1px solid #ccc; */
   background-color: white;
 }
