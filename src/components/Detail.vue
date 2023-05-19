@@ -21,7 +21,7 @@
           <div class="flex-cell flex-header">프로젝트 이름</div>
           <div class="flex-cell">{{project.proName}}</div>
           <div class="flex-cell flex-header">프로젝트 매니저</div>
-          <div class="flex-cell">{{ project.proId }}</div>
+          <div class="flex-cell">{{ project.pmName }}</div>
         </div>
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트 </div>
@@ -38,14 +38,14 @@
 
         <div class="flex-row">
           <div class="flex-cell flex-header">발주처 담당자명</div>
-          <div class="flex-cell">{{ project.clientEmpName }}원</div>
+          <div class="flex-cell">{{ project.clientEmpName }}</div>
           <div class="flex-cell flex-header">발주처 전화번호</div>
           <div class="flex-cell">{{project.clientEmpPh}}</div>
         </div>
     </div>
     <div class="button-container">
 
-      <b-button @click="goToProjectModify">프로젝트 추가</b-button>
+      <b-button @click="goToProjectModify">프로젝트 수정</b-button>
     </div>
 
         </b-card>
@@ -163,9 +163,8 @@
 
 
             <div class="button-container">
-              <b-button @click="logSelectedData" v-b-modal.modal-2 >추가</b-button>
-
-              <b-modal id="modal-2" title="프로젝트 직원 관리">
+              <b-button  v-b-modal.modal-2 >추가</b-button>
+              <b-modal id="modal-2" title="프로젝트 직원 관리" @ok="logSelectedData">
                 <p class="my-4">해당 직원을 프로젝트에 추가하시겠습니까?</p>
               </b-modal>
             </div>
@@ -224,6 +223,10 @@ export default {
       this.searchValue = ''; // Reset search value when search type changes
     },
     methods: {
+      goToProjectModify() {
+
+      // this.$router.push(`/ProjectModify/${id}`);
+    },
       editPeriod(row) {
         this.$set(row, 'isEditing', true);
         this.$set(row, 'editing', `${row.startDate.slice(0, 10)}~${row.endDate.slice(0, 10)}`);
@@ -317,7 +320,7 @@ export default {
         formData.append("emp_id", row.empId);
         formData.append("start_date", row.startDate);
         formData.append("end_date", row.endDate);
-        formData.append("role_id", 2);
+        formData.append("role_id", 6);
         formData.append("emp_name", row.empName);
 
 
@@ -328,8 +331,9 @@ export default {
             })
             .then((res) => {
               if (res.status === 200) {
-                console.log("프로젝트 등록 업데이트 성공!");
+                console.log("프로젝트 참여 직원 등록 성공!");
                 console.log(res);
+                window.location.reload();
               }
             });
         } catch (error) {
@@ -339,12 +343,11 @@ export default {
     
     },
     modifyRow() {
-      console.log("dksjlskjkl")
     for (const row of this.selectedRows) {
       console.log(row.employee.empId);
       console.log(row.startDate);
       console.log(row.endDate);
-      console.log(this.project.proName)
+      console.log(this.project.proId)
       console.log(row.employee.empName)
       console.log(row.roleId);
       console.log(this.project.proId)
@@ -352,11 +355,11 @@ export default {
       const formData = new FormData();
 
 
-      formData.append("pro_name", this.project.proName);
+      formData.append("pro_id", this.project.proId);
       formData.append("emp_id", row.employee.empId);
       formData.append("start_date", row.startDate);
       formData.append("end_date", row.endDate);
-      formData.append("role_id", row.roleId.roleId);
+      formData.append("role_id", 2);
       formData.append("emp_name", row.employee.empName);
 
 
@@ -374,6 +377,7 @@ export default {
               if (res.status === 200) {
                 console.log("프로젝트 참여 직원 업데이트 성공!");
                 console.log(res);
+                window.location.reload();
               }
             });
         } catch (error) {
