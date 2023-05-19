@@ -12,7 +12,7 @@ module.exports = {
   devServer: {
     proxy: {
       "/api": { //'/api'가 들어오면 포트 8082(스프링 서버)로 보낸다
-        target: "http://localhost:3000/api", 
+        target: "http://localhost:8082/api", 
         changeOrigin: true, // cross origin 
         pathRewrite: {
           "^/api": "",

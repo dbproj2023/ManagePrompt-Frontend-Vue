@@ -45,7 +45,7 @@
     </div>
     <div class="button-container">
 
-     <b-button style ="margin-top:10px">수정</b-button>
+      <b-button @click="goToProjectModify">프로젝트 추가</b-button>
     </div>
 
         </b-card>
@@ -76,14 +76,13 @@
                 </template>
             </el-table-column>
 
-            <!-- <el-table-column label="참여기간" min-width="200px" prop="name">
-                <template v-slot="{row}">
-                  <span class="font-weight-600 name mb-0 text-sm ">{{row.startDate.slice(0,10)}}~{{row.endDate.slice(0,10)}}</span>
-                </template>
-            </el-table-column> -->
+
             <el-table-column label="참여기간" min-width="200px" prop="name">
               <template v-slot="{ row }">
-                <span class="font-weight-600 name mb-0 text-sm" @click="editPeriod(row)">{{ row.startDate.slice(0, 10) }}~{{ row.endDate.slice(0, 10) }}</span>
+                <span class="font-weight-600 name mb-0 text-sm" @click="editPeriod(row)">
+                  {{ row.startDate }}~
+                  {{ row.endDate}}
+                </span>
                 <el-input v-model="row.editing" v-show="row.isEditing" @blur="savePeriod(row)" ref="periodInput"></el-input>
               </template>
             </el-table-column>
@@ -152,7 +151,6 @@
               <template v-slot="{ row }">
                 <el-input  type="date" v-model="row.startDate" placeholder="YY-MM-DD ~ YY-MM-DD"></el-input>
                 <el-input  type="date" v-model="row.endDate" placeholder="YY-MM-DD ~ YY-MM-DD"></el-input>
-
               </template>
             </el-table-column>
 
