@@ -195,7 +195,17 @@ export default {
         emp_name: '',
         startDate: '',
         endDate: '',
-        selectedRows: []
+        selectedRows: [],
+        mapping: {
+          경영진: 1,
+          PM: 2,
+          PL: 3,
+          분석가: 4,
+          설계자: 5,
+          프로그래머: 6,
+          테스터: 7,
+          디자이너: 8
+        }
       }
   },
   mounted(){
@@ -254,15 +264,11 @@ export default {
       },
       saveRole(row) {
         this.$set(row, 'isEditing', false);
-        // Extract the start and end dates from the edited value
         const role = row.editing;
-        // console.log(row)
-        // Perform any necessary validation or formatting on the dates
-        // ...
-        // Update the row's start and end dates
         row.roleId.roleName = role;
-        row.roleId.roleId = 8;
-        // row.roleId = role;
+
+       
+        row.roleId.roleId = this.mapping[role];
       },
       sendData() {
         const apiUrl = `${HOST}/api/v1/user/search/`;
@@ -314,12 +320,18 @@ export default {
         const formData = new FormData();
 
         console.log(this.project.proId)
+        console.log(row);
+
+       
+        console.log(row.job,this.mapping[row.job])
+
+   
 
         formData.append("pro_id", this.project.proId);
         formData.append("emp_id", row.empId);
         formData.append("start_date", row.startDate);
         formData.append("end_date", row.endDate);
-        formData.append("role_id", 6);
+        formData.append("role_id",this.mapping[row.job]);
         formData.append("emp_name", row.empName);
 
 
@@ -352,13 +364,14 @@ export default {
       console.log(this.project.proId)
 
       const formData = new FormData();
+      
 
 
       formData.append("pro_id", this.project.proId);
       formData.append("emp_id", row.employee.empId);
       formData.append("start_date", row.startDate);
       formData.append("end_date", row.endDate);
-      formData.append("role_id", 2);
+      formData.append("role_id",  this.mapping[row.roldId]);
       formData.append("emp_name", row.employee.empName);
 
 
