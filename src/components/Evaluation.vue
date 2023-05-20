@@ -48,21 +48,35 @@
           <div style="flex:1; text-align: center;">1</div>
           <div style="flex:5">
             <p>이 직원의 업무 추진 실적, 문제 해결, 책임감 등을 종합적으로 고려했을 때 개인 업무 능력은 어떠했는가?</p>
-            <b-form-group label="Using options array:" v-slot="{ ariaDescribedby }">
-              <b-form-checkbox-group
-                id="checkbox-group-1"
-                v-model="selected"
-                :options="options"
-                :aria-describedby="ariaDescribedby"
-                name="flavour-1"
-              ></b-form-checkbox-group>
-            </b-form-group>
-            
+            <div style="display: flex;">
+              <b-form-checkbox> 매우 낮은 편이다.</b-form-checkbox>
+              <b-form-checkbox> 낮은 편이다</b-form-checkbox>
+              <b-form-checkbox> 중간정도이다</b-form-checkbox>
+              <b-form-checkbox> 높은 편이다</b-form-checkbox>
+              <b-form-checkbox> 매우 높은 편이다</b-form-checkbox>
+            </div>
+            <div style="padding-top: 20px;">
+              <b-form-input style="height:100px" v-model="text" placeholder="Enter your name"></b-form-input>
+            </div>
           </div>
         </div>
         <hr style="border: solid 0.1px"> 
-
-
+        <div style="display: flex; padding-top: 20px;">
+          <div style="flex:1; text-align: center;">1</div>
+          <div style="flex:5">
+            <p>이 직원의 팀원 또는 고객과의 협조, 기여, 협상 등을 종합적으로 고려했을 때 커뮤니케이션 능력은 어떠했는가?</p>
+            <div style="display: flex;">
+              <b-form-checkbox> 매우 낮은 편이다.</b-form-checkbox>
+              <b-form-checkbox> 낮은 편이다</b-form-checkbox>
+              <b-form-checkbox> 중간정도이다</b-form-checkbox>
+              <b-form-checkbox> 높은 편이다</b-form-checkbox>
+              <b-form-checkbox> 매우 높은 편이다</b-form-checkbox>
+            </div>
+            <div style="padding-top: 20px;">
+              <b-form-input style="height:100px" v-model="text" placeholder="Enter your name"></b-form-input>
+            </div>
+          </div>
+        </div>
       </b-card>
 
       
@@ -129,7 +143,7 @@ span{
 
 .evalFrom-card{
   margin-top: 10px;
-  height: 450px;
+  height: 500px;
   width: 80%;
   padding: auto;
   margin-left: 30px;
