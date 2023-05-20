@@ -224,8 +224,7 @@ export default {
     },
     methods: {
       goToProjectModify() {
-
-      // this.$router.push(`/ProjectModify/${id}`);
+      this.$router.push(`/Project/${this.project.proId}/Modify`);
     },
       editPeriod(row) {
         this.$set(row, 'isEditing', true);
