@@ -11,6 +11,7 @@ import Detail from './components/Detail.vue'
 // import page2 from './components/.vue'
 import ProjectInput from './components/ProjectInput.vue'
 import Project_detail from './components/Project_detail.vue'
+import ProjectModify from './components/ProjectModify.vue'
 
 
 Vue.use(Router)
@@ -53,9 +54,14 @@ export default new Router({
         {
             path: '/Project_detail',
             component: Project_detail
-        },{
+        }
+        ,{
             path: '/ProjectInput',
             component: ProjectInput
+        },
+        {
+            path: '/Project/:id/Modify',
+            component: ProjectModify
         }
     ]
 })
