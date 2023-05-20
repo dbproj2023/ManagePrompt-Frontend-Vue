@@ -62,6 +62,7 @@ export default {
       this.clientEmpName = res.data.clientEmpName;
       this.clientEmpPh = res.data.clientEmpPh;
       this.clientEmpEmail = res.data.clientEmpEmail;
+      this.clientId = res.data.cliendId;
       this.isLoading = false;
     });
   } catch (error) {
@@ -72,8 +73,7 @@ export default {
   methods: {
     ModifyPro() {
       const apiUrl1 = `${HOST}/api/v1/proj/update/${this.proId}`;
-      const apiUrl2 = `${HOST}/api/v1/client/update/1`;
-      console.log("아머리ㅏ어ㅣㅏㅓ마ㅣ어리마", apiUrl2)
+      const apiUrl2 = `${HOST}/api/v1/client/update/${this.clientId}`;
 
 
       const formData1 = new FormData();
