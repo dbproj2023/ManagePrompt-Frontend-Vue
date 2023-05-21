@@ -5,7 +5,7 @@
     </div>
     <hr>
     <div>
-      <button type="button">비밀번호 변경</button>
+      <button type="button" @click="navigateToChangePW()">비밀번호 변경</button>
       <button type="submit">저장</button>
       <MyprofileTable/>
       <hr>
@@ -25,6 +25,11 @@
       ParticipateProjTable
     },
     data() {
+    },
+    methods: {
+      navigateToChangePW() {
+        this.$router.push(`/ChangePW`);
+      },
     }
   };
 </script>
