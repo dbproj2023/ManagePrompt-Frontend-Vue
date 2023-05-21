@@ -9,8 +9,7 @@
             <input type="password" id="emp_pw" name="emp_pw" size="15" v-model="input.emp_pw" placeholder="비밀번호"/>
             <input type="submit" value="로그인" @click="login()">
             <div>
-                <a id="find_id" :href="find_id"><strong>아이디 찾기</strong></a>
-                <a id="find_pw" :href="find_pw"><strong>비밀번호 찾기</strong></a>
+                <a id="find_account" :href="find_account"><strong>아이디/비밀번호 찾기</strong></a>
             </div>
         </form>
     </div>
@@ -24,8 +23,7 @@ export default {
                 emp_id: "",
                 emp_pw: ""
             },
-            find_id: "#",
-            find_pw: "#",
+            find_account: "/FindAccount"
         }
     },
     methods: {
