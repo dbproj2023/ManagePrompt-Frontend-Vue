@@ -13,6 +13,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(ElementUI)
 
+import { FormCheckboxPlugin } from 'bootstrap-vue'
+Vue.use(FormCheckboxPlugin)
+
+import { BFormCheckboxGroup } from 'bootstrap-vue'
+Vue.component('b-form-checkbox-group', BFormCheckboxGroup)
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'

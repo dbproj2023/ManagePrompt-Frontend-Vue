@@ -12,8 +12,8 @@ import Detail from './components/Detail.vue'
 import ProjectInput from './components/ProjectInput.vue'
 import Project_detail from './components/Project_detail.vue'
 import ProjectModify from './components/ProjectModify.vue'
-import Change_pw from './components/Change_pw.vue'
-import Access from './components/Access.vue'
+// import Change_pw from './components/Change_pw.vue'
+// import Access from './components/Access.vue'
 import FindAccount from './components/FindAccount.vue'
 
 
@@ -77,14 +77,8 @@ export default new Router({
             path: '/Project/:id/Modify',
             component: ProjectModify
         },
-        {
-            path: '/ChangePW',
-            component: Change_pw
-        },
-        {
-            path: '/Access/:id',
-            component: Access
-        },
+
+
         {
             path: '/FindAccount',
             component: FindAccount

@@ -56,7 +56,7 @@ export default {
 
 <style scoped>
 .wrap {
-  height: 800px;
+  height: 1300px;
   display: flex;
 }
 
