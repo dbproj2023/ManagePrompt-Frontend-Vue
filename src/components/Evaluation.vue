@@ -30,15 +30,15 @@
       <b-card class="evalEmp-card">
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트명</div>
-          <div class="flex-cell">배고프다</div>
+          <div class="flex-cell">{{ this.project.proName}}</div>
           <div class="flex-cell flex-header">프로젝트 기간</div>
-          <div class="flex-cell">종강</div>
+          <div class="flex-cell">{{ project.startDate.slice(0,10) }} ~ {{ project.endDate.slice(0,10)  }}</div>
         </div>
         <div class="flex-row">
           <div class="flex-cell flex-header">평가자</div>
           <div class="flex-cell">평가해</div>
           <div class="flex-cell flex-header">피평가자</div>
-          <div class="flex-cell">평가받아</div>
+          <div class="flex-cell">{{this.selectedEmpName }}</div>
         </div>
       </b-card>
 
@@ -84,33 +84,63 @@
   </div>
 </template>
 
-<style scoped>
-div {
-  flex: 1200px;
-}
-</style>
-
 <script>
+import axios from "axios"; // http 통신을 위한 라이브러리
+const HOST =  "http://localhost:8080";
 export default {
 name: "Evaluation",
 data() {
   return {
     selectedPro: '',
     selectedEmpName: '',
-    selected: [], // Must be an array reference!
-    options: [
-      { text: '매우 낮은 편이다', value: '1' },
-      { text: '낮은 편이다', value: '2' },
-      { text: '중간정도이다', value: '3' },
-      { text: '높은 편이다', value: '4' },
-      { text: '매우 높은 편이다', value: '5' }
-    ]
+    partPro: '',
+    project: ''
   }
-}
+},
+mounted(){
+    const apiUrl1 = `${HOST}/api/v1/proj/member/list`;
+    console.log("여기  !!!!!")
+    try {
+    const url = new URL(apiUrl1);
+    console.log('URL:', url);
+    axios.get(apiUrl1).then((res) => {
+      console.log("skljkl")
+      console.log('API response:', res.data);
+      console.log(res.data.participantList[0])
+      this.project = res.data;
+    });
+  } catch (error) {
+    console.error('Invalid API URL:', apiUrl1);
+    console.error(error);
+  }
+
+  // proId = this.selectedPro
+  // proId = 'pro001'
+
+  const apiUrl2 = `${HOST}/api/v1/proj/pro001`;
+    try {
+    const url = new URL(apiUrl2);
+    console.log('URL:', url);
+    axios.get(apiUrl2).then((res) => {
+      console.log('API response:', res.data);
+      console.log(res.data.participantList[0])
+      this.project = res.data;
+      this.isLoading = false;
+    });
+  } catch (error) {
+    console.error('Invalid API URL:', apiUrl);
+    console.error(error);
+  }
+
+
+ }
 };
 </script>
 
 <style scoped>
+div {
+  flex: 1200px;
+}
 
 h3 {
   margin: 40px 0 0;
