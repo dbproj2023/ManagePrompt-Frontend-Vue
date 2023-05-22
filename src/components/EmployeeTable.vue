@@ -1,75 +1,104 @@
 <template>
     <div>
-        <b-card no-body>
-            <form>
-                <span>프로젝트 참여 기간: </span>
-                <input type="date"> ~ <input type="date">
+        <div>
+            <hr style="border: solid 1px;">
+            <b-container class="bv-example-row" style="display: flex;">
+                <div>
+                    <b-row style="width: 1050px;">
+                        <b-col class="col-6.3" style="display: flex; align-items: center;">
+                            <div style="margin-right: 10px;">프로젝트 참여 기간</div>
+                            <b-form-datepicker class="input-data" v-model="inputDate" placeholder="투입일자" style="width:250px; margin-right: 5px;"  @input="handleDateInput"></b-form-datepicker>
+                            ~
+                            <b-form-datepicker class="input-data" v-model="outputDate" placeholder="탈출일자" style="width:250px; margin-left: 5px;"></b-form-datepicker>
+                        </b-col>
 
-                <span>직무: </span>
-                <select name="role">
-                    <option value="" selected>선택</option>
-                    <option value="0">경영진</option>
-                    <option value="1">PM</option>
-                    <option value="2">PL</option>
-                    <option value="3">분석가</option>
-                    <option value="4">설계자</option>
-                    <option value="5">프로그래머</option>
-                    <option value="6">테스터</option>
-                    <option value="7">디자이너</option>
-                </select>
+                        <b-col class="col-1.5" style="display: flex; align-items: center;">
+                            <div class="search-type" style="margin-right: 10px;">직무</div>
+                            <div>
+                                <select class="form-select form-control" style="width: 130px;" name="role" v-model="selectedStatus" @change="onChange($event)">
+                                    <option value="" selected>선택</option>
+                                    <option value="0">경영진</option>
+                                    <option value="1">PM</option>
+                                    <option value="2">PL</option>
+                                    <option value="3">분석가</option>
+                                    <option value="4">설계자</option>
+                                    <option value="5">프로그래머</option>
+                                    <option value="6">테스터</option>
+                                    <option value="7">디자이너</option>
+                                </select>
+                            </div>
+                        </b-col>
+                    </b-row>
 
-                <span>프로젝트 명: </span>
-                <input type="text" v-model="searchProjValue">
+                    <b-row style="margin-top: 15px; width:1050px;">
+                        <b-col class="col-7.5" style="display: flex; align-items: center;">
+                            <div style="margin-right: 10px;">프로젝트 명</div>
+                            <div>
+                                <b-form-input v-model="pro_name" placeholder="Enter project name" style="width: 230px;"></b-form-input>
+                            </div>
+                        </b-col>
 
-                <span>스킬: </span>
-                <input type="text" v-model="searchSkillValue">
+                        <b-col class="col-7.5" style="display: flex; align-items: center;">
+                            <div style="margin-right: 10px;">스킬</div>
+                            <div>
+                                <b-form-input v-model="skill" placeholder="Enter skill" style="width: 230px;"></b-form-input>
+                            </div>
+                        </b-col>
 
-                <label>
-                    <input type="checkbox" name="non-participant" value="1">프로젝트에 참여하지 않는 사람만 보기
-                </label>
-            </form>
+                        <b-col class="col-7.5" style="display: flex; align-items: center;">
+                            <b-checkbox style="margin-right: 10px;" v-model="absentee">프로젝트에 참여하지 않는 사람만 보기</b-checkbox>
+                        </b-col>
+                    </b-row>
+                </div>
 
-            <br>
-            <hr>
+                <div>
+                    <b-button @click="sendData" style="height: 100px; width: 100px;">검색</b-button>
+                </div>
+            </b-container>
+            <b-card no-body>
 
-            <el-table class="table-responsive table" header-row-class-name="thead-light" :data="filterByProj">
-                <el-table-column label="사번" prop="emp_id" min-width="100px"></el-table-column>
-                
-                <el-table-column label="이름" prop="emp_name" min-width="80px"></el-table-column>
+                <br>
+                <hr>
 
-                <el-table-column label="주민등록번호" prop="emp_ssn" min-width="140px"></el-table-column>
+                <el-table class="table-responsive table" header-row-class-name="thead-light" :data="filterByProj">
+                    <el-table-column label="사번" prop="emp_id" min-width="100px"></el-table-column>
+                    
+                    <el-table-column label="이름" prop="emp_name" min-width="80px"></el-table-column>
 
-                <el-table-column label="이메일" prop="emp_email" min-width="200px"></el-table-column>
+                    <el-table-column label="주민등록번호" prop="emp_ssn" min-width="140px"></el-table-column>
 
-                <el-table-column label="학력" prop="emp_acbg" min-width="50px"></el-table-column>
+                    <el-table-column label="이메일" prop="emp_email" min-width="200px"></el-table-column>
 
-                <el-table-column label="경력" prop="emp_work_ex" min-width="50px"></el-table-column>
+                    <el-table-column label="학력" prop="emp_acbg" min-width="50px"></el-table-column>
 
-                <el-table-column label="스킬" prop="emp_skill" min-width="100px">
-                    <template v-slot="{row}">
-                        <span class="font-weight-600 name mb-0 text-sm">{{ row.emp_skill }}</span>
-                    </template>
-                </el-table-column>
+                    <el-table-column label="경력" prop="emp_work_ex" min-width="50px"></el-table-column>
 
-                <el-table-column label="프로젝트" prop="pro_name" min-width="150px">
-                    <template v-slot="{row}">
-                        <span class="font-weight-600 name mb-0 text-sm">{{row.pro_name}}</span>
-                    </template>
-                </el-table-column>
+                    <el-table-column label="스킬" prop="emp_skill" min-width="100px">
+                        <template v-slot="{row}">
+                            <span class="font-weight-600 name mb-0 text-sm">{{ row.emp_skill }}</span>
+                        </template>
+                    </el-table-column>
 
-                <el-table-column label="직무" prop="role" min-width="80px"></el-table-column>
+                    <el-table-column label="프로젝트" prop="pro_name" min-width="150px">
+                        <template v-slot="{row}">
+                            <span class="font-weight-600 name mb-0 text-sm">{{row.pro_name}}</span>
+                        </template>
+                    </el-table-column>
 
-                <el-table-column label="평점" prop="rating" min-width="50px"></el-table-column>
+                    <el-table-column label="직무" prop="role" min-width="80px"></el-table-column>
 
-                <el-table-column label="권한 지정" prop="auth" min-width="100px">
-                    <template slot-scope="scope">
-                        <div class="avatar-group">
-                            <button @click="navigateToAccess(scope.row.emp_id, scope.row.emp_name)" style="cursor: pointer">권한</button>
-                        </div>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </b-card>
+                    <el-table-column label="평점" prop="rating" min-width="50px"></el-table-column>
+
+                    <el-table-column label="권한 지정" prop="auth" min-width="100px">
+                        <template slot-scope="scope">
+                            <div class="avatar-group">
+                                <button @click="navigateToAccess(scope.row.emp_id, scope.row.emp_name)" style="cursor: pointer">권한</button>
+                            </div>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </b-card>
+        </div>
     </div>
 </template>
 
@@ -132,7 +161,7 @@
                     }
                 ],
                 searchProjValue: '',
-                searchSkillValue: '',
+                searchSkillValue: '', 
                 // emp_id: '',
                 // emp_name: '',
             }

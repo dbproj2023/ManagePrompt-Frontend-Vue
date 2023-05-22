@@ -17,6 +17,16 @@ import ProjectModify from './components/ProjectModify.vue'
 import FindAccount from './components/FindAccount.vue'
 
 
+const Authentication = () => (to, from, next) => {
+    const isLogin = store.getters['loginStore/isLogin'];
+    if (!isLogin) {
+        next('/login?returnUrl=' + to.fullPath);
+    } else {
+        next();
+    }
+};
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -48,7 +58,8 @@ export default new Router({
         },
         {
             path: '/Mypage',
-            component: Mypage
+            component: Mypage,
+//            beforeEnter: Authentication()
         },
         {
             path: '/Project/detail/:id',
