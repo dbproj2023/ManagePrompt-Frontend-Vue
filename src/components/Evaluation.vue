@@ -17,7 +17,7 @@
           <div class="flex-cell">
             <select name="cards_id" class="form-select form-control" v-model="selectedEmpName">
               <option value="">선택하세요</option>
-              <option v-for="(empName, index) in empList" :key="index" :value="empName">{{ empName }}</option>
+              <option v-for="(empName, empId) in empList" :key="empId" :value="empName">{{ empName}}</option>
             </select>
           </div>
         </div>
@@ -97,7 +97,7 @@ data() {
     text: '',
     selectedOption_p: '',
     selectedOption_c: '',
-    empList: [],
+    empList: {},
     commInput: '',
     perfomInput:''
   }
@@ -109,7 +109,6 @@ mounted(){
     const url = new URL(apiUrl1);
     console.log('URL:', url);
     axios.get(apiUrl1).then((res) => {
-      console.log("skljkl")
       console.log('API response:', res.data);
       console.log(res.data.participantList[0])
       this.project = res.data;
@@ -154,7 +153,10 @@ mounted(){
 
       for (let i = 0; i < res.data.participantList.length; i++) {
         const empName = res.data.participantList[i].employee.empName;
-        this.empList.push(empName);
+        const empId = res.data.participantList[i].employee.empId;
+        
+        // Store empName and empId in the dictionary
+        this.empList[empId] = empName;
       }
       console.log(this.empList);
 
@@ -165,7 +167,10 @@ mounted(){
   }
   },
   registerEval(){
-    console.log(this.selectedOption_p, this.selectedOption_c, this.commInput, this.perfomInput)
+    const selectedId = Object.keys(this.empList).find(
+      (empId) => this.empList[empId] === this.selectedEmpName
+    );
+    console.log(selectedId ,this.selectedOption_p, this.selectedOption_c, this.commInput, this.perfomInput)
   }
 }
 };
