@@ -45,7 +45,7 @@
     </div>
     <div class="button-container">
 
-      <b-button @click="goToProjectModify">프로젝트 수정</b-button>
+      <b-button @click="goToProjectModify" style="margin-top: 10px">프로젝트 수정</b-button>
     </div>
 
         </b-card>
@@ -80,8 +80,8 @@
             <el-table-column label="참여기간" min-width="200px" prop="name">
               <template v-slot="{ row }">
                 <span class="font-weight-600 name mb-0 text-sm" @click="editPeriod(row)">
-                  {{ row.startDate }}~
-                  {{ row.endDate}}
+                  {{ row.startDate.slice(0,10) }}~
+                  {{ row.endDate.slice(0,10)}}
                 </span>
                 <el-input v-model="row.editing" v-show="row.isEditing" @blur="savePeriod(row)" ref="periodInput"></el-input>
               </template>
@@ -224,6 +224,7 @@ export default {
     console.error('Invalid API URL:', apiUrl);
     console.error(error);
   }
+
 }
     // this.project = this.projects.find((project) => project.id === projectId);
     ,

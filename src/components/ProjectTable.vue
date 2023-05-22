@@ -132,6 +132,12 @@
         <div v-else style="padding-top: 20px;">
               해당 프로젝트가 없습니다.
         </div>
+
+        <div class="button-container">
+          <b-button @click="goToProjectInput">프로젝트 추가</b-button>
+        </div>
+
+        
     </b-card>
   </div>
   </div>
@@ -169,9 +175,25 @@ const HOST =  "http://localhost:8080";
         }
     },
   computed: {
+    slicedStartDate() {
+      if (this.project.startDate && this.project.endDate) {
+        const startyear = this.project.startDate.slice(2, 4);
+        const startmonth = this.project.startDate.slice(5, 7);
+        const startday = this.project.startDate.slice(8, 10);
+
+        const endyear = this.project.startDate.slice(2, 4);
+        const endmonth = this.project.startDate.slice(5, 7);
+        const endday = this.project.startDate.slice(8, 10);
+        return `${startyear}-${startmonth}-${startday} ~ ${endyear}-${endmonth}-${endday}`}
+      return '';
+  }
   },
   methods: {
+    goToProjectInput() {
+      this.$router.push('/ProjectInput');
+    },
       sendData() {
+        console.log("dajflak")
         this.isLoading = true;
         const apiUrl = `${HOST}/api/v1/proj/lists/search`;
         console.log("나 여기")
@@ -254,6 +276,13 @@ const HOST =  "http://localhost:8080";
 </script>
 
 <style>
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  /* margin-bottom: auto; */ 
+}
+
 
 .small-input{
   width: 100px;

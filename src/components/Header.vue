@@ -18,8 +18,8 @@ div {
     position: sticky;}
 
 .logo {
-  width: 280px; /* 로고 이미지의 너비 */
-  height: 50px; /* 로고 이미지의 높이를 자동으로 조정 */
+  width: 275px; /* 로고 이미지의 너비 */
+  height: 40px; /* 로고 이미지의 높이를 자동으로 조정 */
   margin-top: 5px;
   margin-right: 10px; /* 로고 이미지 오른쪽 여백 */
   /* align-items: center; */
