@@ -3,13 +3,14 @@
       <div id="Evaluation-head">
           Evaluation
       </div>
+      <div>
       <br>
       <b-card class="project-card">
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트</div>
           <div class="flex-cell">
-            <select name="cards_id"  class="form-select form-control"  v-model="selectedPro">
-              <option value="">선택하세요</option>
+            <select name="cards_id"  class="form-select form-control"  v-model="selectedPro" v-on:change="proSelection">
+            <option value="">선택하세요</option>
               <option value="pro001">1</option>
               <option value="pro002">2</option>
               <option value="pro003">3</option>
@@ -19,9 +20,9 @@
           <div class="flex-cell">
             <select name="cards_id"  class="form-select form-control"  v-model="selectedEmpName">
               <option value="">선택하세요</option>
-              <option value="emp001">정아무개</option>
-              <option value="emp002">김아무개</option>
-              <option value="emp003">박아무개</option>
+              <option value="정아무개">정아무개</option>
+              <option value="김아무개">김아무개</option>
+              <option value="박아무개">박아무개</option>
             </select>
           </div>
         </div>
@@ -32,7 +33,7 @@
           <div class="flex-cell flex-header">프로젝트명</div>
           <div class="flex-cell">{{ this.project.proName}}</div>
           <div class="flex-cell flex-header">프로젝트 기간</div>
-          <div class="flex-cell">{{ project.startDate.slice(0,10) }} ~ {{ project.endDate.slice(0,10)  }}</div>
+          <div class="flex-cell">{{ slicedStartDate }}</div>
         </div>
         <div class="flex-row">
           <div class="flex-cell flex-header">평가자</div>
@@ -78,9 +79,7 @@
           </div>
         </div>
       </b-card>
-
-      
-      
+      </div>
   </div>
 </template>
 
@@ -93,31 +92,60 @@ data() {
   return {
     selectedPro: '',
     selectedEmpName: '',
-    partPro: '',
-    project: ''
+    project: '',
+    endDate: null,
+    startDate: null,
+    proName: '',
+    text: ''
   }
 },
 mounted(){
-    const apiUrl1 = `${HOST}/api/v1/proj/member/list`;
-    console.log("여기  !!!!!")
-    try {
-    const url = new URL(apiUrl1);
-    console.log('URL:', url);
-    axios.get(apiUrl1).then((res) => {
-      console.log("skljkl")
-      console.log('API response:', res.data);
-      console.log(res.data.participantList[0])
-      this.project = res.data;
-    });
-  } catch (error) {
-    console.error('Invalid API URL:', apiUrl1);
-    console.error(error);
-  }
+  //   const apiUrl1 = `${HOST}/api/v1/proj/member/list`;
+  //   console.log("여기  !!!!!")
+  //   try {
+  //   const url = new URL(apiUrl1);
+  //   console.log('URL:', url);
+  //   axios.get(apiUrl1).then((res) => {
+  //     console.log("skljkl")
+  //     console.log('API response:', res.data);
+  //     console.log(res.data.participantList[0])
+  //     this.project = res.data;
+  //   });
+  // } catch (error) {
+  //   console.error('Invalid API URL:', apiUrl1);
+  //   console.error(error);
+  // }
 
   // proId = this.selectedPro
   // proId = 'pro001'
 
-  const apiUrl2 = `${HOST}/api/v1/proj/pro001`;
+ },
+ computed: {
+    slicedStartDate() {
+      if (this.project.startDate) {
+        const year = this.project.startDate.slice(2, 4);
+        const month = this.project.startDate.slice(5, 7);
+        const day = this.project.startDate.slice(8, 10);
+        return `${year}-${month}-${day}`;
+      }
+      return '';
+    },
+    slicedendDate() {
+      if (this.project.startDate) {
+        const year = this.project.startDate.slice(2, 4);
+        const month = this.project.startDate.slice(5, 7);
+        const day = this.project.startDate.slice(8, 10);
+        return `${year}-${month}-${day}`;
+      }
+      return '';
+    }
+  }
+,
+ methods: {
+  proSelection() {
+    // 선택된 값에 따라 작업 수행
+    console.log(this.selectedPro);   
+    const apiUrl2 = `${HOST}/api/v1/proj/${this.selectedPro}`;
     try {
     const url = new URL(apiUrl2);
     console.log('URL:', url);
@@ -131,9 +159,8 @@ mounted(){
     console.error('Invalid API URL:', apiUrl);
     console.error(error);
   }
-
-
- }
+  }
+}
 };
 </script>
 
