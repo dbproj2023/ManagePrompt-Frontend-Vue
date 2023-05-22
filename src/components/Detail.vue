@@ -195,6 +195,7 @@ export default {
         emp_name: '',
         startDate: '',
         endDate: '',
+        roleId: '',
         selectedRows: [],
         mapping: {
           경영진: 1,
@@ -210,6 +211,14 @@ export default {
   },
   mounted(){
     const apiUrl = `${HOST}/api/v1/proj/${this.$route.params.id}`;
+    const apiUrl2 = `${HOST}/api/v1/user/search/`;
+
+    const params = {
+          emp_id: this.emp_id,
+          emp_name:  this.emp_name,
+          emp_skill: this.emp_skill
+        };
+
     console.log("여기  !!!!!")
     try {
     const url = new URL(apiUrl);
@@ -220,6 +229,17 @@ export default {
       this.project = res.data;
       this.isLoading = false;
     });
+
+    axios.get(apiUrl2, { params })
+        .then((res) => {
+          console.log(apiUrl, { params });
+          console.log('API response:', res.data);
+          this.employees = res.data;
+        })
+        .catch((error) => {
+          console.error('Failed to fetch data:', error);
+        });
+
   } catch (error) {
     console.error('Invalid API URL:', apiUrl);
     console.error(error);
@@ -361,21 +381,21 @@ export default {
       console.log(row.endDate);
       console.log(this.project.proId)
       console.log(row.employee.empName)
-      console.log(row.roleId);
+      console.log(this.mapping[row.roleId.roleName]);
       console.log(this.project.proId)
 
       const formData = new FormData();
       
-
+      console.log(row)
 
       formData.append("pro_id", this.project.proId);
       formData.append("emp_id", row.employee.empId);
       formData.append("start_date", row.startDate);
       formData.append("end_date", row.endDate);
-      formData.append("role_id",  this.mapping[row.roldId]);
+      formData.append("role_id",  this.mapping[row.roleId.roleName]);
       formData.append("emp_name", row.employee.empName);
 
-
+      console.log("=============")
 
       for (const [key, value] of formData.entries()) {
         console.log(key, value);
@@ -390,16 +410,17 @@ export default {
               if (res.status === 200) {
                 console.log("프로젝트 참여 직원 업데이트 성공!");
                 console.log(res);
-                window.location.reload();
+            //     setTimeout(() => {
+            //   window.location.href = window.location.href;
+            // }, 4000);
               }
             });
         } catch (error) {
           console.log(error);
         }
-
     }
       // Perform any necessary modifications to the row here
-    
+      // window.location.reload();
   }
     }
   }
