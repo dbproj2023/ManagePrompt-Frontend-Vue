@@ -54,6 +54,7 @@ div {
 </style>
 
 <script>
+import router from '@/router';
 import ProjectInput from './ProjectInput.vue'
 import ProjectTable from './ProjectTable.vue'
 export default {

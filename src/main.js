@@ -30,6 +30,8 @@ Vue.component('b-card', BCard)
 
 // import './components/app.scss'
 
+import store from './store'
+
 Vue.prototype.$http = axios;
 Vue.use(axios);
 
@@ -38,4 +40,5 @@ Vue.config.productionTip = false
 new Vue({
   router,
   render: h => h(App),
+  store
 }).$mount('#app')

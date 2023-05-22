@@ -5,9 +5,9 @@
         </div>
         <hr>
         <form class="form-inputs" name="login_form" method="get">
-            <input type="text" id="emp_id" name="emp_id" size="15" v-model="input.emp_id" placeholder="아이디"/>
-            <input type="password" id="emp_pw" name="emp_pw" size="15" v-model="input.emp_pw" placeholder="비밀번호"/>
-            <input type="submit" value="로그인" @click="login()">
+            <input type="text" id="auth_id" name="auth_id" ref="memberIdInput" v-model="input.auth_id" placeholder="아이디"/>
+            <input type="password" id="auth_pw" name="auth_pw" ref="memberPasswordInput" v-model="input.auth_pw" placeholder="비밀번호"/>
+            <input type="button" value="로그인" @click="doLogin()">
             <div>
                 <a id="find_account" :href="find_account"><strong>아이디/비밀번호 찾기</strong></a>
             </div>
@@ -16,30 +16,103 @@
 </template>
 
 <script>
+import axios from "axios";
+const HOST =  "http://localhost:8080";
+import loginStore from './login.js'
+
 export default {
     data() {
         return {
             input: {
-                emp_id: "",
-                emp_pw: ""
+                auth_id: "",
+                auth_pw: ""
             },
             find_account: "/FindAccount"
         }
     },
+    
+    // mounted() {
+    //     const apiUrl = `${HOST}/api/v1/auth/login`;
+    //     console.log("여기  !!!!!")
+    //     try {
+    //         const url = new URL(apiUrl);
+    //         console.log('URL:', url);
+    //         axios.get(apiUrl).then((res) => {
+    //             console.log('API response:', res.data);
+    //             console.log(res.data.participantList[0])
+    //             this.auth_id = res.data;
+    //             this.auth_pw = res.data;
+    //         });
+    //     } catch (error) {
+    //     console.error('Invalid API URL:', apiUrl);
+    //     console.error(error);
+    //     }
+    // },
+
     methods: {
-        login() {
-            if(this.input.emp_id != "" && this.input.emp_pw != "") {
-                if(this.input.emp_id == this.$parent.mockAccount.emp_id && this.input.emp_pw == this.$parent.mockAccount.emp_pw) {
-                    this.$emit("authenticated", true);
-                    // this.$router.replace({ name: "Secure" });
-                } else {
-                    console.log("아이디/비밀번호가 일치하지 않습니다.");
+        doLogin() {
+            console.log("test code click doLogin")
+
+            // if (this.input.auth_id == "") {
+            //     alert("아이디를 입력하세요.");
+            //     this.$refs.memberIdInput.focus();
+            //     return;
+            // } else if (this.input.auth_pw == "") {
+            //     alert("패스워드를 입력하세요.");
+            //     this.$refs.memberPasswordInput.focus();
+            //     return;
+            // }
+    
+            // test 소스 권한 0의 경영진
+            // this.input.auth_id = 'qafffwad';
+            // this.input.auth_pw = 'abc01!~!';
+
+            // test 소스 권한 2의 관리자
+            this.input.auth_id = 'rege1212';
+            this.input.auth_pw = 'abc01!~!';
+
+            // test 소스 권한 3의 직원
+            // this.input.auth_id = 'awfawfwf';
+            // this.input.auth_pw = 'abc01!~!';
+
+            let formData = new FormData();
+            formData.append("authId", this.input.auth_id);
+            formData.append("authPw", this.input.auth_pw);
+
+            axios.post('/api/v1/auth/login2', formData ).then((res) => {
+                //console.log("test code call axios post /login res : ", res);
+
+                if( res.data != null && res.data != undefined && res.data != '' ){
+                    alert("로그인에 성공했습니다")
+                    // TODO. 성공 시 작업
+
+                    this.$store.commit('setLogin2', true)
+                    this.$store.commit('setAccGrade', res.data.accessGrade)
+                    console.log("test code isLogin2-2 : ", this.$store.getters.isLogin2)
+
+                    this.$router.push('/Main');
                 }
-            } else {
-                console.log("아이디와 비밀번호가 있어야 합니다.");
-            }
+                else if( res.data == '' ){
+                    alert("로그인에 실패했습니다.")
+                    // TODO. 실패 시 작업
+                }
+            });
+
+            
+            /*
+            this.$store.dispatch("loginStore/doLogin", memberInfo).then(() => { //
+                const returnUrl = window.location.search.replace(/^\?returnUrl=/, "");//
+                this.$router.push(returnUrl); //
+            }).catch((err) => { //
+                this.errorMessage = err.response.data.errormessage; //
+            }); //
+            */
+            
         }
     },
+    modules: { //
+        loginStore: loginStore //
+    } //
     // setup() {
         
     // },
