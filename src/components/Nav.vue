@@ -21,10 +21,17 @@
             <font color="#B0BEC5">&nbsp; &nbsp;평가</font>
           </b-nav-item>
 
+          <b-nav-item href="/Eval">
+            <img src="./img/theme/satisfaction.png" height="30px" width="30px" class="d-inline-block align-center" alt="Kitten">
+            <font color="#B0BEC5">&nbsp; 평가결과 조회</font>
+          </b-nav-item>
+
           <b-nav-item href="/Mypage">
             <img src="./img/theme/avatar.png" height="30px" width="30px" class="d-inline-block align-center" alt="Kitten">
             <font color="#B0BEC5">&nbsp;마이페이지</font>
           </b-nav-item>
+
+        
       </b-navbar-nav>
     </ul>
     </div>
