@@ -25,6 +25,8 @@
       ParticipateProjTable
     },
     data() {
+      return{
+      }
     },
     methods: {
       navigateToChangePW() {
