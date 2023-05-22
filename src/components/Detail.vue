@@ -410,17 +410,16 @@ export default {
               if (res.status === 200) {
                 console.log("프로젝트 참여 직원 업데이트 성공!");
                 console.log(res);
-            //     setTimeout(() => {
-            //   window.location.href = window.location.href;
-            // }, 4000);
+                setTimeout(() => {
+                window.location.href = window.location.href;
+              }, 4000);
               }
             });
         } catch (error) {
           console.log(error);
         }
     }
-      // Perform any necessary modifications to the row here
-      // window.location.reload();
+    window.location.reload();
   }
     }
   }

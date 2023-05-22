@@ -189,7 +189,7 @@ mounted(){
       ([proId, proName]) => proName === this.selectedPro
     );
 
-    console.log(selectedProId[0], selectedEmpId ,this.selectedOption_p, this.selectedOption_c, this.commInput, this.perfomInput)
+    console.log(selectedProId[1], selectedEmpId ,this.selectedOption_p, this.selectedOption_c, this.commInput, this.perfomInput)
 
     const apiUrl = `${HOST}/api/v1/evaluation/coworker/create`
 
