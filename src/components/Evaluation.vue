@@ -30,7 +30,7 @@
         </div>
         <div class="flex-row">
           <div class="flex-cell flex-header">평가자</div>
-          <div class="flex-cell"> it's me</div>
+          <div class="flex-cell"> {{ this.myName }}</div>
           <div class="flex-cell flex-header">피평가자</div>
           <div class="flex-cell">{{this.selectedEmpName }}</div>
         </div>
@@ -98,10 +98,14 @@ data() {
     empList: {},
     proList: {},
     commInput: '',
-    perfomInput:''
+    perfomInput:'',
+    myName: ''
   }
 },
 mounted(){
+  // proId = this.selectedPro
+  // proId = 'pro001'
+
     const apiUrl1 = `${HOST}/api/v1/user/search/proj/list`;
     console.log("여기  !!!!!")
     try {
@@ -150,6 +154,19 @@ mounted(){
     // 선택된 값에 따라 작업 수행
     console.log(this.selectedPro); 
     console.log(this.proList); 
+
+    const apiUrl = `${HOST}/api/v1/user/info/read`
+    try {
+    const url = new URL(apiUrl);
+    console.log('URL:', url);
+    axios.get(apiUrl).then((res) => {
+      console.log('API response:', res.data);
+      this.myName = res.data.emp_name;
+    });
+  } catch (error) {
+    console.error('Invalid API URL:', apiUrl);
+    console.error(error);
+  }
     
     const selectedProId = Object.entries(this.proList).find(
       ([proId, proName]) => proName === this.selectedPro

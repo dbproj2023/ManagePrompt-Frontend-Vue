@@ -18,7 +18,8 @@
     "vue-persistedstate": "^1.2.5",
     "vue-router": "^3.5.2",
     "vuetiful-board": "^0.3.5",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "webpack-chain": "^6.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
