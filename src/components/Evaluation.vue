@@ -7,10 +7,8 @@
           <div class="flex-cell flex-header">프로젝트</div>
           <div class="flex-cell">
             <select name="cards_id"  class="form-select form-control"  v-model="selectedPro" v-on:change="proSelection">
-            <option value="">선택하세요</option>
-              <option value="pro001">Project A</option>
-              <option value="pro002">Project B</option>
-              <option value="pro003">Project C</option>
+              <option value="">선택하세요</option>
+              <option v-for="(proName, proId) in proList" :key="proId" :value="proName">{{ proName }}</option>
             </select>
           </div>
           <div class="flex-cell flex-header">이름</div>
@@ -98,6 +96,7 @@ data() {
     selectedOption_p: '',
     selectedOption_c: '',
     empList: {},
+    proList: {},
     commInput: '',
     perfomInput:''
   }
@@ -110,9 +109,18 @@ mounted(){
     console.log('URL:', url);
     axios.get(apiUrl1).then((res) => {
       console.log('API response:', res.data);
-      console.log(res.data.participantList[0])
+      // console.log(res.data.participantList[0])
       this.project = res.data;
-      console.log(project)
+      console.log("djafklajlk");
+
+      for (let i = 0; i < this.project.projectList.length; i++) {
+        const proId = this.project.projectList[i].proId;
+        const proName = this.project.projectList[i].proName;
+        this.proList[proId] = proName;
+              // Store empName and empId in the dictionary
+      }
+      console.log(this.proList);
+      
     });
   } catch (error) {
     console.error('Invalid API URL:', apiUrl1);
@@ -140,8 +148,14 @@ mounted(){
  methods: {
   proSelection() {
     // 선택된 값에 따라 작업 수행
-    console.log(this.selectedPro);   
-    const apiUrl2 = `${HOST}/api/v1/proj/${this.selectedPro}`;
+    console.log(this.selectedPro); 
+    console.log(this.proList); 
+    
+    const selectedProId = Object.entries(this.proList).find(
+      ([proId, proName]) => proName === this.selectedPro
+    );
+    console.log(selectedProId);
+    const apiUrl2 = `${HOST}/api/v1/proj/${selectedProId[0]}`;
     try {
     const url = new URL(apiUrl2);
     console.log('URL:', url);
@@ -167,10 +181,48 @@ mounted(){
   }
   },
   registerEval(){
-    const selectedId = Object.keys(this.empList).find(
+    const selectedEmpId = Object.keys(this.empList).find(
       (empId) => this.empList[empId] === this.selectedEmpName
     );
-    console.log(selectedId ,this.selectedOption_p, this.selectedOption_c, this.commInput, this.perfomInput)
+
+    const selectedProId = Object.entries(this.proList).find(
+      ([proId, proName]) => proName === this.selectedPro
+    );
+
+    console.log(selectedProId[0], selectedEmpId ,this.selectedOption_p, this.selectedOption_c, this.commInput, this.perfomInput)
+
+    const apiUrl = `${HOST}/api/v1/evaluation/coworker/create`
+
+
+    const formData = new FormData();
+    formData.append("pro_name", selectedProId[1]);
+    formData.append("coworker_emp_id", selectedEmpId);
+    formData.append("communication_rating",parseInt(this.selectedOption_c));
+    formData.append("communication_desc", this.commInput);
+    formData.append("performance_rating",parseInt(this.selectedOption_p));
+    formData.append("performnace_desc", this.perfomInput);
+
+    for (const [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+
+    console.log(apiUrl)
+    try {
+          axios
+            .post(apiUrl, formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((res) => {
+              if (res.status === 200) {
+
+                console.log("평가 등록 성공!");
+                console.log(res);
+                window.location.reload();
+              }
+            });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 };
@@ -211,7 +263,7 @@ span{
 
 .evalFrom-card{
   margin-top: 10px;
-  height: 550px;
+  height: 600px;
   width: 80%;
   padding: auto;
   margin-left: 30px;
