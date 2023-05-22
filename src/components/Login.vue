@@ -53,23 +53,23 @@ export default {
         doLogin() {
             console.log("test code click doLogin")
 
-            // if (this.input.auth_id == "") {
-            //     alert("아이디를 입력하세요.");
-            //     this.$refs.memberIdInput.focus();
-            //     return;
-            // } else if (this.input.auth_pw == "") {
-            //     alert("패스워드를 입력하세요.");
-            //     this.$refs.memberPasswordInput.focus();
-            //     return;
-            // }
+            if (this.input.auth_id == "") {
+                alert("아이디를 입력하세요.");
+                this.$refs.memberIdInput.focus();
+                return;
+            } else if (this.input.auth_pw == "") {
+                alert("패스워드를 입력하세요.");
+                this.$refs.memberPasswordInput.focus();
+                return;
+            }
     
             // test 소스 권한 0의 경영진
             // this.input.auth_id = 'qafffwad';
             // this.input.auth_pw = 'abc01!~!';
 
             // test 소스 권한 2의 관리자
-            this.input.auth_id = 'rege1212';
-            this.input.auth_pw = 'abc01!~!';
+            // this.input.auth_id = 'rege1212';
+            // this.input.auth_pw = 'abc01!~!';
 
             // test 소스 권한 3의 직원
             // this.input.auth_id = 'awfawfwf';
