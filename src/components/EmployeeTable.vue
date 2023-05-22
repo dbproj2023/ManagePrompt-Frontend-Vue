@@ -3,20 +3,20 @@
         <b-card no-body>
             <form>
                 <span>프로젝트 참여 기간: </span>
-                <input type="date">
+                <input type="date"> ~ <input type="date">
 
                 <span>직무: </span>
-                <input type="text" list="role">
-                <datalist id="role">
-                    <option value="경영진"></option>
-                    <option value="PM"></option>
-                    <option value="PL"></option>
-                    <option value="분석가"></option>
-                    <option value="설계자"></option>
-                    <option value="프로그래머"></option>
-                    <option value="테스터"></option>
-                    <option value="디자이너"></option>
-                </datalist>
+                <select name="role">
+                    <option value="" selected>선택</option>
+                    <option value="0">경영진</option>
+                    <option value="1">PM</option>
+                    <option value="2">PL</option>
+                    <option value="3">분석가</option>
+                    <option value="4">설계자</option>
+                    <option value="5">프로그래머</option>
+                    <option value="6">테스터</option>
+                    <option value="7">디자이너</option>
+                </select>
 
                 <span>프로젝트 명: </span>
                 <input type="text" v-model="searchProjValue">
@@ -45,9 +45,13 @@
 
                 <el-table-column label="경력" prop="emp_work_ex" min-width="50px"></el-table-column>
 
-                <el-table-column label="스킬" prop="emp_skill" min-width="100px"></el-table-column>
+                <el-table-column label="스킬" prop="emp_skill" min-width="100px">
+                    <template v-slot="{row}">
+                        <span class="font-weight-600 name mb-0 text-sm">{{ row.emp_skill }}</span>
+                    </template>
+                </el-table-column>
 
-                <el-table-column label="프로젝트" min-width="150px" prop="pro_name">
+                <el-table-column label="프로젝트" prop="pro_name" min-width="150px">
                     <template v-slot="{row}">
                         <span class="font-weight-600 name mb-0 text-sm">{{row.pro_name}}</span>
                     </template>
@@ -57,13 +61,19 @@
 
                 <el-table-column label="평점" prop="rating" min-width="50px"></el-table-column>
 
-                <el-table-column label="권한 지정" prop="auth" min-width="100px"></el-table-column>
+                <el-table-column label="권한 지정" prop="auth" min-width="100px">
+                    <template slot-scope="scope">
+                        <div class="avatar-group">
+                            <button @click="navigateToAccess(scope.row.emp_id, scope.row.emp_name)" style="cursor: pointer">권한</button>
+                        </div>
+                    </template>
+                </el-table-column>
             </el-table>
         </b-card>
     </div>
 </template>
 
-<script lang="ts">
+<script>
     import { Table, TableColumn } from 'element-ui'
     
     export default {
@@ -74,7 +84,8 @@
         },
         data() {
             return {
-                projects: [{
+                employees: [
+                    {
                     emp_id: 23000001,
                     emp_name: "정은",
                     emp_ssn: "000926-4******",
@@ -85,7 +96,7 @@
                     pro_name: "pro01",
                     role: "경영진",
                     rating: 5
-                }, {
+                    }, {
                     emp_id: 23050002,
                     emp_name: "봉현수",
                     emp_ssn: "000414-3******",
@@ -96,7 +107,7 @@
                     pro_name: "pro02",
                     role: "프로그래머",
                     rating: 2
-                }, {
+                    }, {
                     emp_id: 23070003,
                     emp_name: "양슬빈",
                     emp_ssn: "000929-4******",
@@ -107,10 +118,10 @@
                     pro_name: "pro02",
                     role: "디자이너",
                     rating: 3
-                }, {
+                    }, {
                     emp_id: 23010004,
                     emp_name: "김현중",
-                    emp_ssn: "980000-1******",
+                    emp_ssn: "980126-1******",
                     emp_email: "abc04@prompt.com",
                     emp_acbg: "박사",
                     emp_work_ex: 5,
@@ -118,25 +129,47 @@
                     pro_name: "pro01",
                     role: "PM",
                     rating: 4
-                }],
+                    }
+                ],
                 searchProjValue: '',
-                searchSkillValue: ''
+                searchSkillValue: '',
+                // emp_id: '',
+                // emp_name: '',
             }
         },
         computed: {
             filterByProj() {
                 if (this.searchProjValue) {
                     const searchProjValueLowercase = this.searchProjValue.toLowerCase()
-                    return this.projects.filter(project => project.pro_name.toLowerCase().includes(searchProjValueLowercase))
+                    return this.employees.filter(project => project.pro_name.toLowerCase().includes(searchProjValueLowercase))
                 }
-                return this.projects
-            },
-            filterBySkill() {
                 if (this.searchSkillValue) {
                     const searchSkillValueLowercase = this.searchSkillValue.toLowerCase()
-                    return this.projects.filter(project => project.emp_skill.toLowerCase().includes(searchSkillValueLowercase))
+                    return this.employees.filter(project => project.emp_skill.toLowerCase().includes(searchSkillValueLowercase))
                 }
-                return this.projects
+                return this.employees
+            }
+            // filterByProj() {
+            //     if (this.searchProjValue) {
+            //         const searchProjValueLowercase = this.searchProjValue.toLowerCase()
+            //         return this.employees.filter(project => project.pro_name.toLowerCase().includes(searchProjValueLowercase))
+            //     }
+            //     return this.employees
+            // },
+            // filterBySkill() {
+            //     if (this.searchSkillValue) {
+            //         const searchSkillValueLowercase = this.searchSkillValue.toLowerCase()
+            //         return this.employees.filter(project => project.emp_skill.toLowerCase().includes(searchSkillValueLowercase))
+            //     }
+            //     return this.employees
+            // }
+        },
+        methods: {
+            navigateToAccess(id, name) {
+                // this.emp_id = id;
+                // this.emp_name = name;
+                this.$router.push(`/Access/${id}`);
+                
             }
         }
     }
