@@ -1,27 +1,21 @@
 <template>
   <div class="Evaluation">
-      <div id="Evaluation-head">
-          Evaluation
-      </div>
+      <div>
       <br>
       <b-card class="project-card">
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트</div>
           <div class="flex-cell">
-            <select name="cards_id"  class="form-select form-control"  v-model="selectedPro">
+            <select name="cards_id"  class="form-select form-control"  v-model="selectedPro" v-on:change="proSelection">
               <option value="">선택하세요</option>
-              <option value="pro001">1</option>
-              <option value="pro002">2</option>
-              <option value="pro003">3</option>
+              <option v-for="(proName, proId) in proList" :key="proId" :value="proName">{{ proName }}</option>
             </select>
           </div>
           <div class="flex-cell flex-header">이름</div>
           <div class="flex-cell">
-            <select name="cards_id"  class="form-select form-control"  v-model="selectedEmpName">
+            <select name="cards_id" class="form-select form-control" v-model="selectedEmpName">
               <option value="">선택하세요</option>
-              <option value="emp001">정아무개</option>
-              <option value="emp002">김아무개</option>
-              <option value="emp003">박아무개</option>
+              <option v-for="(empName, empId) in empList" :key="empId" :value="empName">{{ empName}}</option>
             </select>
           </div>
         </div>
@@ -30,15 +24,15 @@
       <b-card class="evalEmp-card">
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트명</div>
-          <div class="flex-cell">배고프다</div>
+          <div class="flex-cell">{{ this.project.proName}}</div>
           <div class="flex-cell flex-header">프로젝트 기간</div>
-          <div class="flex-cell">종강</div>
+          <div class="flex-cell">{{ slicedStartDate }}</div>
         </div>
         <div class="flex-row">
           <div class="flex-cell flex-header">평가자</div>
-          <div class="flex-cell">평가해</div>
+          <div class="flex-cell"> it's me</div>
           <div class="flex-cell flex-header">피평가자</div>
-          <div class="flex-cell">평가받아</div>
+          <div class="flex-cell">{{this.selectedEmpName }}</div>
         </div>
       </b-card>
 
@@ -48,55 +42,196 @@
           <div style="flex:1; text-align: center;">1</div>
           <div style="flex:5">
             <p>이 직원의 업무 추진 실적, 문제 해결, 책임감 등을 종합적으로 고려했을 때 개인 업무 능력은 어떠했는가?</p>
-            <b-form-group label="Using options array:" v-slot="{ ariaDescribedby }">
-              <b-form-checkbox-group
-                id="checkbox-group-1"
-                v-model="selected"
-                :options="options"
-                :aria-describedby="ariaDescribedby"
-                name="flavour-1"
-              ></b-form-checkbox-group>
-            </b-form-group>
-            
+            <div style="display: flex;">
+              <b-form-radio v-model="selectedOption_p" value="1"> 매우 낮은 편이다.</b-form-radio>
+              <b-form-radio v-model="selectedOption_p" value="2"> 낮은 편이다</b-form-radio>
+              <b-form-radio v-model="selectedOption_p" value="3"> 중간정도이다</b-form-radio>
+              <b-form-radio v-model="selectedOption_p" value="4"> 높은 편이다</b-form-radio>
+              <b-form-radio v-model="selectedOption_p" value="5"> 매우 높은 편이다</b-form-radio>
+            </div>
+            <div style="padding-top: 20px;">
+              <b-form-input style="height:100px" v-model="perfomInput" placeholder="Enter your name"></b-form-input>
+            </div>
           </div>
         </div>
         <hr style="border: solid 0.1px"> 
-
-
+        <div style="display: flex; padding-top: 20px;">
+          <div style="flex:1; text-align: center;">1</div>
+          <div style="flex:5">
+            <p>이 직원의 팀원 또는 고객과의 협조, 기여, 협상 등을 종합적으로 고려했을 때 커뮤니케이션 능력은 어떠했는가?</p>
+            <div style="display: flex;">
+              <b-form-radio v-model="selectedOption_c" value="1"> 매우 낮은 편이다.</b-form-radio>
+              <b-form-radio v-model="selectedOption_c" value="2"> 낮은 편이다</b-form-radio>
+              <b-form-radio v-model="selectedOption_c" value="3"> 중간정도이다</b-form-radio>
+              <b-form-radio v-model="selectedOption_c" value="4"> 높은 편이다</b-form-radio>
+              <b-form-radio v-model="selectedOption_c" value="5"> 매우 높은 편이다</b-form-radio>
+            </div>
+            <div style="padding-top: 20px;">
+              <b-form-input style="height:100px" v-model="commInput" placeholder="Enter your name"></b-form-input>
+            </div>
+          </div>
+        </div>
+        <div class="button-container">
+          <b-button  @click="registerEval"  style="margin-top: 10px">프로젝트 등록</b-button>
+        </div>
       </b-card>
-
-      
-      
+      </div>
   </div>
 </template>
 
-<style scoped>
-div {
-  flex: 1200px;
-}
-</style>
-
 <script>
+import axios from "axios"; // http 통신을 위한 라이브러리
+const HOST =  "http://localhost:8080";
 export default {
 name: "Evaluation",
 data() {
   return {
     selectedPro: '',
     selectedEmpName: '',
-    selected: [], // Must be an array reference!
-    options: [
-      { text: '매우 낮은 편이다', value: '1' },
-      { text: '낮은 편이다', value: '2' },
-      { text: '중간정도이다', value: '3' },
-      { text: '높은 편이다', value: '4' },
-      { text: '매우 높은 편이다', value: '5' }
-    ]
+    project: '',
+    endDate: null,
+    startDate: null,
+    proName: '',
+    text: '',
+    selectedOption_p: '',
+    selectedOption_c: '',
+    empList: {},
+    proList: {},
+    commInput: '',
+    perfomInput:''
+  }
+},
+mounted(){
+    const apiUrl1 = `${HOST}/api/v1/user/search/proj/list`;
+    console.log("여기  !!!!!")
+    try {
+    const url = new URL(apiUrl1);
+    console.log('URL:', url);
+    axios.get(apiUrl1).then((res) => {
+      console.log('API response:', res.data);
+      // console.log(res.data.participantList[0])
+      this.project = res.data;
+      console.log("djafklajlk");
+
+      for (let i = 0; i < this.project.projectList.length; i++) {
+        const proId = this.project.projectList[i].proId;
+        const proName = this.project.projectList[i].proName;
+        this.proList[proId] = proName;
+              // Store empName and empId in the dictionary
+      }
+      console.log(this.proList);
+      
+    });
+  } catch (error) {
+    console.error('Invalid API URL:', apiUrl1);
+    console.error(error);
+  }
+  // proId = this.selectedPro
+  // proId = 'pro001'
+
+ },
+ computed: {
+    slicedStartDate() {
+      if (this.project.startDate && this.project.endDate) {
+        const startyear = this.project.startDate.slice(2, 4);
+        const startmonth = this.project.startDate.slice(5, 7);
+        const startday = this.project.startDate.slice(8, 10);
+
+        const endyear = this.project.startDate.slice(2, 4);
+        const endmonth = this.project.startDate.slice(5, 7);
+        const endday = this.project.startDate.slice(8, 10);
+        return `${startyear}-${startmonth}-${startday} ~ ${endyear}-${endmonth}-${endday}`}
+      return '';
+    }
+  }
+,
+ methods: {
+  proSelection() {
+    // 선택된 값에 따라 작업 수행
+    console.log(this.selectedPro); 
+    console.log(this.proList); 
+    
+    const selectedProId = Object.entries(this.proList).find(
+      ([proId, proName]) => proName === this.selectedPro
+    );
+    console.log(selectedProId);
+    const apiUrl2 = `${HOST}/api/v1/proj/${selectedProId[0]}`;
+    try {
+    const url = new URL(apiUrl2);
+    console.log('URL:', url);
+    axios.get(apiUrl2).then((res) => {
+      console.log('API response:', res.data);
+      console.log(res.data.participantList[0].employee)
+      this.project = res.data;
+      this.isLoading = false;
+
+      for (let i = 0; i < res.data.participantList.length; i++) {
+        const empName = res.data.participantList[i].employee.empName;
+        const empId = res.data.participantList[i].employee.empId;
+        
+        // Store empName and empId in the dictionary
+        this.empList[empId] = empName;
+      }
+      console.log(this.empList);
+
+    });
+  } catch (error) {
+    console.error('Invalid API URL:', apiUrl);
+    console.error(error);
+  }
+  },
+  registerEval(){
+    const selectedEmpId = Object.keys(this.empList).find(
+      (empId) => this.empList[empId] === this.selectedEmpName
+    );
+
+    const selectedProId = Object.entries(this.proList).find(
+      ([proId, proName]) => proName === this.selectedPro
+    );
+
+    console.log(selectedProId[1], selectedEmpId ,this.selectedOption_p, this.selectedOption_c, this.commInput, this.perfomInput)
+
+    const apiUrl = `${HOST}/api/v1/evaluation/coworker/create`
+
+
+    const formData = new FormData();
+    formData.append("pro_name", selectedProId[1]);
+    formData.append("coworker_emp_id", selectedEmpId);
+    formData.append("communication_rating",parseInt(this.selectedOption_c));
+    formData.append("communication_desc", this.commInput);
+    formData.append("performance_rating",parseInt(this.selectedOption_p));
+    formData.append("performnace_desc", this.perfomInput);
+
+    for (const [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+
+    console.log(apiUrl)
+    try {
+          axios
+            .post(apiUrl, formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((res) => {
+              if (res.status === 200) {
+
+                console.log("평가 등록 성공!");
+                console.log(res);
+                window.location.reload();
+              }
+            });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 };
 </script>
 
 <style scoped>
+div {
+  flex: 1300px;
+}
 
 h3 {
   margin: 40px 0 0;
@@ -112,7 +247,6 @@ li {
 span{
   font-weight: bold;
 }
-
 .project-card{
   height: 85px;
   width: 80%;
@@ -129,7 +263,7 @@ span{
 
 .evalFrom-card{
   margin-top: 10px;
-  height: 450px;
+  height: 600px;
   width: 80%;
   padding: auto;
   margin-left: 30px;
@@ -144,6 +278,11 @@ span{
   border: 0.6px solid #ccc;
 }
 
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  /* margin-bottom: auto; */ 
+}
 
 .flex-cell {
   flex: 1;
@@ -154,6 +293,6 @@ span{
 }
 
 .Evaluation{
-  background-color: #ccc;
+  background-color: #f5f8f9;
 }
 </style>

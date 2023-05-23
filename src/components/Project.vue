@@ -13,10 +13,10 @@
     </div>
      -->
 
-    <b-button @click="goToProjectInput">프로젝트 추가</b-button>
+    <!-- <b-button @click="goToProjectInput">프로젝트 추가</b-button>
     <b-button @click="displayDetail = true">프로젝트 추가</b-button>
     <b-button a href="/project_detail">프로젝트 데테일(임시버튼)</b-button>
-   
+    -->
   </div>
 </template>
 
@@ -68,9 +68,6 @@ export default {
     }
   },
   methods: {
-    goToProjectInput() {
-      this.$router.push('/ProjectInput');
-    }
   }
 };
 </script>
