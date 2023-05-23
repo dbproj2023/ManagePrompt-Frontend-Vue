@@ -15,6 +15,7 @@ import ProjectModify from './components/ProjectModify.vue'
 // import Change_pw from './components/Change_pw.vue'
 // import Access from './components/Access.vue'
 import FindAccount from './components/FindAccount.vue'
+import EvalResult from './components/EvalResults.vue'
 
 
 const Authentication = () => (to, from, next) => {
@@ -77,11 +78,13 @@ export default new Router({
             path: '/Project/:id/Modify',
             component: ProjectModify
         },
-
-
         {
             path: '/FindAccount',
             component: FindAccount
+        },
+        {
+            path: '/Eval',
+            component: EvalResult 
         }
     ]
 })
