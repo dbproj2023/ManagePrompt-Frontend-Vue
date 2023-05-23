@@ -9,13 +9,7 @@
       <div class="card-warpper1"> 
         <div>
         <b-card class="table-card" title="프로젝트 참여 직원" style="width: 560px; height: 340px;">
-        <!-- <p>{{ project.proName}}</p>
-        <p>발주금액: {{ project.budget }}원</p>
-        <p>참여인원: {{ project.numOfParicipant}}</p>
-        <p>PM: {{ project.PM }}</p>
-        <p>기간: {{ project.startDate.slice(0,10) }} ~ {{ project.endDate.slice(0,10) }}</p>
-        <p>상태: {{ project.status }}</p>
-        <p>발주처 이름: {{ project.clientName }}</p> -->
+
         <div class="flex-table" style="margin-top: 20px;">
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트 이름</div>
@@ -41,6 +35,18 @@
           <div class="flex-cell">{{ project.clientEmpName }}</div>
           <div class="flex-cell flex-header">발주처 전화번호</div>
           <div class="flex-cell">{{project.clientEmpPh}}</div>
+        </div>
+
+        <div class="flex-row">
+          <div class="flex-cell flex-header"> 사내 평가</div>
+          <div class="flex-cell">
+            커뮤니케이션 평가:  {{ averageValues.commavg }}
+            업무수행 평가: {{ averageValues.peravg }}</div>
+          <div class="flex-cell flex-header">고객 평가</div>
+          <div class="flex-cell">
+            커뮤니케이션 평가: {{ project.clientEvaluationList[0].communicationRating}}
+            업무수행 평가: {{ project.clientEvaluationList[0].performanceRating}}
+          </div>
         </div>
     </div>
     <div class="button-container">
@@ -206,7 +212,9 @@ export default {
           프로그래머: 6,
           테스터: 7,
           디자이너: 8
-        }
+        },
+        communicationRatingList: [],
+        performanceRatingList:[]
       }
   },
   mounted(){
@@ -421,7 +429,28 @@ export default {
     }
     window.location.reload();
   }
+    },
+  computed:{
+    averageValues() {
+      console.log("=========")
+      console.log(this.project.empEvaluationList.length);
+      for (let i = 0; i < this.project.empEvaluationList.length; i++) {
+        const communication_rating = this.project.empEvaluationList[i].evaluationList[0].communicationRating;
+        const performance_rating = this.project.empEvaluationList[i].evaluationList[0].performanceRating;
+
+        this.communicationRatingList.push(communication_rating);
+        this.performanceRatingList.push(performance_rating )
+      }
+    if  ( this.communicationRatingList === 0 && this.performanceRatingList === 0){
+      return 0
     }
+    const commavg = this.communicationRatingList.reduce((acc, curr) => acc + curr) /  this.communicationRatingList.length;
+    const peravg = this.performanceRatingList.reduce((acc, curr) => acc + curr) /this.performanceRatingList.length;
+    console.log(commavg, peravg);
+    return { commavg, peravg };
+  }
+
+  }
   }
 ;
 </script>
