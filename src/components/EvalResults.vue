@@ -1,8 +1,6 @@
 <template>
-  <div>
+  <div class="wrapper">
     <div class="result-container">
-
-
       <div class="result">
         <b-card class="avgresult" title="평가결과 종합" >
           <div class="myProfile">
@@ -15,11 +13,13 @@
           <b-card class="rating">업무수행 평가: {{ averageperform }}</b-card>
          
         </b-card>
-
-
       </div>
+
       <div class="result">
         <b-card class="allresult" title="프로젝트 별 평가결과" >
+          <br>
+          <span>{{this.projectList[0].proName }}</span>
+          <br>
           <div style="display: flex;">
             <div><div class="flex-cell flex-header">프로젝트 이름</div></div>
             <div><div class="flex-cell">{{ this.projectList[0].proName }}</div></div>
@@ -27,8 +27,7 @@
             <div><div class="flex-cell ">{{ slicedStartDate }}</div></div>
           </div>
 
-          <br>
-          <div style="display: flex;">
+          <div style="display: flex; padding-top: 10px;">
             <div><div class="flex-cell1 flex-header1" >종합평가 결과</div></div>
             <div><div class="flex-cell1">{{ averageValues}}</div></div>
             <div>
@@ -40,9 +39,9 @@
               <div class="flex-cell ">{{ this.performrating[0]}}</div>
             </div>
           </div>
-
-          <b-card class="rating">
-            종합평가: {{ this.projectList.communicationDetail }} {{ this.projectList.performanceDetail}}
+          <br>
+          <b-card style="padding-top: 10px;">
+           {{ this.projectList.communicationDetail }} {{ this.projectList.performanceDetail}}
           </b-card>
 
 
@@ -59,7 +58,6 @@
   
   
   <script>
-  import ProjectTable from './ProjectTable.vue';
   import axios from "axios"; // http 통신을 위한 라이브러리
   const HOST =  "http://localhost:8080";
   
@@ -183,6 +181,10 @@
     font-size: small;
   }
 
+  .wrapper{
+    background-color: #f5f8f9;
+    width: 100%;
+  }
   .result-container{
     display: flex;
     background-color: #f5f8f9;
@@ -204,8 +206,8 @@
   }
   
   .result{
-    margin: 10px;
-    padding: 10px;
+    margin: 5px;
+    padding: 5px;
   }
   
   .myProfile{
