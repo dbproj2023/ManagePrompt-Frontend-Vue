@@ -1,49 +1,29 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import { createVuexPersistedState } from 'vue-persistedstate';
 
 Vue.use(Vuex);
 
-import {createVuexPersistedState} from "vue-persistedstate";
 export default new Vuex.Store({
-    plugins: [createVuexPersistedState()],
-    // state: {
-    //     isLogin2 : false, // 로그인 여부
-    //     accGrade : 9, // 0-관리자 / 9-승인전
-    // },
-    // mutations: {
-    //     setLogin2( state, data ){
-    //         state.isLogin2 = data
-    //     },
-    //     setAccGrade( state, accGrade ){
-    //         state.accGrade = accGrade
-    //     }
-    // },
-    // getters:{
-    //     isLogin2( state, getters ){
-    //         return state.isLogin2
-    //     },
-    //     getAccGrade( state, accGrade ){
-    //         return state.accGrade
-    //     }
-    // },
-    state: {
-        isLogin : false, // 로그인 여부
-        accGrade : 9, // 0-관리자 / 9-승인전
+  plugins: [createVuexPersistedState()],
+  state: {
+    isLogin: false, // 로그인 여부
+    accGrade: 9, // 0-관리자 / 9-승인전
+  },
+  mutations: {
+    setLogin(state, data) {
+      state.isLogin = data;
     },
-    mutations: {
-        setLogin( state, data ){
-            state.isLogin = data
-        },
-        setAccGrade( state, accGrade ){
-            state.accGrade = accGrade
-        }
+    setAccGrade(state, accGrade) {
+      state.accGrade = accGrade;
     },
-    getters:{
-        isLogin( state, getters ){
-            return state.isLogin
-        },
-        getAccGrade( state, accGrade ){
-            return state.accGrade
-        }
+  },
+  getters: {
+    isLogin(state) {
+      return state.isLogin;
     },
-})
+    getAccGrade(state) {
+      return state.accGrade;
+    },
+  },
+});

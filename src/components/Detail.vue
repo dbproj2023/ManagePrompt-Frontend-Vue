@@ -434,16 +434,20 @@ export default {
     averageValues() {
       console.log("=========")
       console.log(this.project.empEvaluationList.length);
+
+      if  ( this.communicationRatingList === 0 && this.performanceRatingList === 0){
+      return 0
+    }
+    console.log(this.project.empEvaluationList[0].evaluationList[0])
+
       for (let i = 0; i < this.project.empEvaluationList.length; i++) {
-        const communication_rating = this.project.empEvaluationList[i].evaluationList[0].communicationRating;
-        const performance_rating = this.project.empEvaluationList[i].evaluationList[0].performanceRating;
+        const communication_rating = this.project.empEvaluationList[i].evaluationList.communicationRating;
+        const performance_rating = this.project.empEvaluationList[i].evaluationList.performanceRating;
 
         this.communicationRatingList.push(communication_rating);
         this.performanceRatingList.push(performance_rating )
       }
-    if  ( this.communicationRatingList === 0 && this.performanceRatingList === 0){
-      return 0
-    }
+   
     const commavg = this.communicationRatingList.reduce((acc, curr) => acc + curr) /  this.communicationRatingList.length;
     const peravg = this.performanceRatingList.reduce((acc, curr) => acc + curr) /this.performanceRatingList.length;
     console.log(commavg, peravg);
