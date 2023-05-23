@@ -15,7 +15,7 @@
           <div class="flex-cell flex-header">프로젝트 이름</div>
           <div class="flex-cell">{{project.proName}}</div>
           <div class="flex-cell flex-header">프로젝트 매니저</div>
-          <div class="flex-cell">{{ project.pmName }}</div>
+          <div class="flex-cell">{{ pmName }}</div>
         </div>
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트 </div>
@@ -41,11 +41,12 @@
           <div class="flex-cell flex-header"> 사내 평가</div>
           <div class="flex-cell">
             커뮤니케이션 평가:  {{ averageValues.commavg }}
-            업무수행 평가: {{ averageValues.peravg }}</div>
+            업무수행 평가: {{ averageValues.peravg }}
+          </div>
           <div class="flex-cell flex-header">고객 평가</div>
           <div class="flex-cell">
-            커뮤니케이션 평가: {{ project.clientEvaluationList[0].communicationRating}}
-            업무수행 평가: {{ project.clientEvaluationList[0].performanceRating}}
+            커뮤니케이션 평가: {{ project.clientEvaluationList.communicationRating}}
+            업무수행 평가: {{ project.clientEvaluationList.performanceRating}}
           </div>
         </div>
     </div>
@@ -214,7 +215,7 @@ export default {
           디자이너: 8
         },
         communicationRatingList: [],
-        performanceRatingList:[]
+        performanceRatingList:[],
       }
   },
   mounted(){
@@ -235,6 +236,7 @@ export default {
       console.log('API response:', res.data);
       console.log(res.data.participantList[0])
       this.project = res.data;
+      console.log(this.project.cl);
       this.isLoading = false;
     });
 
@@ -431,27 +433,74 @@ export default {
   }
     },
   computed:{
-    averageValues() {
-      console.log("=========")
-      console.log(this.project.empEvaluationList.length);
+    averageValues(){
+      console.log("안녕하세요")
+      console.log(this.project.empEvaluationList);
 
-      if  ( this.communicationRatingList === 0 && this.performanceRatingList === 0){
-      return 0
-    }
-    console.log(this.project.empEvaluationList[0].evaluationList[0])
-
-      for (let i = 0; i < this.project.empEvaluationList.length; i++) {
-        const communication_rating = this.project.empEvaluationList[i].evaluationList.communicationRating;
-        const performance_rating = this.project.empEvaluationList[i].evaluationList.performanceRating;
-
-        this.communicationRatingList.push(communication_rating);
-        this.performanceRatingList.push(performance_rating )
+      if (this.project.empEvaluationList.length === 0) {
+        return 0
       }
+
+      console.log("jhhjjjjj")
+      console.log(this.project.empEvaluationList , this.project.empEvaluationList.length)
+
+      for (let i =0; i<this.project.empEvaluationList.length; i++){
+        for (let j = 0; j<this.project.empEvaluationList[i].evaluationList.length; j++){
+          console.log(this.project.empEvaluationList[i].evaluationList[j].communicationRating);
+          console.log(this.project.empEvaluationList[i].evaluationList[j].performanceRating);
+
+          this.communicationRatingList.push(this.project.empEvaluationList[i].evaluationList[j].communicationRating);
+          this.performanceRatingList.push(this.project.empEvaluationList[i].evaluationList[j].performanceRating);
+        }
+      }
+      console.log("=======");
+      console.log(this.communicationRatingList.length);
+      console.log(this.performanceRatingList.length);
+
+      if (this.communicationRatingList.length===0 && this.performanceRatingList.length===0 ){
+        return {}
+      }
+      const commavg = this.communicationRatingList.reduce((acc, curr) => acc + curr) /  this.communicationRatingList.length;
+      const peravg = this.performanceRatingList.reduce((acc, curr) => acc + curr) /  this.performanceRatingList.length;
+
+
+      return {commavg, peravg}
+
+    },
+  //   averageValues() {
+  //     console.log("=========")
+  //     console.log(this.project.empEvaluationList);
+
+  //       if  ( this.project.empEvaluationList === 0 ){
+  //       return 0
+  //     }
+  //   console.log(this.project.empEvaluationList[0].evaluationList[0])
+
+  //     for (let i = 0; i < this.project.empEvaluationList.length; i++) {
+  //       const communication_rating = this.project.empEvaluationList[i].evaluationList.communicationRating;
+  //       const performance_rating = this.project.empEvaluationList[i].evaluationList.performanceRating;
+
+  //       this.communicationRatingList.push(communication_rating);
+  //       this.performanceRatingList.push(performance_rating )
+  //     }
    
-    const commavg = this.communicationRatingList.reduce((acc, curr) => acc + curr) /  this.communicationRatingList.length;
-    const peravg = this.performanceRatingList.reduce((acc, curr) => acc + curr) /this.performanceRatingList.length;
-    console.log(commavg, peravg);
-    return { commavg, peravg };
+  //   const commavg = this.communicationRatingList.reduce((acc, curr) => acc + curr) /  this.communicationRatingList.length;
+  //   const peravg = this.performanceRatingList.reduce((acc, curr) => acc + curr) /this.performanceRatingList.length;
+  //   console.log(commavg, peravg);
+
+  //   if  ( this.project.empEvaluationList === 'NaN' ){
+  //    return {}
+  //   }
+  //   return { commavg, peravg };
+  // }
+  pmName(){
+    console.log(this.project.participantList);
+    for (const participant of this.project.participantList) {
+      if (participant.roleId.roleName == 'PM'){
+        return participant.employee.empName
+
+      }
+    }
   }
 
   }
