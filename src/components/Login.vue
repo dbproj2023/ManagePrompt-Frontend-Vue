@@ -97,7 +97,7 @@ export default {
             //         // TODO. 실패 시 작업
             //     }
             // });
-            axios.post('/api/v1/auth/login', formData ).then((res) => {
+            axios.post(`/api/v1/auth/login`, formData ).then((res) => {
                 //console.log("test code call axios post /login res : ", res);
 
                 if( res.data != null && res.data != undefined && res.data != '' ){
