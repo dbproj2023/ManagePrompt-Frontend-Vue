@@ -79,18 +79,36 @@ export default {
             formData.append("authId", this.input.auth_id);
             formData.append("authPw", this.input.auth_pw);
 
-            axios.post('/api/v1/auth/login2', formData ).then((res) => {
+            // axios.post('/api/v1/auth/login2', formData ).then((res) => {
+            //     //console.log("test code call axios post /login res : ", res);
+
+            //     if( res.data != null && res.data != undefined && res.data != '' ){
+            //         alert("로그인에 성공했습니다")
+            //         // TODO. 성공 시 작업
+
+            //         this.$store.commit('setLogin2', true)
+            //         this.$store.commit('setAccGrade', res.data.accessGrade)
+            //         console.log("test code isLogin2-2 : ", this.$store.getters.isLogin2)
+
+            //         this.$router.push('/');
+            //     }
+            //     else if( res.data == '' ){
+            //         alert("로그인에 실패했습니다.")
+            //         // TODO. 실패 시 작업
+            //     }
+            // });
+            axios.post('/api/v1/auth/login', formData ).then((res) => {
                 //console.log("test code call axios post /login res : ", res);
 
                 if( res.data != null && res.data != undefined && res.data != '' ){
                     alert("로그인에 성공했습니다")
                     // TODO. 성공 시 작업
 
-                    this.$store.commit('setLogin2', true)
+                    this.$store.commit('setLogin', true)
                     this.$store.commit('setAccGrade', res.data.accessGrade)
-                    console.log("test code isLogin2-2 : ", this.$store.getters.isLogin2)
+                    console.log("test code isLogin-2 : ", this.$store.getters.isLogin)
 
-                    this.$router.push('/Main');
+                    this.$router.push('/');
                 }
                 else if( res.data == '' ){
                     alert("로그인에 실패했습니다.")

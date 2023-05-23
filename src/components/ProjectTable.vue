@@ -256,11 +256,11 @@ const HOST =  "http://localhost:8080";
   },
 },
   mounted() {
-  const apiUrl = `${HOST}/api/v1/proj/lists`;
+  const apiUrl = '/api/v1/proj/lists';
   console.log("여기  !!!!!")
   try {
-    const url = new URL(apiUrl);
-    console.log('URL:', url);
+    // const url = new URL(apiUrl);
+    // console.log('URL:', url);
     axios.get(apiUrl).then((res) => {
       console.log('API response:', res.data);
       this.projects = res.data;

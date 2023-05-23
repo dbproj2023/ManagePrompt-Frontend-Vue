@@ -21,18 +21,48 @@ export default {
     Nav, 
     Header
   },
+  // mounted(){
+  //   let isLogin2 = this.$store.getters.isLogin2
+  //   let path = this.$route.path
+  //   let accGrade = this.$store.getters.getAccGrade
+  //   console.log("test code ?? : ", this.$route)
+
+  //   console.log("test code App.vue mounted isLogin2 : ", isLogin2)
+  //   console.log("test code App.vue mounted path : ", path)
+  //   console.log("test code App.vue mounted accGrade : ", accGrade)
+
+  //   /* 홈(메인), 로그인 제외 접근 */
+  //   if( path != '/' && path != '/Main' && path != '/Login' && isLogin2 == false ){
+  //     this.$router.push('/Login');
+  //   }
+  //   /* 프로젝트 접근 시 권한 3 미만 */
+  //   else if( path.startsWith('/Project') && accGrade >= 4 ){
+  //     console.log("test code /Project")
+  //     this.$router.push('/');
+  //   }
+  //   /* 직원관리 접근 시 권한 2 미만 */
+  //   else if( path.startsWith('/Emloyee') && accGrade >= 3 ){
+  //     console.log("test code /Emloyee")
+  //     this.$router.push('/');
+  //   }
+  //   /* 마이페이지 */
+  //   else if( path.startsWith('/Mypage') && isLogin2 == false ){
+  //     console.log("test code /Mypage")
+  //     this.$router.push('/');
+  //   }
+  // }
   mounted(){
-    let isLogin2 = this.$store.getters.isLogin2
+    let isLogin = this.$store.getters.isLogin
     let path = this.$route.path
     let accGrade = this.$store.getters.getAccGrade
     console.log("test code ?? : ", this.$route)
 
-    console.log("test code App.vue mounted isLogin2 : ", isLogin2)
+    console.log("test code App.vue mounted isLogin : ", isLogin)
     console.log("test code App.vue mounted path : ", path)
     console.log("test code App.vue mounted accGrade : ", accGrade)
 
     /* 홈(메인), 로그인 제외 접근 */
-    if( path != '/' && path != '/Main' && path != '/Login' && isLogin2 == false ){
+    if( path != '/' && path != '/Main' && path != '/Login' && isLogin == false ){
       this.$router.push('/Login');
     }
     /* 프로젝트 접근 시 권한 3 미만 */
@@ -45,8 +75,13 @@ export default {
       console.log("test code /Emloyee")
       this.$router.push('/');
     }
+    /* 평가 접근 시 권한 3 미만 */
+    else if( path.startsWith('/Evaluation') && accGrade >= 4 ){
+      console.log("test code /Evaluation")
+      this.$router.push('/');
+    }
     /* 마이페이지 */
-    else if( path.startsWith('/Mypage') && isLogin2 == false ){
+    else if( path.startsWith('/Mypage') && isLogin == false ){
       console.log("test code /Mypage")
       this.$router.push('/');
     }

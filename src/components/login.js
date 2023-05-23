@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const HOST =  "http://localhost:8080";
-const apiUrl = `${HOST}/api/v1/auth/login`;
+// const HOST =  "http://localhost:8080";
+// const apiUrl = `${HOST}/api/v1/auth/login`;
+const apiUrl = `/api/v1/auth/login`;
 
 const loginStore = {
 	namespaced: true,
