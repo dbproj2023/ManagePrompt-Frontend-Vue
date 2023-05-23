@@ -2,17 +2,15 @@
   <div>
     <div class="result-container">
 
-      <div v-if="isLoading">
-          로딩중 !
-       </div>
-      <div v-else class="result">
+
+      <div class="result">
         <b-card class="avgresult" title="평가결과 종합" >
           <div class="myProfile">
             <img src="./img/theme/team-1.jpg" height="130px" width="130px" alt="로고" class="logo">
             <p>{{ this.myName }}</p>
           </div>
 
-          <b-card class="rating">종합평가: {{   averageValues}}</b-card>
+          <b-card class="rating">종합평가: {{  averageValues}}</b-card>
           <b-card class="rating">커뮤니케이션 평가: {{  averagecommunication}}</b-card>
           <b-card class="rating">업무수행 평가: {{ averageperform }}</b-card>
          
@@ -22,7 +20,33 @@
       </div>
       <div class="result">
         <b-card class="allresult" title="프로젝트 별 평가결과" >
-          나는 문어
+          <div style="display: flex;">
+            <div><div class="flex-cell flex-header">프로젝트 이름</div></div>
+            <div><div class="flex-cell">{{ this.projectList[0].proName }}</div></div>
+            <div><div class="flex-cell flex-header">프로젝트 이름</div></div>
+            <div><div class="flex-cell ">{{ slicedStartDate }}</div></div>
+          </div>
+
+          <br>
+          <div style="display: flex;">
+            <div><div class="flex-cell1 flex-header1" >종합평가 결과</div></div>
+            <div><div class="flex-cell1">{{ averageValues}}</div></div>
+            <div>
+              <div class="flex-cell flex-header">커뮤니케이션 평가</div>
+              <div class="flex-cell flex-header">업무수행 평가</div>
+          </div>
+            <div>
+              <div class="flex-cell ">{{ this.communirating[0] }}</div>
+              <div class="flex-cell ">{{ this.performrating[0]}}</div>
+            </div>
+          </div>
+
+          <b-card class="rating">
+            종합평가: {{ this.projectList.communicationDetail }} {{ this.projectList.performanceDetail}}
+          </b-card>
+
+
+
 
         </b-card>
         
@@ -44,26 +68,14 @@
       data() {
         return {
           avgflag: true,
-          issLoading : true,
+          isLoading: true,
           myName: '',
           performrating: [],
-          communirating: []
+          communirating: [],
+          projectList: []
         }
     },
     mounted() {
-      const apiUrl = `${HOST}/api/v1/user/info/read`
-      try {
-      const url = new URL(apiUrl);
-      console.log('URL:', url);
-      axios.get(apiUrl).then((res) => {
-        console.log('API response:', res.data);
-        this.myName = res.data.emp_name;
-      });
-      } catch (error) {
-        console.error('Invalid API URL:', apiUrl);
-        console.error(error);
-      }
-
       const apiUrl1 = `${HOST}/api/v1/evaluation/coworker/read`
       try {
       const url = new URL(apiUrl1);
@@ -74,6 +86,8 @@
 
         console.log(res.data.projectEvaluationList[0].evaluationList)
 
+        this.myName = res.data.empName;
+
         for (let i = 0; i < res.data.projectEvaluationList.length; i++) {
           const parsingdata = res.data.projectEvaluationList[i].evaluationList
           for (let j=0; j<parsingdata.length; j++){
@@ -83,12 +97,16 @@
             this.performrating.push(parsingdata[j].performanceRating);
             this.communirating.push(parsingdata[j].communicationRating);
 
+            this.projectList = res.data.projectEvaluationList
+            console.log(this.projectList);
+
           }
+          isLoading: false;
               
         // Store empName and empId in the dictionary
         // this.empList[empId] = empName;
       }
-        this.myName = res.data.emp_name;
+       
       });
     } catch (error) {
       console.error('Invalid API URL:', apiUrl1);
@@ -112,16 +130,28 @@
   },
   averageValues() {
     // Calculate the average of averageperform and averagecommunication
+    if  (this.communirating.length === 0 && this.performrating.length === 0){
+      return 0
+    }
     const commavg = this.communirating.reduce((acc, curr) => acc + curr) /  this.communirating.length;
     const peravg = this.performrating.reduce((acc, curr) => acc + curr) / this.performrating.length;
-  
-    this.avgflag = false;
     return (commavg+peravg)/2;
   }
-},
+  ,  slicedStartDate() {
+      if (this.projectList[0].startDate && this.projectList[0].endDate) {
+        const startyear = this.projectList[0].startDate.slice(2, 4);
+        const startmonth = this.projectList[0].startDate.slice(5, 7);
+        const startday = this.projectList[0].startDate.slice(8, 10);
+
+        const endyear = this.projectList[0].startDate.slice(2, 4);
+        const endmonth =this.projectList[0].startDate.slice(5, 7);
+        const endday = this.projectList[0].startDate.slice(8, 10);
+        return `${startyear}-${startmonth}-${startday} ~ ${endyear}-${endmonth}-${endday}`}
+      return '';
+    }
   }
-  ;
-  </script>
+}
+</script>
   
   <style scoped>
   
@@ -187,4 +217,43 @@
     height: 50px;
     margin: 10px;
   }
+
+  .flex-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  font-size: small;
+}
+
+  .flex-header{
+  /* font-weight: bold; */
+  background-color: #f0f0f0;
+}
+
+.flex-cell {
+  flex: 1;
+  padding: 8px;
+  width: 200px;
+  border: 1px solid #ccc;
+  white-space: pre-wrap;
+  text-align: center;
+}
+
+.flex-cell1 {
+  flex: 1;
+  padding: 8px;
+  width: 200px;
+  border: 1px solid #ccc;
+  white-space: pre-wrap;
+  text-align: center;
+  height: 84px;
+}
+
+.flex-header1{
+  text-align: center;
+  /* font-weight: bold; */
+  background-color: #f0f0f0;
+  height: 84px;
+}
 </style>

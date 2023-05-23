@@ -538,8 +538,6 @@ li {
 
 .flex-row {
   display: flex;
-  height: 50px;
-  text-align: center;
 }
 
 .flex-header{
