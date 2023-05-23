@@ -16,6 +16,7 @@ import ProjectModify from './components/ProjectModify.vue'
 // import Access from './components/Access.vue'
 import FindAccount from './components/FindAccount.vue'
 import EvalResult from './components/EvalResults.vue'
+import NewEnroll from './components/NewEnroll.vue'
 
 
 const Authentication = () => (to, from, next) => {
@@ -85,6 +86,10 @@ export default new Router({
         {
             path: '/Eval',
             component: EvalResult 
+        },
+        {
+            path: '/newEnroll',
+            component: NewEnroll
         }
     ]
 })
