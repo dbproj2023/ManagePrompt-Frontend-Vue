@@ -65,23 +65,28 @@ export default {
     if( path != '/' && path != '/Main' && path != '/Login' && isLogin == false ){
       this.$router.push('/Login');
     }
+    /* 신규 직원 등록 시 권한 2 */
+    else if( path.startWith('/newEnroll') && accGrade != 2) {
+      console.log("test code /newEnroll")
+      this.$router.push('/');
+    }
     /* 프로젝트 접근 시 권한 3 미만 */
-    else if( path.startsWith('/Project') && accGrade >= 4 ){
+    else if( path.startsWith('/Project') && accGrade >= 4 ) {
       console.log("test code /Project")
       this.$router.push('/');
     }
     /* 직원관리 접근 시 권한 2 미만 */
-    else if( path.startsWith('/Emloyee') && accGrade >= 3 ){
+    else if( path.startsWith('/Emloyee') && accGrade >= 3 ) {
       console.log("test code /Emloyee")
       this.$router.push('/');
     }
     /* 평가 접근 시 권한 3 미만 */
-    else if( path.startsWith('/Evaluation') && accGrade >= 4 ){
+    else if( path.startsWith('/Evaluation') && accGrade >= 4 ) {
       console.log("test code /Evaluation")
       this.$router.push('/');
     }
     /* 마이페이지 */
-    else if( path.startsWith('/Mypage') && isLogin == false ){
+    else if( path.startsWith('/Mypage') && isLogin == false ) {
       console.log("test code /Mypage")
       this.$router.push('/');
     }
