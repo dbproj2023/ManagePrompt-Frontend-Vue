@@ -31,7 +31,6 @@
                     <tr>
                         <th><label for="auth_pw">비밀번호</label></th>
                         <td>
-                            <!-- <input type="password" id="auth_pw" name="auth_pw" v-model="auth_pw" required :rules="passwordRules" @input="auth_pw = $event.target.value"/> -->
                             <input type="password" id="auth_pw" name="auth_pw" v-model="auth_pw" required @focusout="checkAuthPw()" @input="auth_pw = $event.target.value"/>
                             <p>{{ message_auth_pw }}</p>
                         </td>
@@ -39,7 +38,6 @@
                     <tr>
                         <th><label for="check_pw">비밀번호 확인</label></th>
                         <td>
-                            <!-- <input type="password" id="check_pw" name="check_pw" v-model="check_pw" required :rules="passwordCheckRules.concat(passwordConfirmationRule)" @input="check_pw = $event.target.value"/> -->
                             <input type="password" id="check_pw" name="check_pw" v-model="check_pw" required @focusout="matchAuthPw()" @input="check_pw = $event.target.value"/>
                             <p>{{ message_check_pw }}</p>
                         </td>
