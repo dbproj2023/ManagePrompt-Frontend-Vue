@@ -135,31 +135,4 @@ export default {
 .project-table {
   font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif';;
 }
-</style> -->
-<!-- 
-<template>
-  <div>
-    <h1>{{ message }}</h1>
-  </div>
-</template>
-
-<script>
-import api from './api';
-
-export default {
-  data() {
-    return {
-      message: ''
-    };
-  },
-  mounted() {
-    api.getHello()
-      .then(response => {
-        this.message = response.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-};
-</script>
+</style>
