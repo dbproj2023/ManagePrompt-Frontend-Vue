@@ -72,7 +72,7 @@
           </div>
         </div>
         <div class="button-container">
-          <b-button  @click="registerEval"  style="margin-top: 10px">프로젝트 등록</b-button>
+          <b-button  @click="registerEval"  style="margin-top: 10px">평가 등록</b-button>
         </div>
       </b-card>
       </div>
@@ -115,7 +115,6 @@ mounted(){
       console.log('API response:', res.data);
       // console.log(res.data.participantList[0])
       this.project = res.data;
-      console.log("djafklajlk");
 
       for (let i = 0; i < this.project.projectList.length; i++) {
         const proId = this.project.projectList[i].proId;
@@ -123,7 +122,6 @@ mounted(){
         this.proList[proId] = proName;
               // Store empName and empId in the dictionary
       }
-      console.log(this.proList);
       
     });
   } catch (error) {
@@ -185,9 +183,12 @@ mounted(){
       for (let i = 0; i < res.data.participantList.length; i++) {
         const empName = res.data.participantList[i].employee.empName;
         const empId = res.data.participantList[i].employee.empId;
+
+        if (this.myName != empName){
+          this.empList[empId] = empName;
+        }
         
         // Store empName and empId in the dictionary
-        this.empList[empId] = empName;
       }
       console.log(this.empList);
 
