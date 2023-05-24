@@ -3,7 +3,11 @@
     <div>
       <hr style="border: solid 1px">  
       <!-- 검색창 -->
+
+
+
       <b-container class="bv-example-row" style="display: flex">
+
         <div>
         <b-row style="width:1050px">
           <b-col class="col-6.3" style="display: flex; align-items: center;">
@@ -24,13 +28,25 @@
           </b-col>
         </b-row>
 
-        <b-row style="margin-top: 15px; width:1050px;" >
+        <b-row style="margin-top: 15px; width:1100px;">
+          <b-col class="col-2">
+            <div>
+              <select v-model="selectedStatus"  @change="onChange($event)" class="form-select form-control" style="width: 130px;">
+              <option value="">년도</option>
+              <option value="진행중">진행중</option>
+              <option value="완료">완료</option>
+              <option value="예정">예정</option>
+              <option value="취소">취소</option>
+              </select>
+            </div>
+          </b-col>
+
           <b-col class="col-7.5" style="display: flex; align-items: center;">
             <div style="margin-right: 10px;">
               프로젝트 명
             </div>
             <div>  
-              <b-form-input v-model="proName" placeholder="Enter your name" style="width: 230px ;"></b-form-input>
+              <b-form-input v-model="proName" placeholder="Enter your name" style="width: 180px ;"></b-form-input>
             </div>
           </b-col>
           <b-col class="col-7.5" style="display: flex; align-items: center;">
@@ -45,7 +61,7 @@
               </select>
             </div> -->
             <div>  
-              <b-form-input v-model="clientName" placeholder="Enter your name" style="width: 230px ;"></b-form-input>
+              <b-form-input v-model="clientName" placeholder="Enter your name" style="width: 180px ;"></b-form-input>
             </div>
           </b-col>
           <b-col  class="col-1.5" style="display: flex; align-items: center;" >
@@ -148,7 +164,10 @@
 <script>
 //  import projects from 'projects'
 // import RangeDatePicker from 'vue-easy-range-date-picker'; 
- import { Table, TableColumn} from 'element-ui'
+import './css/main.css';
+import { Table, TableColumn} from 'element-ui'
+import './css/datepicker/daterangepicker.css'
+import './css/select2/select2.min.css'
 
 import axios from "axios"; // http 통신을 위한 라이브러리
 const HOST =  "http://localhost:8080";
@@ -309,4 +328,7 @@ const HOST =  "http://localhost:8080";
 b-form-datepicker {
   width: 150px;
 }
+
+
+
 </style>
