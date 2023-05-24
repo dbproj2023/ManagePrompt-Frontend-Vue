@@ -21,36 +21,6 @@ export default {
     Nav, 
     Header
   },
-  // mounted(){
-  //   let isLogin2 = this.$store.getters.isLogin2
-  //   let path = this.$route.path
-  //   let accGrade = this.$store.getters.getAccGrade
-  //   console.log("test code ?? : ", this.$route)
-
-  //   console.log("test code App.vue mounted isLogin2 : ", isLogin2)
-  //   console.log("test code App.vue mounted path : ", path)
-  //   console.log("test code App.vue mounted accGrade : ", accGrade)
-
-  //   /* 홈(메인), 로그인 제외 접근 */
-  //   if( path != '/' && path != '/Main' && path != '/Login' && isLogin2 == false ){
-  //     this.$router.push('/Login');
-  //   }
-  //   /* 프로젝트 접근 시 권한 3 미만 */
-  //   else if( path.startsWith('/Project') && accGrade >= 4 ){
-  //     console.log("test code /Project")
-  //     this.$router.push('/');
-  //   }
-  //   /* 직원관리 접근 시 권한 2 미만 */
-  //   else if( path.startsWith('/Emloyee') && accGrade >= 3 ){
-  //     console.log("test code /Emloyee")
-  //     this.$router.push('/');
-  //   }
-  //   /* 마이페이지 */
-  //   else if( path.startsWith('/Mypage') && isLogin2 == false ){
-  //     console.log("test code /Mypage")
-  //     this.$router.push('/');
-  //   }
-  // }
   mounted(){
     let isLogin = this.$store.getters.isLogin
     let path = this.$route.path
@@ -68,27 +38,37 @@ export default {
     /* 신규 직원 등록 시 권한 2 */
     else if( path.startsWith('/newEnroll') && accGrade != 2 ) {
       console.log("test code /newEnroll")
-      this.$router.push('/');
+      alert("접근 권한이 없습니다.");
+      this.$router.go(-1);
     }
+    // else if( path.startsWith('/Enroll') && 뉴비 == true ) {
+    //   console.log("test code /Enroll")
+    //   alert("접근 권한이 없습니다.");
+    //   this.$router.go(-1);
+    // }
     /* 프로젝트 접근 시 권한 3 미만 */
     else if( path.startsWith('/Project') && accGrade >= 4 ) {
       console.log("test code /Project")
-      this.$router.push('/');
+      alert("접근 권한이 없습니다.");
+      this.$router.go(-1);
     }
     /* 직원관리 접근 시 권한 2 미만 */
     else if( path.startsWith('/Emloyee') && accGrade >= 3 ) {
       console.log("test code /Emloyee")
-      this.$router.push('/');
+      alert("접근 권한이 없습니다.");
+      this.$router.go(-1);
     }
     /* 평가 접근 시 권한 3 미만 */
     else if( path.startsWith('/Evaluation') && accGrade >= 4 ) {
       console.log("test code /Evaluation")
-      this.$router.push('/');
+      alert("접근 권한이 없습니다.");
+      this.$router.go(-1);
     }
     /* 마이페이지 */
     else if( path.startsWith('/Mypage') && isLogin == false ) {
       console.log("test code /Mypage")
-      this.$router.push('/');
+      alert("로그인해주세요.");
+      this.$router.push('/Login');
     }
   }
 }
