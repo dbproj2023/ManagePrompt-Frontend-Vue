@@ -13,6 +13,15 @@
                 <el-table-column label="직무" prop="role" min-width="80px"></el-table-column>
 
                 <el-table-column label="진행 상태" prop="progress_state" min-width="150px"></el-table-column>
+
+                <!-- 완료된 평가에만 버튼 만들어 평가할 수 있도록 -->
+                <el-table-column label="평가" prop="evaluation" min-width="150px">
+                    <template slot-scope="scope">
+                        <div class="avatar-group">
+                            <button @click="navigateToAccess(scope.row.pro_name, scope.row.roll, scope.row.participation_period)" style="cursor: pointer">권한</button>
+                        </div>
+                    </template>
+                </el-table-column>
             </el-table>
         </b-card>
     </div>
