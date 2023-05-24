@@ -66,7 +66,7 @@ export default {
       this.$router.push('/Login');
     }
     /* 신규 직원 등록 시 권한 2 */
-    else if( path.startWith('/newEnroll') && accGrade != 2) {
+    else if( path.startsWith('/newEnroll') && accGrade != 2 ) {
       console.log("test code /newEnroll")
       this.$router.push('/');
     }
