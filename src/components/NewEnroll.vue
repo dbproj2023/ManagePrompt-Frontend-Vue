@@ -96,6 +96,8 @@ export default {
             message_auth_pw: "",
             selectedYear: "",
             selectedRoll: "",
+            click_emp_id: false,
+            click_auth_id: false,
             str_join_year: "",
             str_roll: "",
             str_emp_id: "",
@@ -117,6 +119,11 @@ export default {
                 return;
             }
 
+            if( this.click_emp_id == false ) {
+                alert("사번 중복 여부를 확인해주세요.");
+                return;
+            }
+
             if( this.emp_name == '' ) {
                 alert("이름을 입력해 주세요.");
                 return;
@@ -127,6 +134,11 @@ export default {
                 return;
             } else if( this.auth_id.length < 6 || this.auth_id.length > 12 ) {
                 alert("아이디는 6자리 이상, 12자리 이하로 생성해야 합니다.");
+                return;
+            }
+            
+            if( this.click_auth_id == false ) {
+                alert("아이디 중복 여부를 확인해주세요.");
                 return;
             }
 
@@ -146,9 +158,12 @@ export default {
 
             axios.post(`api/v1/auth/new-user`, formData).then((res) => {
                 console.log("test code /user : ", res)
-                if( !isNaN(res.data) ){ // 뭘로 받아야 되지...?
+                console.log("test code /user22 : ", res.data.id)
+
+                if( res.data ){
+                    console.log("test code: ?")
                     alert("초기 정보 등록이 완료되었습니다.")
-                    this.$router.push({path: './newEnroll'});
+                    this.$router.go(0);
                 }
             });
         },
@@ -196,6 +211,8 @@ export default {
             console.log("test code emp_id : ", this.emp_id)
         },
         checkEmpId() {
+            this.click_emp_id = true;
+
             const validate_emp_id = /^\d{8}$/
 
             console.log("test code empId : ", this.emp_id)
@@ -236,6 +253,8 @@ export default {
             console.log("test code auth_id : ", this.auth_id);
         },
         checkAuthId() {
+            this.click_auth_id = true;
+
             if( this.auth_id == '' ) {
                 alert("아이디를 생성해 주세요.")
                 return

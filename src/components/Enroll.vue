@@ -1,7 +1,7 @@
 <template>
     <div id="enroll">
         <div>
-            <h2>신규 정보 등록</h2>
+            <h2>신규 직원 정보 등록</h2>
         </div>
         <hr>
         <div>
@@ -24,7 +24,6 @@
                     <tr>
                         <th><label for="emp_ssn">주민등록번호</label></th>
                         <td>
-                            <!-- <input type="text" id="emp_ssn" name="emp_ssn" v-model="emp_ssn" required :rules="ssnRules" @input="emp_ssn = $event.target.value"/> -->
                             <input type="text" id="emp_ssn" name="emp_ssn" v-model="emp_ssn" required @focusout="checkEmpSsn()" @input="emp_ssn = $event.target.value"/>
                             <p>{{ message_emp_ssn }}</p>
                         </td>
@@ -39,7 +38,6 @@
                     <tr>
                         <th><label for="auth_pw">비밀번호</label></th>
                         <td>
-                            <!-- <input type="password" id="auth_pw" name="auth_pw" v-model="auth_pw" required :rules="passwordRules" @input="auth_pw = $event.target.value"/> -->
                             <input type="password" id="auth_pw" name="auth_pw" v-model="auth_pw" required @focusout="checkAuthPw()" @input="auth_pw = $event.target.value"/>
                             <p>{{ message_auth_pw }}</p>
                         </td>
@@ -47,7 +45,6 @@
                     <tr>
                         <th><label for="check_pw">비밀번호 확인</label></th>
                         <td>
-                            <!-- <input type="password" id="check_pw" name="check_pw" v-model="check_pw" required :rules="passwordCheckRules.concat(passwordConfirmationRule)" @input="check_pw = $event.target.value"/> -->
                             <input type="password" id="check_pw" name="check_pw" v-model="check_pw" required @focusout="matchAuthPw()" @input="check_pw = $event.target.value"/>
                             <p>{{ message_check_pw }}</p>
                         </td>
@@ -55,7 +52,6 @@
                     <tr>
                         <th><label for="emp_email">이메일</label></th>
                         <td>
-                            <!-- <input type="email" id="emp_email" name="emp_email" v-model="emp_email" required :rules="emailRules" @input="emp_email = $event.target.value"/> -->
                             <input type="email" id="emp_email" name="emp_email" v-model="emp_email" required @input="emp_email = $event.target.value"/>
                             <button type="button" @click="checkEmpEmail()">중복 확인</button>   
                         </td>
@@ -113,77 +109,9 @@ export default {
             message_emp_edu: "",
             message_emp_work_ex: "",
             message_emp_skill: "",
-            // ssnRules: [
-            //     v => !!v || '주민등록번호를 작성해주세요',
-            //     v => /.+-+./.test(v) || '주민등록번호 형식으로 작성해주세요'
-            // ],
-            // passwordRules: [
-            //     v => !!v || '비밀번호를 작성해주세요',
-            //     v => (v && v.length >= 5 && v.length <= 20) || '비밀번호는 8글자 이상 20글자 이하로 작성해주세요',
-            //     v => /(ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz)/.test(v) || '영문 대소문자를 포함해야합니다',
-            //     v => /(?=.*\d)/.test(v) || '숫자를 포함해야합니다',
-            //     v => /([~`!@#$%^&*<>?/])/.test(v) || '특수문자를 포함해야합니다 [~`!@#$%^&*<>?/]'
-            // ],
-            // passwordCheckRules: [
-            //     v => !!v || '비밀번호를 작성해주세요',
-            //     v => (v && v.length >= 5 && v.length <= 20) || '비밀번호는 8글자 이상 20글자 이하로 작성해주세요',
-            //     v => /(ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz)/.test(v) || '영문 대소문자를 포함해야합니다',
-            //     v => /(?=.*\d)/.test(v) || '숫자를 포함해야합니다',
-            //     v => /([~`!@#$%^&*<>?/])/.test(v) || '특수문자를 포함해야합니다 [~`!@#$%^&*<>?/]'
-            // ],
-            // emailRules: [
-            //     v => !!v || '이메일을 작성해주세요',
-            //     v => /.+@.+\..+/.test(v) || '이메일 형식으로 작성해주세요'
-            // ],
         }
     },
-    // computed: {
-    //     passwordConfirmationRule() {
-    //         return () =>
-    //             this.auth_pw !== this.confirmPassword || "패스워드가 일치하지 않습니다";
-    //     }
-    // },
     methods: {
-        // enrollSubmit() {
-        //     const validate = this.$refs.form.validate()
-        //     if(validate) {
-        //         let saveData = {};
-        //         saveData.emp_id = this.emp_id;
-        //         saveData.emp_name = this.emp_name;
-        //         saveData.emp_ssn = this.emp_ssn;
-        //         saveData.auth_id = this.auth_id;
-        //         saveData.auth_pw = this.auth_pw;
-        //         saveData.check_pw = this.check_pw;
-        //         saveData.emp_email = this.emp_email;
-        //         saveData.emp_edu = this.emp_edu;
-        //         saveData.emp_work_ex = this.emp_work_ex;
-        //         saveData.emp_skill = this.emp_skill;
-
-        //         try {
-        //             this.$axios.post(`${HOST}/api/v1/auth/user`, JSON.stringify(saveData), {
-        //             headers: {
-        //                 "Content-Type": `application/json`,
-        //                 },
-        //             })
-        //             .then((response) => {
-        //                 console.log(response)
-        //                 if (response.data.errorCode === 400) {
-        //                     alert(response.data.errorMessage)
-        //                 }
-        //                 else {
-        //                     alert("신규 등록이 완료되었습니다. 로그인 화면으로 돌아갑니다")
-        //                     this.$router.push({path: './Login'});
-        //                 }
-        //             })
-        //             .catch(error => {
-        //                 console.log(error.response);
-        //             });
-        //         } catch (error) {
-        //             console.error(error);
-        //         }
-        //     }
-        // },
-
         enrollSubmit() {
             let formData = new FormData();
             formData.append("emp_id", this.emp_id);
@@ -205,10 +133,6 @@ export default {
                 }
             });
         },
-
-        // linkTologin() {
-        //     this.$router.push({path:"./Login"});
-        // },
         checkEmpId() {
             const validate_emp_id = /^\d{8}$/
 
@@ -355,13 +279,7 @@ export default {
                 return;
             }
         }
-        // enroll() {
-        //     // DB에 등록
-        // }
     },
-    // setup() {
-        
-    // },
 }
 </script>
 

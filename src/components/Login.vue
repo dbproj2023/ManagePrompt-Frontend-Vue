@@ -30,25 +30,6 @@ export default {
             find_account: "/FindAccount"
         }
     },
-    
-    // mounted() {
-    //     const apiUrl = `${HOST}/api/v1/auth/login`;
-    //     console.log("여기  !!!!!")
-    //     try {
-    //         const url = new URL(apiUrl);
-    //         console.log('URL:', url);
-    //         axios.get(apiUrl).then((res) => {
-    //             console.log('API response:', res.data);
-    //             console.log(res.data.participantList[0])
-    //             this.auth_id = res.data;
-    //             this.auth_pw = res.data;
-    //         });
-    //     } catch (error) {
-    //     console.error('Invalid API URL:', apiUrl);
-    //     console.error(error);
-    //     }
-    // },
-
     methods: {
         doLogin() {
             console.log("test code click doLogin")
@@ -79,61 +60,33 @@ export default {
             formData.append("authId", this.input.auth_id);
             formData.append("authPw", this.input.auth_pw);
 
-            // axios.post('/api/v1/auth/login2', formData ).then((res) => {
-            //     //console.log("test code call axios post /login res : ", res);
-
-            //     if( res.data != null && res.data != undefined && res.data != '' ){
-            //         alert("로그인에 성공했습니다")
-            //         // TODO. 성공 시 작업
-
-            //         this.$store.commit('setLogin2', true)
-            //         this.$store.commit('setAccGrade', res.data.accessGrade)
-            //         console.log("test code isLogin2-2 : ", this.$store.getters.isLogin2)
-
-            //         this.$router.push('/');
-            //     }
-            //     else if( res.data == '' ){
-            //         alert("로그인에 실패했습니다.")
-            //         // TODO. 실패 시 작업
-            //     }
-            // });
             axios.post(`/api/v1/auth/login`, formData ).then((res) => {
-                //console.log("test code call axios post /login res : ", res);
-
                 if( res.data != null && res.data != undefined && res.data != '' ){
                     alert("로그인에 성공했습니다")
-                    // TODO. 성공 시 작업
 
                     this.$store.commit('setLogin', true)
                     this.$store.commit('setAccGrade', res.data.accessGrade)
                     console.log("test code isLogin-2 : ", this.$store.getters.isLogin)
 
-                    this.$router.push('/');
+                    // // 새로운 직원이면
+                    // if( res.data.isNewbie == true ){
+                    //     // 회원 정보 등록 페이지로 이동
+                    //     this.$router.push('/Enroll')
+                    // }else{
+                    //     // 이전 페이지로 이동
+                    //     // this.$router.push('/');
+                    //     this.$router.go(-1);
+                    // }
                 }
                 else if( res.data == '' ){
                     alert("로그인에 실패했습니다.")
-                    // TODO. 실패 시 작업
                 }
             });
-
-            
-            /*
-            this.$store.dispatch("loginStore/doLogin", memberInfo).then(() => { //
-                const returnUrl = window.location.search.replace(/^\?returnUrl=/, "");//
-                this.$router.push(returnUrl); //
-            }).catch((err) => { //
-                this.errorMessage = err.response.data.errormessage; //
-            }); //
-            */
-            
         }
     },
-    modules: { //
-        loginStore: loginStore //
-    } //
-    // setup() {
-        
-    // },
+    modules: {
+        loginStore: loginStore
+    }
 }
 </script>
 
