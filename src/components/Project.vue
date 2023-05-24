@@ -55,8 +55,8 @@ div {
 
 <script>
 import router from '@/router';
-import ProjectInput from './ProjectInput.vue'
-import ProjectTable from './ProjectTable.vue'
+import ProjectInput from '../components/ProjectInput.vue'
+import ProjectTable from '../components/ProjectTable.vue'
 export default {
   name: "Project",
   components:{
