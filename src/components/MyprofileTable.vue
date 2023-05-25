@@ -52,20 +52,39 @@
 
 <script>
     import { Table, TableColumn } from 'element-ui'
+    import axios from 'axios'
 
     export default {
-    name: 'light-table',
+        name: 'MyprofileTable',
         components: {
             [Table.name]: Table,
             [TableColumn.name]: TableColumn
         },
         data() {
             return {
-
+                emp_id: "",
+                emp_name: "",
+                emp_ssn: "",
+                emp_edu: "",
+                emp_email: "",
+                emp_work_ex: "",
+                emp_skill: "",
+                emp_ph: "",
+                created_at: ""
             }
         },
-    computed: {
-    }
+        mounted() {
+            try {
+                axios.get('/api/v1/user/info/read').then((res) => {
+                    console.log('API response:', res.data);
+                    this.project = res.data;
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        computed: {
+        }
     }
 </script>
 
