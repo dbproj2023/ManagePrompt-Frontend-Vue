@@ -4,14 +4,14 @@
       <div class="result">
         <b-card class="avgresult" title="평가결과 종합" >
           <div class="myProfile">
-            <img src="./img/theme/team-1.jpg" height="130px" width="130px" alt="로고" class="logo">
+            <!-- <img src="./img/theme/team-1.jpg" height="130px" width="130px" alt="로고" class="logo"> -->
             <p>{{ this.myName }}</p>
           </div>
 
           <b-card class="rating">종합평가: {{ }}</b-card>
           <b-card class="rating">커뮤니케이션 평가: {{ }}</b-card>
           <b-card class="rating">업무수행 평가: {{  }}</b-card>
-         
+       
         </b-card>
       </div>
 
@@ -24,7 +24,7 @@
             <div><div class="flex-cell flex-header">프로젝트 이름</div></div>
             <div><div class="flex-cell">{{this.proName }}</div></div>
             <div><div class="flex-cell flex-header">프로젝트 기간</div></div>
-            <div><div class="flex-cell ">{{   }}</div></div>
+            <div><div class="flex-cell ">{{ slicedStartDate }}</div></div>
           </div>
 
           <div style="display: flex; padding-top: 10px;">
@@ -84,8 +84,10 @@
       axios.get(apiUrl1).then((res) => {
         console.log('API response:', res.data);
         this.proName = res.data.projectEvaluationList[0].proName;
-
         this.myName = res.data.empName;
+
+        console.log("===", res.data.projectEvaluationList);
+
         
         for (let i = 0; i < res.data.projectEvaluationList.length; i++) {
           const roleName = res.data.projectEvaluationList[i].roleName;
@@ -155,16 +157,17 @@
   //   return (commavg+peravg)/2;
   // }
    slicedStartDate() {
-      if (this.projectList[0].startDate && this.projectList[0].endDate) {
-        const startyear = this.projectList[0].startDate.slice(2, 4);
-        const startmonth = this.projectList[0].startDate.slice(5, 7);
-        const startday = this.projectList[0].startDate.slice(8, 10);
+    // console.log(this.projectList)
+    //   if (this.projectList[0].startDate && this.projectList[0].endDate) {
+    //     const startyear = this.projectList[0].startDate.slice(2, 4);
+    //     const startmonth = this.projectList[0].startDate.slice(5, 7);
+    //     const startday = this.projectList[0].startDate.slice(8, 10);
 
-        const endyear = this.projectList[0].startDate.slice(2, 4);
-        const endmonth =this.projectList[0].startDate.slice(5, 7);
-        const endday = this.projectList[0].startDate.slice(8, 10);
-        return `${startyear}-${startmonth}-${startday} ~ ${endyear}-${endmonth}-${endday}`}
-      return '';
+    //     const endyear = this.projectList[0].startDate.slice(2, 4);
+    //     const endmonth =this.projectList[0].startDate.slice(5, 7);
+    //     const endday = this.projectList[0].startDate.slice(8, 10);
+    //     return `${startyear}-${startmonth}-${startday} ~ ${endyear}-${endmonth}-${endday}`}
+    //   return '';
     }
   }
 }
@@ -214,7 +217,7 @@
     padding: auto;
     /* background-color: red; */
     width: 320px;
-    height: 430px;
+    height: 350px;
     padding-right: 10px
   }
 
@@ -227,6 +230,7 @@
   .result{
     margin: 5px;
     padding: 5px;
+    height: 150px;
   }
   
   .myProfile{
