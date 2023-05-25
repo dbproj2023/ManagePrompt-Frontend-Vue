@@ -164,10 +164,8 @@
 <script>
 //  import projects from 'projects'
 // import RangeDatePicker from 'vue-easy-range-date-picker'; 
-import './css/main.css';
 import { Table, TableColumn} from 'element-ui'
-import './css/datepicker/daterangepicker.css'
-import './css/select2/select2.min.css'
+
 
 import axios from "axios"; // http 통신을 위한 라이브러리
 const HOST =  "http://localhost:8080";
