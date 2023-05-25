@@ -25,46 +25,58 @@ export default {
     let isLogin = this.$store.getters.isLogin
     let path = this.$route.path
     let accGrade = this.$store.getters.getAccGrade
+    // let newbie = this.$store.getters.newbie
     console.log("test code ?? : ", this.$route)
 
     console.log("test code App.vue mounted isLogin : ", isLogin)
     console.log("test code App.vue mounted path : ", path)
     console.log("test code App.vue mounted accGrade : ", accGrade)
+    // console.log("test code App.vue mounted 뉴비 : ", 뉴비)
 
-    /* 홈(메인), 로그인 제외 접근 */
+    // 홈(메인), 로그인 제외 나머지 페이지 로그인 후 접근
     if( path != '/' && path != '/Main' && path != '/Login' && isLogin == false ){
       this.$router.push('/Login');
     }
-    /* 신규 직원 등록 시 권한 2 */
+    // 로그인 한 사람 다시 로그인 접근 금지
+    else if( path.startsWith('/Login') && isLogin == true ) {
+      this.$router.go(-1);
+    }
+    // 권한 2(관리자)만 신규 직원 초기 등록 가능
     else if( path.startsWith('/newEnroll') && accGrade != 2 ) {
       console.log("test code /newEnroll")
       alert("접근 권한이 없습니다.");
       this.$router.go(-1);
     }
-    // else if( path.startsWith('/Enroll') && 뉴비 == true ) {
+    // 신규 직원만 회원 정보 등록 페이지 접근 가능
+    // else if( path.startsWith('/Enroll') && accGrade != 9 && newbie == false ) {
     //   console.log("test code /Enroll")
     //   alert("접근 권한이 없습니다.");
     //   this.$router.go(-1);
     // }
-    /* 프로젝트 접근 시 권한 3 미만 */
-    else if( path.startsWith('/Project') && accGrade >= 4 ) {
+    // 권한 2(관리자) 이상 프로젝트 관리 페이지 접근 가능
+    else if( path.startsWith('/Project') && accGrade >= 3 ) {
       console.log("test code /Project")
       alert("접근 권한이 없습니다.");
       this.$router.go(-1);
     }
-    /* 직원관리 접근 시 권한 2 미만 */
+    // 권한 2(관리자) 이상 직원 관리 페이지 접근 가능
     else if( path.startsWith('/Emloyee') && accGrade >= 3 ) {
       console.log("test code /Emloyee")
       alert("접근 권한이 없습니다.");
       this.$router.go(-1);
     }
-    /* 평가 접근 시 권한 3 미만 */
+    // 권한 3(직원) 이상 평가 페이지 접근 가능
     else if( path.startsWith('/Evaluation') && accGrade >= 4 ) {
       console.log("test code /Evaluation")
       alert("접근 권한이 없습니다.");
       this.$router.go(-1);
     }
-    /* 마이페이지 */
+    // 발주처는 마이페이지 접근 금지
+    else if( path.startsWith('/Mypage') && accGrade == 4 ) {
+      alert("접근 권한이 없습니다.");
+      this.$router.go(-1);
+    }
+    // 로그인 한 직원 마이페이지 접근 가능
     else if( path.startsWith('/Mypage') && isLogin == false ) {
       console.log("test code /Mypage")
       alert("로그인해주세요.");

@@ -77,6 +77,7 @@ export default {
                     //     // this.$router.push('/');
                     //     this.$router.go(-1);
                     // }
+                    this.$router.go(-1);
                 }
                 else if( res.data == '' ){
                     alert("로그인에 실패했습니다.")
