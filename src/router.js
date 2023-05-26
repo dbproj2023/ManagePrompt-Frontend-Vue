@@ -7,28 +7,28 @@ import Enroll from './components/component/Enroll.vue'
 import Employee from './components/Employee.vue'
 import Project from './components/Project.vue'
 import Evaluation from './components/Evaluation.vue'
-// import Mypage from './components/component/Mypage.vue'
-import ProDetail from './components/ProjectDetail.vue'
-// // import page2 from './components/.vue'
-import ProjectInput from './components/component/ProjectInput.vue'
-// import Project_detail from './components/component/Project_detail.vue'
-import ProjectModify from './components/component/ProjectModify.vue'
-// // import Change_pw from './components/Change_pw.vue'
-// // import Access from './components/Access.vue'
-import FindAccount from './components/component/FindAccount.vue'
-// import EvalResult from './components/component/EvalResults.vue'
-// import NewEnroll from './components/component/NewEnroll.vue'
-// import cusEval from './components/component/EvaluationCustomer.vue'
+// import Mypage from './components/Mypage.vue'
+import Detail from './components/Detail.vue'
+// import page2 from './components/.vue'
+import ProjectInput from './components/ProjectInput.vue'
+// import Project_detail from './components/Project_detail.vue'
+import ProjectModify from './components/ProjectModify.vue'
+// import Change_pw from './components/Change_pw.vue'
+// import Access from './components/Access.vue'
+import FindAccount from './components/FindAccount.vue'
+// import EvalResult from './components/EvalResults.vue'
+// import NewEnroll from './components/NewEnroll.vue'
+// import cusEval from './components/EvaluationCustomer.vue'
 
 
-const Authentication = () => (to, from, next) => {
-    const isLogin = store.getters['loginStore/isLogin'];
-    if (!isLogin) {
-        next('/login?returnUrl=' + to.fullPath);
-    } else {
-        next();
-    }
-};
+// const Authentication = () => (to, from, next) => {
+//     const isLogin = store.getters['loginStore/isLogin'];
+//     if (!isLogin) {
+//         next('/login?returnUrl=' + to.fullPath);
+//     } else {
+//         next();
+//     }
+// };
 
 
 Vue.use(Router)
@@ -41,48 +41,48 @@ export default new Router({
             component: Main
         },
         {
-            path: '/Login',
+            path: '/login',
             component: Login
         },
         {
-            path: '/Enroll',
+            path: '/enroll',
             component: Enroll
         },
         {
-            path: '/Employee',
+            path: '/employee',
             component: Employee
         },
         {
-            path: '/Project',
+            path: '/project',
             component: Project
         },
         {
-            path: '/Evaluation',
+            path: '/evaluation',
             component: Evaluation
-        }
-        // {
-        //     path: '/Mypage',
-        //     component: Mypage,
+        },
+        {
+            // path: '/mypage',
+            // component: Mypage,
 //            beforeEnter: Authentication()
-        // },
-        ,{
-            path: '/Project/detail/:id',
-            component: ProDetail
+        },
+        {
+            path: '/project/detail/:id',
+            component: Detail
         },
         // {
         //     path: '/Project_detail',
         //     component: Project_detail
         // }
         ,{
-            path: '/ProjectInput',
+            path: '/projectInput',
             component: ProjectInput
         },
         {
-            path: '/Project/:id/Modify',
+            path: '/project/:id/modify',
             component: ProjectModify
         },
         {
-            path: '/FindAccount',
+            path: '/findAccount',
             component: FindAccount
         },
         // {

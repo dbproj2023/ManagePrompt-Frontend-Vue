@@ -72,7 +72,7 @@ export default {
               if (res.status === 200) {
                 console.log("프로젝트 등록 성공!");
                 console.log(res);
-                this.$router.push("/Project");
+                this.$router.push("/project");
               }
             });
         } catch (error) {

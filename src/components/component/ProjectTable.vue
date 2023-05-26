@@ -210,7 +210,7 @@ const HOST =  "http://localhost:8080";
       this.currentPage = page;
     },
     goToProjectInput() {
-      this.$router.push('/ProjectInput');
+      this.$router.push('/projectInput');
     },
       sendData() {
         console.log("dajflak")
@@ -247,7 +247,7 @@ const HOST =  "http://localhost:8080";
     },
     navigateToDetail(id) {
       console.log("나 여깄어")
-      this.$router.push(`/Project/detail/${id}`);
+      this.$router.push(`/project/detail/${id}`);
     },
     onChange(e) {
       this.searchType = e.target.value;

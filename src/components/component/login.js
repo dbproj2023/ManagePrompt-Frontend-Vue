@@ -8,14 +8,14 @@ const loginStore = {
 	namespaced: true,
 	state: {
         auth_id: "",
-        accessToken: ""
+        accessToken: "",
+        // newbie: ""
 	},
 	getters: {
         // 로그인 여부를 가져옵니다.
         isLogin(state) {
             return state.accessToken == "" ? false : true;
         },
-        
 	},
 	mutations: {
         // auth_id를 설정합니다.
@@ -26,6 +26,10 @@ const loginStore = {
         setAccessToken(state, accessToken) {
             state.accessToken = accessToken;
         },
+        // newbie를 설정합니다.
+        // setNewbie(state, newbie) {
+        //     state.newbie = newbie;
+        // }
         // 초기화시킵니다.
         reset(state) {
             state.auth_id = '';
@@ -43,6 +47,7 @@ const loginStore = {
                     console.log("로그인되었습니다.");
                     commit('setAuthId', memberInfo.id);
                     commit('setAccessToken', res.data.accessToken);
+                    // commit('setNewbie', res.data.newbie);
                     result = true;
                 } else {
                     console.log("로그인되지 않았습니다.");
@@ -66,9 +71,9 @@ const loginStore = {
             });
         },
         // 로그아웃합니다.
-	    // doLogout({commit}) {
-		//     commit('reset');
-        // }
+	    async doLogout({ commit }) {
+		    commit('reset');
+        }
 	}
 };
 
