@@ -129,7 +129,7 @@ export default {
                 console.log("test code /user : ", res)
                 if( res.data == 'success' ){
                     alert("신규 등록이 완료되었습니다. 로그인 화면으로 돌아갑니다.")
-                    this.$router.push({path: './Login'});
+                    this.$router.push({path: './login'});
                 }
             });
         },

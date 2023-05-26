@@ -25,8 +25,6 @@
     data() {
       return {
       }
-    },
-    methods: {
     }
   };
   </script>
@@ -35,7 +33,6 @@
   div {
     flex: 1200px;
   }
-  
   h3 {
     left: 500px;
     margin: 30px;

@@ -194,7 +194,7 @@
 
 
 <script>
-import ProjectTable from './ProjectTable.vue';
+// import ProjectTable from './ProjectTable.vue';
 import axios from "axios"; // http 통신을 위한 라이브러리
 const HOST =  "http://localhost:8080";
 
@@ -276,7 +276,7 @@ export default {
     },
     methods: {
       goToProjectModify() {
-      this.$router.push(`/Project/${this.project.proId}/Modify`);
+      this.$router.push(`/project/${this.project.proId}/modify`);
     },
       editPeriod(row) {
         this.$set(row, 'isEditing', true);

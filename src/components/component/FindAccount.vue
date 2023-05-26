@@ -7,7 +7,6 @@
       <div>
         <Find_id/>
         <Find_pw/>
-
       </div>
     </div>
   </template>
@@ -21,9 +20,10 @@
       components: {
         Find_id,
         Find_pw
-    
       },
       data() {
+        return {
+        }
       },
       methods: {
       }

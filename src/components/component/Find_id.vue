@@ -6,28 +6,68 @@
         <hr> -->
         <form class="form-inputs" name="find_id_form" method="get">
             아이디 찾기
-            <input type="email" id="emp_email" name="emp_email" size="15" v-model="input.emp_email" placeholder="이메일"/>
-            <!-- <input type="submit" value="확인" @click="check()"> -->
+            <div>
+                <input type="email" id="emp_email" name="emp_email" v-model="emp_email" placeholder="이메일"/>
+                <input type="button" value="이메일 인증 발송" @click="sendToEmail()">
+            </div>
+            <div>
+                <input type="text" id="verify_code" name="verify_code" v-if="input_visible" v-model="verify_code" placeholder="인증코드"/>
+                <input type="button" value="인증번호 확인" v-if="input_visible" @click="checkVerifyCode()">
+            </div>
         </form>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
-            input: {
-                emp_email: ""
-            }
+            emp_email: "",
+            input_visible: false,
+            verify_code: ""
         }
     },
     methods: {
-        check() {
+        sendToEmail() {
+            this.showInput();
+
+            let formData = new FormData();
+            formData.append("email", this.emp_email);
+
+            // 이메일이 DB에 있는 지 확인하고 인증코드 발송하게 해달라고 하기
+            axios.post('/api/v1/auth/help/sendEmail', formData ).then((res) => {
+                if( res.data.status == 1 ){
+                    alert(res.data.message);
+                }
+                else if( res.data.status == 0 ){
+                    alert(res.data.message);
+                }
+            });
+        },
+        showInput() {
+            this.input_visible = true;
+            return;
+        },
+        checkVerifyCode() {
+            let formData = new FormData();
+            formData.append("email", this.emp_email);
+            formData.append("verifyCode", this.verify_code);
+
+            // 인증코드가 일치하면 아이디와 비밀번호를 보내달라고 하기
+            axios.post('/api/v1/auth/help/verifyEmail', formData ).then((res) => {
+                if( res.data.status == 1 ){
+                    alert(res.data.message);
+                    
+                    // this.$router.push('/Login');
+                }
+                else if( res.data.status == 0 ){
+                    alert(res.data.message);
+                }
+            });
         }
-    },
-    // setup() {
-        
-    // },
+    }
 }
 </script>
 
