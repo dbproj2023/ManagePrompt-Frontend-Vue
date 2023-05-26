@@ -27,6 +27,62 @@
       }
     },
     methods: {
+        doLogin() {
+            console.log("test code click doLogin")
+
+            if (this.input.auth_id == "") {
+                alert("아이디를 입력하세요.");
+                this.$refs.memberIdInput.focus();
+                return;
+            } else if (this.input.auth_pw == "") {
+                alert("패스워드를 입력하세요.");
+                this.$refs.memberPasswordInput.focus();
+                return;
+            }
+    
+            // test 소스 권한 0의 경영진
+            // this.input.auth_id = 'qafffwad';
+            // this.input.auth_pw = 'abc01!~!';
+
+            // test 소스 권한 2의 관리자
+            // this.input.auth_id = 'rege1212';
+            // this.input.auth_pw = 'abc01!~!';
+
+            // test 소스 권한 3의 직원
+            // this.input.auth_id = 'awfawfwf';
+            // this.input.auth_pw = 'abc01!~!';
+
+            let formData = new FormData();
+            formData.append("authId", this.input.auth_id);
+            formData.append("authPw", this.input.auth_pw);
+
+            axios.post(`/api/v1/auth/login`, formData ).then((res) => {
+                if( res.data != null && res.data != undefined && res.data != '' ){
+                    alert("로그인에 성공했습니다")
+
+                    this.$store.commit('setLogin', true)
+                    this.$store.commit('setAccGrade', res.data.accessGrade)
+                    console.log("test code isLogin-2 : ", this.$store.getters.isLogin)
+
+                    // // 새로운 직원이면
+                    // if( res.data.isNewbie == true ){
+                    //     // 회원 정보 등록 페이지로 이동
+                    //     this.$router.push('/Enroll')
+                    // }else{
+                    //     // 이전 페이지로 이동
+                    //     // this.$router.push('/');
+                    //     this.$router.go(-1);
+                    // }
+                    this.$router.go(-1);
+                }
+                else if( res.data == '' ){
+                    alert("로그인에 실패했습니다.")
+                }
+            });
+        }
+    },
+    modules: {
+        loginStore: loginStore
     }
   };
   </script>
