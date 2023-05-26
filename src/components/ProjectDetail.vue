@@ -22,7 +22,7 @@ import router from '@/router';
 // import ProjectInput from '../components/ProjectInput.vue'
 import Header from './component/Header.vue';
 import Nav from './component/Nav.vue'
-import Detail from './component/Detail.vue'
+import Detail from './component/component/Detail.vue'
 export default {
   name: "ProjectDetail",
   components:{
