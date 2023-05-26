@@ -39,6 +39,7 @@ export default {
   }
 };
 </script>
+
 <style>
 
 
@@ -73,6 +74,8 @@ export default {
 
 .addButton {
   color: #394F85;
+  height: 30px;
+  width: 100px;
   background-color: #F4F8F8 !important;
 }
 
@@ -92,19 +95,20 @@ export default {
 }
 
 /* Update the styles for the background */
-.v-content{
+
+.v-content {
+  position: relative;
   background-color: #F8F9FA;
 }
 
-.v-content:before
- {
+.v-content:before {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 300px;
-  background-color:#33508A;
+  background-color: #33508A;
 }
 
 

@@ -75,7 +75,7 @@ export default {
 }
 
 .addButton {
-
+  
   color: white !important;
   background-color: #394F86 !important;
 }

@@ -1,17 +1,25 @@
 <template>
   <div class="header">
     <div class="icon">
-<!-- v-if="isLogin" -->
-      <span  class="material-symbols-outlined group-icon" :style="{ color: iconColor }" >group
-      </span>
 
-      <!-- <span v-else class="material-symbols-outlined">login</span>
-      <span class="material-symbols-outlined arrow-icon" @click="showDropdown">arrow_drop_down</span>
-      <ul v-if="isDropdownVisible" class="dropdown-menu">
-        <li>마이페이지</li>
-        <li>Logout</li>
-      </ul> -->
-    </div>
+  
+      <!-- 로그인 안했을 때 -->
+      <!-- <div class="login-container">
+        <div class="login-text" @click="goToLogin">
+          <i class="login-title fa-solid fa-right-to-bracket fa-2xs" style="color: #ffffff;"></i>
+          <span class="header-text">Sign in</span>
+        </div>
+      </div> -->
+
+
+      <!-- 로그인 했을 때 -->
+      <div class="login-container" @click="showDropdown">
+      <i class="fa-solid fa-circle-user" style="color: #ffffff;"></i>
+      <span  class="header-text">{{ this.myName }}</span>
+      </div>
+
+
+  </div>
   </div>
 </template>
 
@@ -27,21 +35,42 @@
 </style>
 
 <script>
+import axios from "axios"; // http 통신을 위한 라이브러리
+const HOST =  "http://localhost:8080";
 export default {
   name: "Header",
   data() {
     return {
       isDropdownVisible: false,
       iconColor: '#AAB1B8',
-      isLoggedIn: false
+      isLoggedIn: false,
+      myName: ''
+
     };
   },
+  mounted(){
+    const apiUrl = `${HOST}/api/v1/user/info/read`;
+    try {
+    const url = new URL(apiUrl);
+    console.log('URL:', url);
+    axios.get(apiUrl).then((res) => {
+      console.log('API response:', res.data);
+      this.myName = res.data.emp_name;
+    });
+  } catch (error) {
+    console.error('Invalid API URL:', apiUrl);
+    console.error(error);
+  }
+
+  },
   methods: {
-    
     showDropdown: function() {
       this.isDropdownVisible = !this.isDropdownVisible;
       console.log(this.isDropdownVisible);
     },
+    goToLogin: function(){
+      this.$router.push({path: './login'});
+    }
   },
 };
 </script>
@@ -73,4 +102,40 @@ export default {
 .dropdown-menu li:hover {
   background-color: #f5f5f5;
 }
+
+.material-symbols-outlined,
+span {
+  color: white;
+  font-size: 18px; 
+  text-align: center;
+}
+
+.header-text{
+  padding-left: 10px;
+  font-family: 'ONE-Mobile-Title';
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Adjust the height as needed */
+}
+
+.login-text {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.login-title {
+  margin-right: 5px;
+}
+
+.header-text {
+  color: #ffffff;
+}
+
+
+
 </style>

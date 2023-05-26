@@ -68,6 +68,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: hidden; 
+
 }
 
 .navbar {
@@ -122,6 +124,9 @@
   border-radius: 50px;
   margin: 5px 0;
   transition: background-color 0.3s, color 0.3s;
+  font-family: 'D2Coding';
+  font-size: 10px;
+  line-height: 1; /* Adjust the value as needed */
 }
 
 .nav-item.active {
@@ -141,7 +146,7 @@
 }
 
 .nav-item:hover {
-  background-color: #99a3bf;
+  background-color: #becdf7;
   color: white;
 }
 
@@ -150,24 +155,19 @@
   margin-left: 4px;
 }
 
+span{
+  padding-left: 10px;
+  color:black
+}
 .navbar .nav-item i {
   margin-right: 8px;
   color: black; /* Change the icon color to black */
 }
 
-.navbar .nav-item i.fa-user {
-  font-size: 16px;
-}
 
-.navbar .nav-item i.fa-file-alt {
-  font-size: 15px;
-}
-
-.navbar .nav-item i.fa-users {
-  font-size: 14px;
-}
 
 .navbar.transparent-bg {
   background-color: white!important; /* Set the background to transparent */
 }
+
 </style>

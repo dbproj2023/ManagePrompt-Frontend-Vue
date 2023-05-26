@@ -1,10 +1,10 @@
 <template>
   <div>
-    <b-card class="center-card">
+    <b-card class="center-card" style="width: 1200px">
     <div>
       <hr style="border: solid 1px; color: #1D3876">  
       <!-- 검색창 -->
-      <b-container class="bv-example-row" style="display: flex">
+      <b-container class="bv-example-row" style="display: flexwidth: 1000px">
         <div>
         <b-row>
           <b-col class="col-3.5">
@@ -31,9 +31,9 @@
           </b-col>
           
           <b-col class="col-7" style="display: flex; align-items: center;" >
-           <b-form-datepicker class="input-data" v-model="startDate" placeholder="시작일시" style="width:250px; margin-right: 5px;"  @input="handleDateInput"></b-form-datepicker>
+           <b-form-datepicker class="input-data" v-model="startDate" placeholder="시작일시" style="width:250px; height: 50px; margin-right: 5px;"  @input="handleDateInput"></b-form-datepicker>
             ~ 
-            <b-form-datepicker class="input-data" v-model="endDate" placeholder="종료일시" style="width:250px; margin-left: 5px;"></b-form-datepicker>
+            <b-form-datepicker class="input-data" v-model="endDate" placeholder="종료일시" style="width:250px;  height: 50px; margin-left: 5px;"></b-form-datepicker>
           </b-col>
         
         
