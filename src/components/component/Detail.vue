@@ -188,7 +188,7 @@
 
 
 <script>
-import ProjectTable from './ProjectTable.vue';
+// import ProjectTable from './ProjectTable.vue';
 import axios from "axios"; // http 통신을 위한 라이브러리
 const HOST =  "http://localhost:8080";
 
