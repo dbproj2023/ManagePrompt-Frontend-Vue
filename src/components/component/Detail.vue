@@ -1,5 +1,5 @@
 <template>
-<div class="wrapper">
+<div>
   <div class="spinner-div" v-if="isLoading">
           로딩중 !
   </div>
@@ -8,8 +8,8 @@
     <div class="card-warpper">
       <div class="card-warpper1"> 
         <div>
-        <b-card class="table-card" title="프로젝트 참여 직원" style="width: 560px; height: 340px;">
-
+        <b-card class="table-card" style="width: 560px; height: 340px;">
+          <h8>프로젝트 정보</h8>
         <div class="flex-table" style="margin-top: 20px;">
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트 이름</div>
@@ -51,16 +51,20 @@
         </div>
     </div>
     <div class="button-container">
-
-      <b-button @click="goToProjectModify" style="margin-top: 10px">프로젝트 수정</b-button>
+      <button class="login100-form-btn pro-button" type="button" @click="goToProjectModify">프로젝트 수정</button>
+      <!-- <b-button @click="goToProjectModify" style="margin-top: 10px">프로젝트 수정</b-button> -->
     </div>
 
         </b-card>
     </div>
      <!-- 1-2번 card -->
      <div style="margin-top: 20px;">
-          <b-card class="table-card" title="프로젝트 참여 직원" style="width: 560px; height: 340px; overflow: auto;">
-            <el-table class="table-responsive table text-center" header-row-class-name="thead-light"  :data="project.participantList" @selection-change="handleSelectionChange">
+          <b-card class="table-card" style="width: 560px; height: 320px; overflow: auto;">
+            <h8>프로젝트 참여 직원</h8>
+            <br>
+            <br>
+          
+            <el-table class="table-responsive table text-center" header-row-class-name="thead-light"  :data="project.participantList" @selection-change="handleSelectionChange"  size="small">
             <el-table-column type="selection" width="20px"></el-table-column>
 
             <el-table-column label="사번" min-width="100px" prop="name">
@@ -94,11 +98,9 @@
               </template>
             </el-table-column>
 
-
             </el-table>
             <div class="button-container">
-              
-              <b-button @click="modifyRow">수정</b-button>
+              <button class="login100-form-btn pro-button" type="button" @click="modifyRow">직원 수정</button>
                 <b-modal id="modal-1" title="프로젝트 직원 관리">
                   <p class="my-4">해당 직원을 프로젝트에서 수정하시겠습니까?</p>
                 </b-modal>
@@ -110,7 +112,8 @@
         
          <!-- 2번 card -->
       <div class="card-wrapper2">
-        <b-card class="table-card" title="직원 정보 조회" style="width: 670px; height: 685px;">
+        <b-card class="table-card" style="width: 600px; height: 685px;">
+          <h8>직원 정보 조회</h8>
           <div class="employee-search-bar" style="display:flex; align-items: center;">
             <div style="margin-right: 10px; width: 150px">
               <select name="cards_id"  class="form-select form-control"  v-model="selectedValue">
@@ -124,11 +127,11 @@
               <b-form-input v-model="searchValue" placeholder="Enter your name"></b-form-input>
             </div>
             <div>         
-              <b-button @click="sendData" style="margin-left: 5px; width:80px;"> 검색 </b-button>
+              <button @click="sendData" class="login100-form-btn pro-button search-button" type="button">검색</button>
             </div>
           </div>
           <div>
-            <el-table v-if="employees.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="employees" @selection-change="handleSelectionChange">
+            <el-table v-if="employees.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="employees" @selection-change="handleSelectionChange"  size="small">
               <el-table-column type="selection" width="20px"></el-table-column>
             
               <el-table-column label="사번" min-width="43px" prop="name">
@@ -170,7 +173,8 @@
 
 
             <div class="button-container">
-              <b-button  v-b-modal.modal-2 >추가</b-button>
+              <button  v-b-modal.modal-2 class="login100-form-btn pro-button" type="button">직원 추가</button>
+              <!-- <b-button  v-b-modal.modal-2 >추가</b-button> -->
               <b-modal id="modal-2" title="프로젝트 직원 관리" @ok="logSelectedData">
                 <p class="my-4">해당 직원을 프로젝트에 추가하시겠습니까?</p>
               </b-modal>
@@ -219,6 +223,7 @@ export default {
       }
   },
   mounted(){
+    console.log("dajkflkjlskjalkjflkajflak")
     const apiUrl = `${HOST}/api/v1/proj/${this.$route.params.id}`;
     const apiUrl2 = `${HOST}/api/v1/user/search/`;
 
@@ -510,7 +515,7 @@ export default {
 
 <style scoped>
 
-h3 {
+h10 {
   left: 500px;
   margin: 30px;
 }
@@ -522,22 +527,23 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-.card-warpper{
-  display: flex;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 200px;
-  top: 50px;
-  padding: 30px;
-  background-color: #f5f8f9;;
-  /* overflow: auto; 수직 스크롤 생성 */
-}
+
 
 .table{
   font-size: small;
 }
 
+.card-warpper{
+  display: flex;
+  position: absolute;
+  /* width: 100%; */
+  /* height: 100%; */
+  /* left: 200px; */
+  /* top: 50px; */
+  padding: 30px;
+  background-color: #f5f8f9;;
+  /* overflow: auto; 수직 스크롤 생성 */
+}
 
 /* .card {
     background: white;
@@ -549,7 +555,7 @@ li {
     margin: 10px;
     padding: 20px;
     box-shadow: 0 20px 40px 0 rgba(204, 204, 204, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     position: relative;
 } */
@@ -584,7 +590,7 @@ li {
   height: 0px;
   margin-right: 10px;
   background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  border: 0.5px solid #ccc;
   padding: 8px;
   font-size: 14px;
   color: #333;
@@ -613,26 +619,31 @@ li {
 .flex-table {
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
+  border: 0.5px solid #F6F6F6; /* Set a lighter border color */
   border-collapse: collapse;
   font-size: small;
 }
 
 .flex-row {
   display: flex;
+  border: 0.5px solid #F6F6F6; /* Set a lighter border color */
+
 }
 
 .flex-header{
   /* font-weight: bold; */
-  background-color: #f0f0f0;
+  border: 0.5px solid #F6F6F6; /* Set a lighter border color */
+  background-color: #E8ECEC;
 }
 
 .flex-cell {
   flex: 1;
   padding: 8px;
-  border: 1px solid #ccc;
+  /* border: 0.5px solid #ccc; */
   white-space: pre-wrap;
   text-align: center;
+  border: 0.5px solid #F6F6F6; /* Set a lighter border color */
+
 }
 
 .table-card{
@@ -640,8 +651,29 @@ li {
   overflow-y: scroll;
 }
 
-.wrapper{
-  flex: 1200px;
+.pro-button {
+  margin-top: 10px;
+  width: 120px;
+  height: 30px;
+  background-color: #c1d9db;
+  /* #33508A; */
+  color: rgb(76, 73, 73);
+  font-size: 12px;
+}
+
+.table-responsive {
+  max-height: 500px; 
+  overflow-y: auto;
+}
+
+.table-responsive .el-table__row {
+  height: 20px; /* Adjust the desired row height here */
+}
+
+.search-button{
+  margin-left: 5px; 
+  height: 35px; 
+  width:100px;
 }
 
 </style>

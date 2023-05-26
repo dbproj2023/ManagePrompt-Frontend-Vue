@@ -9,6 +9,7 @@ const { defineConfig } = require('@vue/cli-service')
 // 백앤드 연동
 module.exports = {
   lintOnSave: false,
+
   devServer: {
     proxy: {
       "/api": { //'/api'가 들어오면 포트 3000(스프링 서버)로 보낸다
@@ -20,7 +21,12 @@ module.exports = {
       },
     },
   },
+
   outputDir: "../backend/public",
+
+  transpileDependencies: [
+    'vuetify'
+  ]
 };
 
 

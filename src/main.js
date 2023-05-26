@@ -32,13 +32,25 @@ Vue.component('b-card', BCard)
 
 import store from './store'
 
+import vuetify from './plugins/vuetify'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/css/v4-shims.css';
+
+
+
+
 Vue.prototype.$http = axios;
 Vue.use(axios);
+Vue.use(Vuetify);
 
 Vue.config.productionTip = false
 
 new Vue({
   router,
   render: h => h(App),
+  vuetify: new Vuetify(),
   store
 }).$mount('#app')

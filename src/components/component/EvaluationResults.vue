@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div>
     <div class="result-container">
       <div class="result">
         <b-card class="avgresult" title="평가결과 종합" >
@@ -105,7 +105,7 @@
               this.rating['communirating'].push(parsingdata[j].communicationRating);
             }
           }
-          isLoading: false;
+          false;
 
           if (this.pmrating.communirating.length===0){
             this.PMratingP = 0

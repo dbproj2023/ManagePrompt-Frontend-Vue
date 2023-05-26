@@ -106,7 +106,7 @@
     import { Table, TableColumn } from 'element-ui'
     
     export default {
-        name: 'light-table',
+        name: 'employeeTable',
         components: {
             [Table.name]: Table,
             [TableColumn.name]: TableColumn

@@ -1,25 +1,16 @@
 <template>
-  <div id ="app">
-    <Header/>
-    <div class="wrap">
-      <div class="menu-wrap">
-        <Nav/>
-      </div>
+  <v-app id ="app">
       <router-view/>
-    </div>
-  </div>
+
+  </v-app>
 </template>
 
 <script>
 // import Nav from './views/nav';
-import Nav from './components/Nav.vue'
-import Header from './components/Header.vue'
-
 export default {
   name: 'App',
   components: {
-    Nav, 
-    Header
+
   },
   mounted(){
     let isLogin = this.$store.getters.isLogin
@@ -101,6 +92,8 @@ export default {
     font-weight: normal;
     font-style: normal;
 }
+
+
 
 @font-face {
     font-family: 'GongGothicMedium';
