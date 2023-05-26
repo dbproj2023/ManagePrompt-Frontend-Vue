@@ -136,7 +136,7 @@
     justify-content: center;
     align-items: center;
     padding: 15px;
-    background: #E2EFF0;
+    background:#33508A;
   }
 
   .wrap-login100 {

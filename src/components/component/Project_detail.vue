@@ -258,7 +258,7 @@ li {
   left: 280px;
   top: 50px;
   padding: 30px;
-  background-color: #f5f8f9;
+  background-color: #ffffff;
   /* overflow: auto; 수직 스크롤 생성 */
 }
 

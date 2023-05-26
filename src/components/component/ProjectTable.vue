@@ -59,7 +59,6 @@
         </b-row>
         </div>
         <div>
-          <button @click="sendData" class="login100-form-btn pro-button addButton" type="button"  style="height: px; width: 100px">검색</button>
 
         </div>
 
@@ -72,9 +71,11 @@
       <hr style="color: #1D3876;"/>
     </div>
 
-
-    <button @click="goToProjectInput" class="login100-form-btn pro-button addButton" type="button">프로젝트 추가</button>
-
+    <div style="display: flex; justify-content: flex-end;">
+      <button @click="sendData" class="login100-form-btn pro-button addButton" style="width: 200px" type="button">검색</button>
+      <button @click="goToProjectInput" class="login100-form-btn pro-button addButton" style="width: 200px" type="button">프로젝트 추가</button>
+    </div>
+   
     
     <div class="spinner-div" v-if="isLoading">
       <b-card class="ProjectTableCard" style="min-height: 450px;">
@@ -295,47 +296,28 @@ const HOST =  "http://localhost:8080";
 
 }
 </script>
-
 <style>
-
-.wrapper{
+.wrapper {
   background-color: #E3F5F5;
 }
+
 .button-container {
   display: flex;
   justify-content: flex-end;
-  /* margin-bottom: auto; */ 
 }
 
-
-.small-input{
+.small-input {
   width: 100px;
 }
 
 .option .form-control {
-  /* Add your styles here */
-  /* Example styles */
   height: 27.9px;
   padding: 4px;
 }
 
 .option .form-control:focus {
-  /* Add your styles here */
-  /* Example styles */
   box-shadow: none;
   border-color: #aaa;
-}
-
-.ProtectTableCard {
-  overflow-y: scroll;
-}
-
-b-form-datepicker {
-  width: 150px;
-}
-
-.b-card{
-  background-color: aliceblue;
 }
 
 .ProjectTableCard {
@@ -345,31 +327,30 @@ b-form-datepicker {
 
 .custom-header th {
   color: #1D3876;
-  background-color: #F4F8F8 !important; /* Update with your desired background color */
+  background-color: #F4F8F8 !important;
 }
 
-
-.addButton{
+.addButton {
   color: #1D3876;
-  background-color: #F4F8F8 !important; 
+  background-color: #F4F8F8 !important;
 }
 
 .center-card {
-overflow: hidden;
-width: 1200px;
-height: 800px;
-border-radius: 10px;
-margin: auto;
-padding: 54px 65px 60px 65px;
-justify-content: center;
-align-items: center;
-
-border-radius: 10px;
-overflow: hidden;
-background-color: #fff;
-padding: 54px 65px 60px 65
+  overflow: hidden;
+  width: 1200px;
+  height: auto;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgb(237, 240, 242);
+  position: relative;
 }
 
 
+
+.ProjectTableCard {
+  border: none !important;
+  border-radius: 10px;
+}
 
 </style>

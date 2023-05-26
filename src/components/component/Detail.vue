@@ -1,8 +1,14 @@
 <template>
 <div>
+     
   <div class="spinner-div" v-if="isLoading">
-          로딩중 !
-  </div>
+  <b-card class="ProjectTableCard" style="min-height: 800px;">
+    <div class="spinner-container" style="padding-top: 300px;">
+      <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
+    </div>
+  </b-card>
+</div>
+
 
   <div v-else>
     <div class="card-warpper">
@@ -536,12 +542,12 @@ li {
 .card-warpper{
   display: flex;
   position: absolute;
+  padding-top: 30px;
   /* width: 100%; */
   /* height: 100%; */
   /* left: 200px; */
   /* top: 50px; */
-  padding: 30px;
-  background-color: #f5f8f9;;
+  /* background-color: #ffffff;; */
   /* overflow: auto; 수직 스크롤 생성 */
 }
 
@@ -567,7 +573,8 @@ li {
 }
 
 .card-warpper1{
-  padding-right: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
   overflow-y: scroll;
   
 }
@@ -601,6 +608,14 @@ li {
   border-color: #aaa;
   box-shadow: 0 0 3px #aaa;
 }
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 
 .option .form-control {
   /* Add your styles here */
@@ -655,9 +670,10 @@ li {
   margin-top: 10px;
   width: 120px;
   height: 30px;
-  background-color: #c1d9db;
+  background-color: #394F85;
+  /* background-color: #c1d9db; */
   /* #33508A; */
-  color: rgb(76, 73, 73);
+  color: white;
   font-size: 12px;
 }
 

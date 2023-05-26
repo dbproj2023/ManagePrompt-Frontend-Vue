@@ -1,6 +1,6 @@
 <template>
     <v-app>
-      <v-content style="background-color:#F5F5F5;">
+      <v-content style="background-color: #394F86">
         <v-container fluid>
           <Login/>
         </v-container>
