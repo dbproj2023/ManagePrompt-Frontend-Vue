@@ -1,11 +1,23 @@
 <template>
-  <div>
-    <b-navbar variant="faded" type="light">
+  <div class="nav-wrapper">
       <b-navbar-brand href="/">
-        <img src="../assets/img/logo.png" height="80px" width="250px" class="d-inline-block align-center" alt="Logo">
+        <v-img
+          :src="require('../assets/img/logo.svg')"
+          class="my-3"
+          contain
+          height="50"
+        />      
       </b-navbar-brand>
-    </b-navbar>
+    
+      <hr>
 
+<<<<<<< HEAD
+    <b-nav class="nav-links">
+      <b-nav-item :active="$route.path === '/project'" to="/project" class="nav-item">
+        <i class="fas fa-list-alt"></i>
+        <span class="nav-text">프로젝트 관리</span>
+      </b-nav-item>
+=======
     <div class="nav">
       <ul>
         <b-navbar-nav>
@@ -18,8 +30,25 @@
             ]" :style="{ color: ($route.path === '/project') ? '#82CACC' : 'gray' }">list_alt</span>
             <span :class="[{'align-middle': true, 'text': $route.path !== '/project', 'text-active': $route.path === '/project' }]">프로젝트 관리</span>
           </b-nav-item>
+>>>>>>> 4add1340f7bc76c17421e305a3cbbbeed0f37d91
 
+      <b-nav-item :active="$route.path === '/employee'" to="/employee" class="nav-item">
+        <i class="fas fa-users"></i>
+        <span class="nav-text">직원 관리</span>
+      </b-nav-item>
 
+<<<<<<< HEAD
+      <b-nav-item :active="$route.path === '/evaluation'" to="/evaluation" class="nav-item">
+        <i class="fas fa-file-alt"></i>
+        <span class="nav-text">평가 보고서 조회</span>
+      </b-nav-item>
+
+      <!-- <b-nav-item :active="$route.path === '/mypage'" to="/mypage" class="nav-item">
+        <i class="fas fa-user"></i>
+        <span class="nav-text">마이페이지</span>
+      </b-nav-item> -->
+    </b-nav>
+=======
           <b-nav-item :class="{ active: $route.path === '/employee' }" href="/employee">
             <span :class="[
               'material-symbols-outlined',
@@ -52,78 +81,68 @@
         </b-navbar-nav>
       </ul>
     </div>
+>>>>>>> 4add1340f7bc76c17421e305a3cbbbeed0f37d91
   </div>
 </template>
-
-<style>
-@font-face {
-  font-family: 'LotteMartDream';
-  font-style: normal;
-  font-weight: 600;
-  src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff');
+<style scoped>
+.nav-wrapper {
+  margin: 15px;
+  height: 700px;
+  background-color: #FDFDFD;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.nav {
-  width: 200px;
-  height: 100%;
-  flex: 3;
-  background-color: white;
-  font-weight: 100;
-  text-align: left;
+.navbar {
+  margin-bottom: 20px;
 }
 
-
-.icon-spacing {
-  margin-right: 10px;
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.align-middle {
-  vertical-align: middle;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  color: #AAB1B8 ;
+.nav-links .nav-item {
+  display: flex;
+  align-items: center;
+  color: black; /* Change the font color to black */
+  border-radius: 20px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s, color 0.3s;
+  padding: 5px 10px;
 }
 
-.span{
-  font: gray;
+.nav-links .nav-item:hover {
+  background-color: #acb8d8;
+  color: white;
 }
 
-.gray-icon {
-  color: gray;
+.nav-text {
+  margin-left: 8px;
 }
 
-.text{
-  font-family: "LotteMartDream";
-}
-/* 
-.active {
-  background-color: red;
-} */
-
-
-.text-active {
-  color: #1D3876; /* Update with the desired color for active text */
-  font-weight: 500;
+.navbar .nav-item i {
+  margin-right: 8px;
+  color: black; /* Change the icon color to black */
 }
 
-
-.material-symbols-outlined {
-  color: #AAB1B8; /* Default icon color */
+.navbar .nav-item i.fa-user {
+  font-size: 16px;
 }
 
-.material-symbols-solid {
-  color: #000000; /* Update with the desired color for active icons */
+.navbar .nav-item i.fa-file-alt {
+  font-size: 15px;
 }
 
+.navbar .nav-item i.fa-users {
+  font-size: 14px;
+}
+
+.navbar.transparent-bg {
+  background-color: white!important; /* Set the background to transparent */
+}
 </style>
-
-<script>
-export default {
-  name: "Nav",
-  data() {
-    return {
-      
-    }
-  }
-};
-</script>

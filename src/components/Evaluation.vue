@@ -1,14 +1,13 @@
 <template>
     <v-app>
-      <v-navigation-drawer v-model="drawer" app width="250px">
-      <Nav/>
+      <v-navigation-drawer v-model="drawer" app width="250px" class="no-border" style=" background-color: #F8F9FA;">
+      <Nav />
     </v-navigation-drawer>
+    <v-app-bar app style="background-color: #33508A;">
+      <Header />
+    </v-app-bar>
   
-      <v-app-bar app style="background-color:#F5F5F5;">
-        <Header/>
-      </v-app-bar>
-  
-      <v-content style="background-color:#F5F5F5;">
+      <v-content>
         <v-container fluid>
           <Evaluation/>
         </v-container>

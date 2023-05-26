@@ -39,7 +39,7 @@ import 'vuetify/dist/vuetify.min.css'
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/css/v4-shims.css';
 
-
+import ArgonDashboard from "./argon-dashboard";
 
 
 Vue.prototype.$http = axios;
