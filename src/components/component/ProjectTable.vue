@@ -1,161 +1,153 @@
 <template>
   <div>
+    <b-card class="center-card">
     <div>
-      <hr style="border: solid 1px">  
+      <hr style="border: solid 1px; color: #1D3876">  
       <!-- 검색창 -->
-
-
-
       <b-container class="bv-example-row" style="display: flex">
-
         <div>
-        <b-row style="width:1050px">
-          <b-col class="col-6.3" style="display: flex; align-items: center;">
-          <div style="margin-right: 10px;">일정</div>
-          <b-form-datepicker class="input-data" v-model="startDate" placeholder="시작일시" style="width:250px; margin-right: 5px;"  @input="handleDateInput"></b-form-datepicker>
-            ~ 
-          <b-form-datepicker class="input-data" v-model="endDate" placeholder="종료일시" style="width:250px; margin-left: 5px;"></b-form-datepicker>
-        </b-col>
-        
-          <b-col class="col-5" style="display: flex; align-items: center;" >
-            <div class="search-type" style="margin-right: 10px;">
-              발주금액
-            </div>
-              <b-form-input type="number" v-model="budge_start" placeholder="최소 예산" style="width: 150px; margin-right: 5px;"/>
-              ~
-              <b-form-input type="number" v-model="budge_end" placeholder="최대 예산" style="width: 150px;  margin-left: 5px; margin-right:5px" />
-              원
-          </b-col>
-        </b-row>
-
-        <b-row style="margin-top: 15px; width:1100px;">
-          <b-col class="col-2">
+        <b-row>
+          <b-col class="col-3.5">
             <div>
-              <select v-model="selectedStatus"  @change="onChange($event)" class="form-select form-control" style="width: 130px;">
-              <option value="">년도</option>
-              <option value="진행중">진행중</option>
-              <option value="완료">완료</option>
-              <option value="예정">예정</option>
-              <option value="취소">취소</option>
-              </select>
-            </div>
-          </b-col>
-
-          <b-col class="col-7.5" style="display: flex; align-items: center;">
-            <div style="margin-right: 10px;">
-              프로젝트 명
-            </div>
-            <div>  
-              <b-form-input v-model="proName" placeholder="Enter your name" style="width: 180px ;"></b-form-input>
-            </div>
-          </b-col>
-          <b-col class="col-7.5" style="display: flex; align-items: center;">
-            <div style="margin-right: 10px;">
-              발주처 명 
-            </div>
-            <!-- <div style="margin-right: 10px;">
-              <select name="cards_id" @change="onChange($event)" class="form-select form-control">
-                <option value="">프로젝트명/발주처명</option>
-                <option value="프로젝트명">프로젝트명</option>
-                <option value="발주처명">발주처명</option>
-              </select>
-            </div> -->
-            <div>  
-              <b-form-input v-model="clientName" placeholder="Enter your name" style="width: 180px ;"></b-form-input>
-            </div>
-          </b-col>
-          <b-col  class="col-1.5" style="display: flex; align-items: center;" >
-            <div class="search-type" style="margin-right: 10px;">
-              상태
-            </div>
-            <div>
-              <select v-model="selectedStatus"  @change="onChange($event)" class="form-select form-control" style="width: 130px;">
+              <select v-model="selectedStatus"  @change="onChange($event)" class="form-select form-control">
               <option value="">상태</option>
               <option value="진행중">진행중</option>
               <option value="완료">완료</option>
               <option value="예정">예정</option>
               <option value="취소">취소</option>
+              </select>
+            </div>
+          </b-col>
+
+          <b-col class="col-3.5">
+            <div>
+              <select v-model="selectedStatus"  @change="onChange($event)" class="form-select form-control">
+              <option value="">년도</option>
+              <option value="2021">2021</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
             </select>
             </div>
           </b-col>
+          
+          <b-col class="col-7" style="display: flex; align-items: center;" >
+           <b-form-datepicker class="input-data" v-model="startDate" placeholder="시작일시" style="width:250px; margin-right: 5px;"  @input="handleDateInput"></b-form-datepicker>
+            ~ 
+            <b-form-datepicker class="input-data" v-model="endDate" placeholder="종료일시" style="width:250px; margin-left: 5px;"></b-form-datepicker>
+          </b-col>
+        
+        
+         
+        </b-row>
+
+        <b-row style="margin-top: 15px;">
+          
+          <b-col class="col-3.5" style="display: flex; align-items: center;">            
+            <b-form-input v-model="proName" placeholder="프로젝트명"></b-form-input>
+          </b-col>
+          <b-col class="col-3.5" style="display: flex; align-items: center;">
+            <b-form-input v-model="clientName" placeholder="발주처명">
+            </b-form-input>
+          </b-col>
+          <b-col class="col-7" style="display: flex; align-items: center;" >
+            <b-form-input type="number" v-model="budge_start" placeholder="최소 예산" style="width: 250px; margin-right: 5px;"/>
+            ~
+            <b-form-input type="number" v-model="budge_end" placeholder="최대 예산" style="width: 250px;  margin-left: 5px; margin-right:5px" />
+            원
+          </b-col>
+
         </b-row>
         </div>
         <div>
-          <b-button @click="sendData" style="height: 100px; width: 100px"> 검색 </b-button>
+          <button @click="sendData" class="login100-form-btn pro-button addButton" type="button"  style="height: px; width: 100px">검색</button>
+
         </div>
+
+        <!-- <div>
+          <button @click="goToProjectInput" class="login100-form-btn pro-button addButton" type="button">프로젝트 추가</button>
+
+          <b-button @click="sendData" style="height: 100px; width: 100px"> 검색 </b-button>
+        </div> -->
       </b-container>
-      <hr/>
+      <hr style="color: #1D3876;"/>
     </div>
-    
+
+
+    <button @click="goToProjectInput" class="login100-form-btn pro-button addButton" type="button">프로젝트 추가</button>
+
     
     <div class="spinner-div" v-if="isLoading">
-      로딩중 !
-
+      <b-card class="ProjectTableCard" style="min-height: 450px;">
+        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+          <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
+        </div>
+      </b-card>
     </div>
+
+    
 
     <div v-else style="padding-top: 20px;">
     <!-- 프로젝트 테이블 -->   
     <b-card class="ProjectTableCard">
-      <el-table v-if="projects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="projects">
-            <el-table-column label="프로젝트 이름"
-                             prop="proName"
-                             min-width="100px">
+      <el-table v-if="projects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="pagedProjects">
+            <el-table-column label="프로젝트 이름" prop="proName" min-width="100px" >
             </el-table-column>
 
             <el-table-column label="참여기간" min-width="150px" prop="name">
-                <template v-slot="{row}">
-                  <span class="font-weight-600 name mb-0 text-sm ">{{row.startDate.slice(0,10)}} ~ {{row.endDate.slice(0,10)}}</span>
-                </template>
+             <template v-slot="{row}">
+               <span class="font-weight-600 name mb-0 text-sm ">{{row.startDate.slice(0,10)}} ~ {{row.endDate.slice(0,10)}}</span>
+              </template>
             </el-table-column>
 
+            <el-table-column label="예산" prop="budget" min-width="140px"></el-table-column>
 
-            <el-table-column label="예산"
-                             prop="budget"
-                             min-width="140px">
-            </el-table-column>
+            <el-table-column label="발주처명" prop="clientName" min-width="140px"></el-table-column>
 
 
-            <el-table-column label="발주처명"
-                             prop="clientName"
-                             min-width="140px">
-            </el-table-column>
 
-<!-- 
-            <el-table-column label="Status" min-width="200px" prop="status">
+            <!-- <el-table-column label="Status" min-width="200px" prop="status">
               <template v-slot="{ row }">          
                 <badge class="badge-dot mr-4" type="">
                   <i :class="`bg-${projectStatus(row)[1]}`"></i>
-                  <span class="status" :class="`text-${projectStatus(row)[1]}`">0</span>
+                  <span class="status" :class="`text-${projectStatus(row)[1]}`"></span>
                 </badge>
               </template>
             </el-table-column> -->
-       
+
+            <!-- <el-table-column label="Status" min-width="100px" prop="status"></el-table-column> -->
+
             <el-table-column min-width="50px">
               <template slot-scope="scope">
                 <div class="avatar-group">
                   <img
                     alt="Image placeholder"
                     height="30px"
-                    src="./img/theme/more.png"
+                    src="../assets/img/more.png"
                     @click="navigateToDetail(scope.row.proId)"
                     style="cursor: pointer"
                   >
                 </div>
               </template>
             </el-table-column>
+
+            <el-pagination v-if="projects.length > 0"
+            class="pagination"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            :total="projects.length"
+            @current-change="handlePageChange"
+          ></el-pagination>
         </el-table>
 
         <div v-else style="padding-top: 20px;">
               해당 프로젝트가 없습니다.
         </div>
 
-        <div class="button-container">
-          <b-button @click="goToProjectInput">프로젝트 추가</b-button>
-        </div>
-
         
     </b-card>
   </div>
+</b-card>
+
   </div>
 
   
@@ -164,7 +156,7 @@
 <script>
 //  import projects from 'projects'
 // import RangeDatePicker from 'vue-easy-range-date-picker'; 
-import { Table, TableColumn} from 'element-ui'
+import { Pagination, Table, TableColumn } from 'element-ui';
 
 
 import axios from "axios"; // http 통신을 위한 라이브러리
@@ -174,11 +166,14 @@ const HOST =  "http://localhost:8080";
  export default {
   name: 'ProjectTable',
       components: {
-      [Table.name]: Table,
-      [TableColumn.name]: TableColumn
+        [Pagination.name]: Pagination,
+        [Table.name]: Table,
+        [TableColumn.name]: TableColumn
     },
     data() {
       return {
+        currentPage: 1,
+        pageSize: 10,
         proName: '',
         selectedStatus: '',
         clientName: '',
@@ -192,6 +187,11 @@ const HOST =  "http://localhost:8080";
         }
     },
   computed: {
+    pagedProjects() {
+      const startIndex = (this.currentPage - 1) * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+      return this.projects.slice(startIndex, endIndex);
+    },
     slicedStartDate() {
       if (this.project.startDate && this.project.endDate) {
         const startyear = this.project.startDate.slice(2, 4);
@@ -206,6 +206,9 @@ const HOST =  "http://localhost:8080";
   }
   },
   methods: {
+    handlePageChange(page) {
+      this.currentPage = page;
+    },
     goToProjectInput() {
       this.$router.push('/ProjectInput');
     },
@@ -243,6 +246,7 @@ const HOST =  "http://localhost:8080";
         });
     },
     navigateToDetail(id) {
+      console.log("나 여깄어")
       this.$router.push(`/Project/detail/${id}`);
     },
     onChange(e) {
@@ -294,6 +298,9 @@ const HOST =  "http://localhost:8080";
 
 <style>
 
+.wrapper{
+  background-color: #E3F5F5;
+}
 .button-container {
   display: flex;
   justify-content: flex-end;
@@ -325,6 +332,42 @@ const HOST =  "http://localhost:8080";
 
 b-form-datepicker {
   width: 150px;
+}
+
+.b-card{
+  background-color: aliceblue;
+}
+
+.ProjectTableCard {
+  border: none !important;
+  border-radius: 10px;
+}
+
+.custom-header th {
+  color: #1D3876;
+  background-color: #F4F8F8 !important; /* Update with your desired background color */
+}
+
+
+.addButton{
+  color: #1D3876;
+  background-color: #F4F8F8 !important; 
+}
+
+.center-card {
+overflow: hidden;
+width: 1200px;
+height: 800px;
+border-radius: 10px;
+margin: auto;
+padding: 54px 65px 60px 65px;
+justify-content: center;
+align-items: center;
+
+border-radius: 10px;
+overflow: hidden;
+background-color: #fff;
+padding: 54px 65px 60px 65
 }
 
 

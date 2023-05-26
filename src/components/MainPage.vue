@@ -10,7 +10,7 @@
 
     <v-content style="background-color:#F5F5F5;">
       <v-container fluid>
-        <ProjectTable/>
+        <Main/>
       </v-container>
     </v-content>
   </v-app>
@@ -18,22 +18,19 @@
 
 
 <script>
-import router from '@/router';
-// import ProjectInput from '../components/ProjectInput.vue'
 import Header from './component/Header.vue';
 import Nav from './component/Nav.vue'
-import ProjectTable from './component/ProjectTable.vue'
+import Main from './component/Main.vue'
 export default {
-  name: "Project",
+  name: "MainPage",
   components:{
-    ProjectTable,
+    Main,
     Nav,
     Header
   },
   data() {
     return {
-      drawer: true
-        }
+    }
   },
   methods: {
   }

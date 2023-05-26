@@ -8,9 +8,9 @@
       <Header/>
     </v-app-bar>
 
-    <v-content style="background-color:#F5F5F5;">
+    <v-content style="background-color:#F5F5F5">
       <v-container fluid>
-        <ProjectTable/>
+        <Detail/>
       </v-container>
     </v-content>
   </v-app>
@@ -22,18 +22,20 @@ import router from '@/router';
 // import ProjectInput from '../components/ProjectInput.vue'
 import Header from './component/Header.vue';
 import Nav from './component/Nav.vue'
-import ProjectTable from './component/ProjectTable.vue'
+import Detail from './component/Detail.vue'
 export default {
-  name: "Project",
+  name: "ProjectDetail",
   components:{
-    ProjectTable,
+    Detail,
     Nav,
     Header
   },
   data() {
     return {
+      isLoading: true,
       drawer: true
-        }
+
+    }
   },
   methods: {
   }
@@ -41,9 +43,7 @@ export default {
 </script>
 
 <style scoped>
-div {
-  flex: 1200px;
-}
+
 
 h3 {
   left: 500px;
