@@ -7,7 +7,7 @@ import Enroll from './components/component/Enroll.vue'
 import Employee from './components/Employee.vue'
 import Project from './components/Project.vue'
 import Evaluation from './components/Evaluation.vue'
-// import Mypage from './components/component/Mypage.vue'
+import Mypage from './components/MyPage.vue'
 import ProDetail from './components/ProjectDetail.vue'
 // import page2 from './components/.vue'
 import ProjectInput from './components/component/ProjectInput.vue'
@@ -60,11 +60,11 @@ export default new Router({
             path: '/evaluation',
             component: Evaluation
         },
-        // {
-        //     path: '/mypage',
-        //     component: Mypage,
-        //     beforeEnter: Authentication()
-        // },
+        {
+            path: '/mypage',
+            component: Mypage
+            // beforeEnter: Authentication()
+        },
         {
             path: '/project/detail/:id',
             component: ProDetail

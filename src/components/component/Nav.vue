@@ -112,7 +112,7 @@
 } */
 
 .nav-links .nav-item:hover {
-  background-color: #acb8d8;
+  background-color: #cbd1e3;
   color: white;
 }
 
@@ -121,7 +121,7 @@
   display: flex;
   align-items: center;
   color: #AAB1B8;
-  border-radius: 50px;
+  border-radius: 20px;
   margin: 5px 0;
   transition: background-color 0.3s, color 0.3s;
   font-family: 'D2Coding';
@@ -146,7 +146,7 @@
 }
 
 .nav-item:hover {
-  background-color: #becdf7;
+  background-color: #acb3c4;
   color: white;
 }
 

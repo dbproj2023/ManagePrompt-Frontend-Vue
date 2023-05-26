@@ -70,7 +70,7 @@
             <br>
             <br>
           
-            <el-table class="table-responsive table text-center" header-row-class-name="thead-light"  :data="project.participantList" @selection-change="handleSelectionChange"  size="small">
+            <el-table class="table-responsive table text-center"  header-row-class-name="thead-light"  :data="project.participantList" @selection-change="handleSelectionChange"  size="small">
             <el-table-column type="selection" width="20px"></el-table-column>
 
             <el-table-column label="사번" min-width="100px" prop="name">
@@ -226,6 +226,7 @@ export default {
         },
         communicationRatingList: [],
         performanceRatingList:[],
+        name: 'H8'
       }
   },
   mounted(){
@@ -616,6 +617,9 @@ li {
   height: 100%;
 }
 
+.mb-0 {
+  color: black
+}
 
 .option .form-control {
   /* Add your styles here */
@@ -634,20 +638,20 @@ li {
 .flex-table {
   display: flex;
   flex-direction: column;
-  border: 0.5px solid #F6F6F6; /* Set a lighter border color */
+  border: 0.5px solid #F6F6F6; 
   border-collapse: collapse;
   font-size: small;
 }
 
 .flex-row {
   display: flex;
-  border: 0.5px solid #F6F6F6; /* Set a lighter border color */
+  border: 0.5px solid #F6F6F6; 
 
 }
 
 .flex-header{
   /* font-weight: bold; */
-  border: 0.5px solid #F6F6F6; /* Set a lighter border color */
+  border: 0.5px solid #F6F6F6; 
   background-color: #E8ECEC;
 }
 
@@ -680,6 +684,7 @@ li {
 .table-responsive {
   max-height: 500px; 
   overflow-y: auto;
+  color: black;
 }
 
 .table-responsive .el-table__row {
