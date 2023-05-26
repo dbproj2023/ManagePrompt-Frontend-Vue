@@ -1,15 +1,16 @@
 <template>
   <div class="header">
     <div class="icon">
+<!-- v-if="isLogin" -->
+      <span  class="material-symbols-outlined group-icon" :style="{ color: iconColor }" >group
+      </span>
 
-      <span v-if="isLogin" class="material-symbols-outlined group-icon" :style="{ color: iconColor }" @click="showDropdown">group</span>
-
-      <span v-else class="material-symbols-outlined">login</span>
+      <!-- <span v-else class="material-symbols-outlined">login</span>
       <span class="material-symbols-outlined arrow-icon" @click="showDropdown">arrow_drop_down</span>
       <ul v-if="isDropdownVisible" class="dropdown-menu">
         <li>마이페이지</li>
         <li>Logout</li>
-      </ul>
+      </ul> -->
     </div>
   </div>
 </template>
