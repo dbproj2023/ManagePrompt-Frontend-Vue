@@ -86,7 +86,7 @@ export default new Router({
             component: FindAccount
         },
         // {
-        //     path: '/Eval',
+        //     path: '/eval',
         //     component: EvalResult 
         // },
         // {

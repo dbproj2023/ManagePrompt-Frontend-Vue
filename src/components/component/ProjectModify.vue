@@ -128,7 +128,7 @@ export default {
     }
 
      
-    this.$router.push(`/Project/detail/${this.proId}`);
+    this.$router.push(`/project/detail/${this.proId}`);
     window.location.reload();
     
     }

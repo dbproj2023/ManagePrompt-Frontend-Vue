@@ -9,35 +9,35 @@
     <div class="nav">
       <ul>
         <b-navbar-nav>
-          <b-nav-item :class="{ active: $route.path === '/Project' }" href="/Project">
+          <b-nav-item :class="{ active: $route.path === '/project' }" href="/project">
             <span :class="[
               'material-symbols-outlined',
               'align-middle',
               'icon-spacing',
-              { 'text-active': $route.path === '/Project', 'gray-icon': $route.path !== '/Project' }
-            ]" :style="{ color: ($route.path === '/Project') ? '#82CACC' : 'gray' }">list_alt</span>
-            <span :class="[{'align-middle': true, 'text': $route.path !== '/Project', 'text-active': $route.path === '/Project' }]">프로젝트 관리</span>
+              { 'text-active': $route.path === '/project', 'gray-icon': $route.path !== '/project' }
+            ]" :style="{ color: ($route.path === '/project') ? '#82CACC' : 'gray' }">list_alt</span>
+            <span :class="[{'align-middle': true, 'text': $route.path !== '/project', 'text-active': $route.path === '/project' }]">프로젝트 관리</span>
           </b-nav-item>
 
 
-          <b-nav-item :class="{ active: $route.path === '/Employee' }" href="/Employee">
+          <b-nav-item :class="{ active: $route.path === '/employee' }" href="/employee">
             <span :class="[
               'material-symbols-outlined',
               'align-middle',
               'icon-spacing',
-              { 'text-active': $route.path === '/Employee', 'gray-icon': $route.path !== '/Employee' }
-            ]" :style="{ color: ($route.path === '/Employee') ? '#82CACC' : 'gray' }">recent_actors</span>
-            <span :class="[{'align-middle': true, 'text': $route.path !== '/Employee', 'text-active': $route.path === '/Employee' }]">직원 관리</span>
+              { 'text-active': $route.path === '/employee', 'gray-icon': $route.path !== '/employee' }
+            ]" :style="{ color: ($route.path === '/employee') ? '#82CACC' : 'gray' }">recent_actors</span>
+            <span :class="[{'align-middle': true, 'text': $route.path !== '/employee', 'text-active': $route.path === '/employee' }]">직원 관리</span>
           </b-nav-item>
 
-          <b-nav-item :class="{ active: $route.path === '/Evaluation' }" href="/Evaluation">
+          <b-nav-item :class="{ active: $route.path === '/evaluation' }" href="/evaluation">
             <span :class="[
               'material-symbols-outlined',
               'align-middle',
               'icon-spacing',
-              { 'text-active': $route.path === '/Evaluation', 'gray-icon': $route.path !== '/Evaluation' }
-            ]" :style="{ color: ($route.path === '/Evaluation') ? '#82CACC' : 'gray' }">fact_check</span>
-            <span :class="[{'align-middle': true, 'text': $route.path !== '/Evaluationuation', 'text-active': $route.path === '/Evaluation' }]">평가 보고서 조회</span>
+              { 'text-active': $route.path === '/evaluation', 'gray-icon': $route.path !== '/evaluation' }
+            ]" :style="{ color: ($route.path === '/evaluation') ? '#82CACC' : 'gray' }">fact_check</span>
+            <span :class="[{'align-middle': true, 'text': $route.path !== '/evaluationuation', 'text-active': $route.path === '/evaluation' }]">평가 보고서 조회</span>
           </b-nav-item>
 
           <!-- <b-nav-item :class="{ active: $route.path === '/Mypage' }" href="/Mypagel">
