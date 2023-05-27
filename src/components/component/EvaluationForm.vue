@@ -56,7 +56,7 @@
         </div>
         <hr style="border: solid 0.1px"> 
         <div style="display: flex; padding-top: 20px;">
-          <div style="flex:1; text-align: center;">1</div>
+          <div style="flex:1; text-align: center;">2</div>
           <div style="flex:5">
             <p>이 직원의 팀원 또는 고객과의 협조, 기여, 협상 등을 종합적으로 고려했을 때 커뮤니케이션 능력은 어떠했는가?</p>
             <div style="display: flex;">
@@ -279,6 +279,7 @@ span{
   margin-left: 30px;
 }
 
+
 .evalFrom-card{
   margin-top: 10px;
   height: 600px;
@@ -287,13 +288,34 @@ span{
   margin-left: 30px;
 }
 
-.flex-row{
+.flex-table {
   display: flex;
+  flex-direction: column;
+  border: 0.5px solid #F6F6F6; 
+  border-collapse: collapse;
+  font-size: small;
 }
+
+.flex-row {
+  display: flex;
+  border: 0.5px solid #F6F6F6; 
+
+}
+
 .flex-header{
   /* font-weight: bold; */
-  background-color: #f0f0f0;
-  border: 0.6px solid #ccc;
+  border: 0.5px solid #F6F6F6; 
+  background-color: #E8ECEC;
+}
+
+.flex-cell {
+  flex: 1;
+  padding: 8px;
+  /* border: 0.5px solid #ccc; */
+  white-space: pre-wrap;
+  text-align: center;
+  border: 0.5px solid #F6F6F6; /* Set a lighter border color */
+
 }
 
 .button-container {
@@ -302,15 +324,6 @@ span{
   /* margin-bottom: auto; */ 
 }
 
-.flex-cell {
-  flex: 1;
-  padding: 8px;
-  border: 0.6px solid #ccc;
-  white-space: pre-wrap;
-  text-align: center;
-}
 
-.Evaluation{
-  background-color: #f5f8f9;
-}
+
 </style>

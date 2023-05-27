@@ -1,7 +1,25 @@
 <template>
   <div id="Main">
       <div id="Main-head">
-          Mainsslskskk
+          dd
+      </div>
+
+      <div class="card1">
+        <b-card class="mini-card" >
+          
+        </b-card>
+
+        <b-card class="mini-card">
+
+        </b-card>
+
+        <b-card class="mini-card">
+
+        </b-card>
+        
+        <b-card class="mini-card">
+
+        </b-card>
       </div>
 
   </div>
@@ -11,6 +29,15 @@
 <style scoped>
 div {
   flex: 1200px;
+}
+.card1{
+  display: flex;
+}
+.mini-card{
+  width: 300px;
+  height: 130px;
+  margin: 5px;
+  border-radius: 20px;
 }
 </style>
 

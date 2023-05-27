@@ -54,6 +54,11 @@
           </b-nav-item> -->
         </b-navbar-nav>
 
+
+        <ul>
+          <li href="/ev"></li>
+        </ul>
+
     </div>
   </div>
 </template>

@@ -9,7 +9,7 @@
         <b-row>
           <b-col class="col-3.5">
             <div>
-              <select v-model="selectedStatus"  @change="onChange($event)" class="form-select form-control">
+              <select v-model="selectedStatus" style=" height: 50px;"  @change="onChange($event)" class="form-select form-control">
               <option value="">상태</option>
               <option value="진행중">진행중</option>
               <option value="완료">완료</option>
@@ -21,7 +21,7 @@
 
           <b-col class="col-3.5">
             <div>
-              <select v-model="selectedStatus"  @change="onChange($event)" class="form-select form-control">
+              <select v-model="selectedYear" style=" height: 50px;" @change="onChange($event)" class="form-select form-control">
               <option value="">년도</option>
               <option value="2021">2021</option>
               <option value="2022">2022</option>
@@ -96,7 +96,7 @@
 
             <el-table-column label="참여기간" min-width="150px" prop="name">
              <template v-slot="{row}">
-               <span class="font-weight-600 name mb-0 text-sm ">{{row.startDate.slice(0,10)}} ~ {{row.endDate.slice(0,10)}}</span>
+               <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC">{{row.startDate.slice(0,10)}} ~ {{row.endDate.slice(0,10)}}</span>
               </template>
             </el-table-column>
 
@@ -115,7 +115,7 @@
               </template>
             </el-table-column> -->
 
-            <!-- <el-table-column label="Status" min-width="100px" prop="status"></el-table-column> -->
+            <el-table-column label="진행상태" min-width="100px" prop="status"></el-table-column>
 
             <el-table-column min-width="50px">
               <template slot-scope="scope">
@@ -177,6 +177,7 @@ const HOST =  "http://localhost:8080";
         pageSize: 10,
         proName: '',
         selectedStatus: '',
+        selectedYear: '',
         clientName: '',
         startDate: '',
         endDate: '',
