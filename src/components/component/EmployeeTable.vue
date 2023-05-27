@@ -7,15 +7,15 @@
                     <b-row style="width: 1050px;">
                         <b-col class="col-6.3" style="display: flex; align-items: center;">
                             <div style="margin-right: 10px;">프로젝트 참여 기간</div>
-                            <b-form-datepicker class="input-data" v-model="inputDate" placeholder="투입일자" style="width:250px; margin-right: 5px;"  @input="handleDateInput"></b-form-datepicker>
+                            <b-form-datepicker class="input_date" v-model="inputDate" placeholder="투입일자" style="width:250px; margin-right: 5px;"  @input="handleDateInput"></b-form-datepicker>
                             ~
-                            <b-form-datepicker class="input-data" v-model="outputDate" placeholder="탈출일자" style="width:250px; margin-left: 5px;"></b-form-datepicker>
+                            <b-form-datepicker class="output_date" v-model="outputDate" placeholder="탈출일자" style="width:250px; margin-left: 5px;"></b-form-datepicker>
                         </b-col>
 
                         <b-col class="col-1.5" style="display: flex; align-items: center;">
                             <div class="search-type" style="margin-right: 10px;">직무</div>
                             <div>
-                                <select class="form-select form-control" style="width: 130px;" name="role" v-model="selectedStatus" @change="onChange($event)">
+                                <select class="form-select form-control" style="width: 130px;" name="role" v-model="role" @change="onChange($event)">
                                     <option value="" selected>선택</option>
                                     <option value="0">경영진</option>
                                     <option value="1">PM</option>
@@ -34,7 +34,7 @@
                         <b-col class="col-7.5" style="display: flex; align-items: center;">
                             <div style="margin-right: 10px;">프로젝트 명</div>
                             <div>
-                                <b-form-input v-model="pro_name" placeholder="Enter project name" style="width: 230px;"></b-form-input>
+                                <b-form-input v-model="proName" placeholder="Enter project name" style="width: 230px;"></b-form-input>
                             </div>
                         </b-col>
 
@@ -104,6 +104,7 @@
 
 <script>
     import { Table, TableColumn } from 'element-ui'
+    import axios from 'axios';
     
     export default {
         name: 'employeeTable',
@@ -113,64 +114,45 @@
         },
         data() {
             return {
-                employees: [
-                    {
-                    emp_id: 23000001,
-                    emp_name: "정은",
-                    emp_ssn: "000926-4******",
-                    emp_email: "abc01@prompt.com",
-                    emp_acbg: "학사",
-                    emp_work_ex: 1,
-                    emp_skill: "Vue",
-                    pro_name: "pro01",
-                    role: "경영진",
-                    rating: 5
-                    }, {
-                    emp_id: 23050002,
-                    emp_name: "봉현수",
-                    emp_ssn: "000414-3******",
-                    emp_email: "abc02@prompt.com",
-                    emp_acbg: "석사",
-                    emp_work_ex: 3,
-                    emp_skill: "Spring",
-                    pro_name: "pro02",
-                    role: "프로그래머",
-                    rating: 2
-                    }, {
-                    emp_id: 23070003,
-                    emp_name: "양슬빈",
-                    emp_ssn: "000929-4******",
-                    emp_email: "abc03@prompt.com",
-                    emp_acbg: "고졸",
-                    emp_work_ex: 0,
-                    emp_skill: "Vue",
-                    pro_name: "pro02",
-                    role: "디자이너",
-                    rating: 3
-                    }, {
-                    emp_id: 23010004,
-                    emp_name: "김현중",
-                    emp_ssn: "980126-1******",
-                    emp_email: "abc04@prompt.com",
-                    emp_acbg: "박사",
-                    emp_work_ex: 5,
-                    emp_skill: "Spring",
-                    pro_name: "pro01",
-                    role: "PM",
-                    rating: 4
-                    }
-                ],
+                currentPage: 1,
+                pageSize: 10,
+                inputDate: '',
+                outputDate: '',
+                role: '',
+                proName: '',
+                skill: '',
+                absentee: '',
+                employees: [],
+                isLoading: true,
                 searchProjValue: '',
-                searchSkillValue: '', 
+                searchSkillValue: '',
                 // emp_id: '',
                 // emp_name: '',
             }
         },
         computed: {
+            pagedEmployees() {
+                const startIndex = (this.currentPage - 1) * this.pageSize;
+                const endIndex = startIndex + this.pageSize;
+                return this.employees.slice(startIndex, endIndex);
+            },
+            slicedStartDate() {
+                if (this.employee.startDate && this.employee.endDate) {
+                    const startyear = this.employee.startDate.slice(2, 4);
+                    const startmonth = this.employee.startDate.slice(5, 7);
+                    const startday = this.employee.startDate.slice(8, 10);
+
+                    const endyear = this.employee.startDate.slice(2, 4);
+                    const endmonth = this.employee.startDate.slice(5, 7);
+                    const endday = this.employee.startDate.slice(8, 10);
+                    return `${startyear}-${startmonth}-${startday} ~ ${endyear}-${endmonth}-${endday}`
+                }
+                return '';
+            },
             filterByProj() {
                 if (this.searchProjValue) {
                     const searchProjValueLowercase = this.searchProjValue.toLowerCase()
-                    return this.employees.filter(project => project.pro_name.toLowerCase().includes(searchProjValueLowercase))
+                    return this.employees.filter(project => project.proName.toLowerCase().includes(searchProjValueLowercase))
                 }
                 if (this.searchSkillValue) {
                     const searchSkillValueLowercase = this.searchSkillValue.toLowerCase()
@@ -181,7 +163,7 @@
             // filterByProj() {
             //     if (this.searchProjValue) {
             //         const searchProjValueLowercase = this.searchProjValue.toLowerCase()
-            //         return this.employees.filter(project => project.pro_name.toLowerCase().includes(searchProjValueLowercase))
+            //         return this.employees.filter(project => project.proName.toLowerCase().includes(searchProjValueLowercase))
             //     }
             //     return this.employees
             // },
@@ -194,11 +176,63 @@
             // }
         },
         methods: {
+            handlePageChange(page) {
+                this.currentPage = page;
+            },
+            sendData() {
+                this.isLoading = true;
+                const apiUrl = '/api/v1/user/list';
+
+                const params = {
+                    period_start: this.inputDate,
+                    period_end: this.outputDate,
+                    role: this.role,
+                    pro_name: this.proName, // 프로젝트 이름으로 가져와야 함
+                    skill_name: this.skill,
+                    is_work: this.absentee,
+                    page: 0,
+                    size: 30,
+                    sort: "emp_id,desc",
+                };
+
+                axios.get(apiUrl, { params }).then((res) => {
+                    console.log(apiUrl, { params });
+                    console.log('API response:', res.data);
+                    this.employees = res.data;
+                    this.isLoading = false;
+                }).catch((error) => {
+                    console.log('Failed to fetch data:', error);
+                });
+            },
             navigateToAccess(id, name) {
                 // this.emp_id = id;
                 // this.emp_name = name;
-                this.$router.push(`/Access/${id}`);
+                this.$router.push(`/access/${id}`);
                 
+            },
+            onChange(e) {
+                this.searchType = e.target.value;
+                console.log(this.searchType)
+                this.searchProject = ''; // Reset search value when search type changes
+            },
+            handleDateInput(newValue) {
+                if (newValue === this.value) {
+                    // Same date is selected, reset the value
+                    this.value = null;
+                }
+            },
+        },
+        mounted() {
+            const apiUrl = '/api/v1/user/search';
+            try {
+                axios.get(apiUrl).then((res) => {
+                    console.log('API response:', res.data);
+                    this.employees = res.data;
+                    this.isLoading = false;
+                });
+            } catch(error) {
+                console.error('Invalid API URL:', apiUrl);
+                console.error(error);
             }
         }
     }

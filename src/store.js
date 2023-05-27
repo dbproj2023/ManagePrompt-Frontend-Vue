@@ -5,7 +5,9 @@ import { createVuexPersistedState } from 'vue-persistedstate';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  plugins: [createVuexPersistedState()],
+  plugins: [createVuexPersistedState({
+    storage: window.sessionStorage // store를 session storage 에 유지
+  })],
   state: {
     isLogin: false, // 로그인 여부
     accGrade: 9, // 0-관리자 / 9-승인전

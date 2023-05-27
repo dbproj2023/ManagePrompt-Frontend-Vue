@@ -45,12 +45,6 @@
         },
         data() {
             return {
-                number: '',
-                progress_year: 0,
-                participation_period: '',
-                pro_name: '',
-                role: '',
-                progress_state: '',
                 project_list: [],
             }
         },
@@ -61,19 +55,18 @@
             try {
                 axios.get(apiUrl).then((res) => {
                     console.log('API response:', res.data.projectList);
-                    
-                    this.project_list = res.data.projectList;
-                    console.log('project_list:', this.project_list);
 
-                    for(let i=0; i<this.project_list.length; i++) {
-                        this.number = i;
-                        this.progress_year = this.project_list[i].startDate.charAt(0) + this.project_list[i].startDate.charAt(1) + this.project_list[i].startDate.charAt(2) + this.project_list[i].startDate.charAt(3);
-                        this.participation_period = "기간";
-                        this.pro_name = this.project_list[i].proName;
-                        this.role = this.project_list[i].roleName;
-                        this.progress_state = "상태";
+                    for(let i=0; i < res.data.projectList.length; i++) {
+                        var obj = {
+                            number : i,
+                            progress_year : res.data.projectList[i].startDate.charAt(0) + res.data.projectList[i].startDate.charAt(1) + res.data.projectList[i].startDate.charAt(2) + res.data.projectList[i].startDate.charAt(3),
+                            participation_period : "기간",
+                            pro_name : res.data.projectList[i].proName,
+                            role : res.data.projectList[i].roleName,
+                            progress_state : "상태",
+                        };
 
-                        console.log("test code:", this.number, this.progress_year, this.pro_name, this.role);
+                        this.project_list.push( obj );
                     }
                 });
             } catch (error) {

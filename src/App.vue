@@ -17,12 +17,6 @@ export default {
     let path = this.$route.path
     let accGrade = this.$store.getters.getAccGrade
     // let newbie = this.$store.getters.newbie
-    console.log("test code ?? : ", this.$route)
-
-    console.log("test code App.vue mounted isLogin : ", isLogin)
-    console.log("test code App.vue mounted path : ", path)
-    console.log("test code App.vue mounted accGrade : ", accGrade)
-    // console.log("test code App.vue mounted newbie : ", newbie)
 
     // 홈(메인), 로그인, 계정찾기 제외 나머지 페이지 로그인 후 접근
     if( path != '/' && path != '/login' && path != '/findAccount' && isLogin == false ){
@@ -54,8 +48,8 @@ export default {
       alert("접근 권한이 없습니다.");
       this.$router.go(-1);
     }
-    // 권한 3(직원) 이상 평가 페이지 접근 가능
-    else if( path.startsWith('/evaluation') && accGrade >= 4 ) {
+    // 권한 4(발주처) 이상 평가 페이지 접근 가능
+    else if( path.startsWith('/evaluation') && accGrade >= 5 ) {
       alert("접근 권한이 없습니다.");
       this.$router.go(-1);
     }
@@ -69,7 +63,25 @@ export default {
       alert("로그인해주세요.");
       this.$router.push('/login');
     }
-  }
+
+    console.log("test code this.$store : ", this.$store )
+
+    // this.sesstionStorage.setItem("aaa", "bb")
+
+    // setTimeout(()=>{
+    //   // this.$store.commit('setLogin', false);
+    //   // this.$store.commit('setAccGrade', 10);
+    //   console.log("test code App.vuee timeout");
+
+    //   console.log("test code App.vuee timeout isLogin : ", this.$store.getters.isLogin);
+    // }, 3000)
+  },
+  /* 앱 종료 */
+  // beforeDestroy() {
+  //   this.$store.dispatch('setLogin', false);
+  //   this.$store.dispatch('setAccGrade', 10);
+  //   console.log("test code App.vuee destroyed");
+  // }
 }
 </script>
 

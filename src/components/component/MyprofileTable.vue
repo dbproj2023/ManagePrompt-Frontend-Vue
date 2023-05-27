@@ -107,23 +107,21 @@
             }
         },
         mounted() {
-            try {
-                axios.get('api/v1/user/info/read').then((res) => {
-                    console.log('API response:', res.data);
-                    this.emp_id = res.data.emp_id;
-                    this.emp_name = res.data.emp_name;
-                    this.emp_ssn = res.data.emp_ssn;
-                    this.emp_edu = res.data.emp_edu;
-                    this.emp_ph = res.data.emp_ph;
-                    this.emp_email = res.data.emp_email;
-                    this.emp_work_ex = res.data.emp_workex;
-                    this.emp_skill = res.data.emp_skill;
-                    this.created_at = res.data.created_at;
-                    this.emp_join_date = this.extractedDate();
-                });
-            } catch (error) {
-                console.error(error);
-            }
+            axios.get('/api/v1/user/info/read').then((res) => {
+                console.log('API response:', res.data);
+                this.emp_id = res.data.emp_id;
+                this.emp_name = res.data.emp_name;
+                this.emp_ssn = res.data.emp_ssn;
+                this.emp_edu = res.data.emp_edu;
+                this.emp_ph = res.data.emp_ph;
+                this.emp_email = res.data.emp_email;
+                this.emp_work_ex = res.data.emp_workex;
+                this.emp_skill = res.data.emp_skill;
+                this.created_at = res.data.created_at;
+                this.emp_join_date = this.extractedDate();
+            }).catch((error) => {
+                console.log(error);
+            });
         },
         methods: {
             extractedDate() {
@@ -135,7 +133,7 @@
                 this.$router.push(`/changePW`);
             },
             saveData() {
-                const formData = new FormData;
+                const formData = new FormData();
                 formData.append("emp_edu", this.emp_edu);
                 formData.append("emp_ph", this.emp_ph);
                 formData.append("emp_email", this.emp_email);
