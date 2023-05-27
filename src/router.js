@@ -68,6 +68,11 @@ export default new Router({
             // beforeEnter: Authentication()
         },
         {
+            path: '/mypage',
+            component: Mypage,
+            // beforeEnter: Authentication()
+        },
+        {
             path: '/project/detail/:id',
             component: ProDetail
         },

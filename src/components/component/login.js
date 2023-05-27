@@ -71,8 +71,8 @@ const loginStore = {
             });
         },
         // 로그아웃합니다.
-	    async doLogout({ commit }) {
-		    commit('reset');
+        async doLogout({ commit }) {
+            commit('reset');
         }
 	}
 };
