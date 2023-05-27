@@ -47,7 +47,7 @@
   <script>
   import axios from "axios";
   const HOST =  "http://localhost:8080";
-  import loginStore from './login.js'
+  // import loginStore from './login.js'
   
   export default {
       data() {
@@ -113,25 +113,25 @@
                   }
               });
           },
-          doLogout() {
-            console.log("test code click doLogout")
+          // doLogout() {
+          //   console.log("test code click doLogout")
 
-            axios.get('api/v1/auth/logout').then((res) => {
-                if( res.data == 'logout' ) {
-                    alert("로그아웃 되었습니다.");
+          //   axios.get('api/v1/auth/logout').then((res) => {
+          //       if( res.data == 'logout' ) {
+          //           alert("로그아웃 되었습니다.");
 
-                    this.$store.commit('setLogin', false);
-                    this.$store.commit('setAccGrade', '');
-                    console.log("test code isLogout : ", this.$store.getters.isLogin)
+          //           this.$store.commit('setLogin', false);
+          //           this.$store.commit('setAccGrade', '');
+          //           console.log("test code isLogout : ", this.$store.getters.isLogin)
 
-                    this.$router.push('/');
-                }
-            });
-        }
+          //           this.$router.push('/');
+          //       }
+          //   });
+          // }
       },
-      modules: {
-          loginStore: loginStore
-      }
+      // modules: {
+      //     loginStore: loginStore
+      // }
   }
   </script>
 
