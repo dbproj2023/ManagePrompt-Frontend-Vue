@@ -14,7 +14,8 @@
         <span class="header-text">{{ myName }}</span>
         <div :class="{'dropdown-menu': true, 'show': isDropdownVisible}">
           <a class="dropdown-item" href="/mypage">MyPage</a>
-          <a class="dropdown-item" href="/logout">Logout</a>
+          <!-- <a class="dropdown-item" href="/logout">Logout</a> -->
+          <a class="dropdown-item" @click="doLogout()">Logout</a>
         </div>
       </div>
       </div>
@@ -63,17 +64,17 @@ export default {
     console.log(this.isLogIn);
 
     const apiUrl = `${HOST}/api/v1/user/info/read`;
-     try {
-     const url = new URL(apiUrl);
-     console.log('URL:', url);
-     axios.get(apiUrl).then((res) => {
-       console.log('API response:', res.data);
-       this.myName = res.data.emp_name;
-     });
-   } catch (error) {
-     console.error('Invalid API URL:', apiUrl);
-     console.error(error);
-   }
+    try {
+      const url = new URL(apiUrl);
+      console.log('URL:', url);
+      axios.get(apiUrl).then((res) => {
+        console.log('API response:', res.data);
+        this.myName = res.data.emp_name;
+      });
+    } catch (error) {
+      console.error('Invalid API URL:', apiUrl);
+      console.error(error);
+    }
 
 
 
@@ -84,6 +85,22 @@ export default {
     },
     goToLogin: function(){
       this.$router.push({path: './login'});
+    },
+    doLogout() {
+      console.log("test code click doLogout")
+
+      axios.get('/api/v1/auth/logout/').then((res) => { // logout 뒤에 슬래시 빼야하는데 왜 붙어야 실행될까...
+        console.log("test code: 로그아웃 들어오나여");
+          if( res.data == 'logout' ) {
+              alert("로그아웃 되었습니다.");
+
+              this.$store.commit('setLogin', false);
+              this.$store.commit('setAccGrade', '');
+              console.log("test code isLogout : ", this.$store.getters.isLogin)
+
+              this.$router.push('/');
+          }
+      });
     }
   },
 };
