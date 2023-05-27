@@ -7,11 +7,11 @@
       <Header />
     </v-app-bar>
   
-      <v-content>
+      <v-main>
         <v-container fluid>
           <Evaluation/>
         </v-container>
-      </v-content>
+      </v-main>
     </v-app>
   </template>
   
@@ -29,6 +29,7 @@
     },
     data() {
       return {
+        drawer: true
       }
     },
     methods: {

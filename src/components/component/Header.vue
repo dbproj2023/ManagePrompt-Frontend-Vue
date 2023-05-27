@@ -4,8 +4,8 @@
 
       
      
-      <!-- 로그인 안했을 때 -->
-      <div  v-if = this.isLogIn class="header">
+      <!-- 로그인 했을때 때 -->
+      <div v-if = this.isLogIn class="header">
       <div class="icon">
       <div class="login-container" @click="showDropdown">
         <div class="user-icon">
@@ -29,13 +29,7 @@
       </div>
 
   </div>
-
-
-
-
   </div>
-
-
 </template>
 
 <style scoped>
@@ -65,7 +59,23 @@ export default {
   },
   mounted(){
     let Login = this.$store.getters.isLogin
-    this.isLogin = Login
+    this.isLogIn = Login
+    console.log(this.isLogIn);
+
+    const apiUrl = `${HOST}/api/v1/user/info/read`;
+     try {
+     const url = new URL(apiUrl);
+     console.log('URL:', url);
+     axios.get(apiUrl).then((res) => {
+       console.log('API response:', res.data);
+       this.myName = res.data.emp_name;
+     });
+   } catch (error) {
+     console.error('Invalid API URL:', apiUrl);
+     console.error(error);
+   }
+
+
 
   },
   methods: {
