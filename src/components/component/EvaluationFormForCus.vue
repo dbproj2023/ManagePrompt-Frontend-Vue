@@ -1,8 +1,7 @@
 <template>
-  <div class="Evaluation">
+  <div>
       <div>
       <br>
-
       <b-card class="evalCus-card">
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트명</div>

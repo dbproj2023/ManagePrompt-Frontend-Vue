@@ -209,8 +209,6 @@
   }
   .result-container{
     display: flex;
-    background-color: #f5f8f9;
-
   }
 
   .avgresult{
