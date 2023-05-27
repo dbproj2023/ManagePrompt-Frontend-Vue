@@ -1,10 +1,10 @@
 <template>
     <v-app>
-      <v-content style="background-color: #394F86">
+      <v-main style="background-color: #394F86">
         <v-container fluid>
           <Login/>
         </v-container>
-      </v-content>
+      </v-main>
     </v-app>
   </template>
   
