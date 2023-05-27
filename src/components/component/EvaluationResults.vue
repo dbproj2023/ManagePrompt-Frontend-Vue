@@ -14,20 +14,20 @@
           </div>
         </div>
         <div v-else>
-          <h6 class="mb-0 text-center"> {{this.myName}} </h6>
+          <h6 class="mb-0 text-center"> {{ this.myName }}</h6>
 
           <div class="flex-table total-table" style="margin-top: 20px;">
             <div class="flex-row">
               <div class="flex-cell flex-header">종합 평가</div>
-              <div class="flex-cell"></div>
+              <div class="flex-cell">{{ this.total_avg_rating }}</div>
             </div>
             <div class="flex-row">
               <div class="flex-cell flex-header">업무수행 평가</div>
-              <div class="flex-cell">{{this.ratingP}}</div>
+              <div class="flex-cell">{{ this.avg_communication_rating }}</div>
             </div>
             <div class="flex-row">
               <div class="flex-cell flex-header">커뮤니케이션 평가</div>
-              <div class="flex-cell">{{ this.ratingC }}</div>
+              <div class="flex-cell">{{ this.avg_performance_rating }}</div>
             </div>
           </div>
         </div>
@@ -39,16 +39,16 @@
           <br>
           <div style="display: flex; text-align: center; align-items: center;">
             <i class="fa-solid fa-folder-open fa-xl"></i>
-            <h6> {{ this.proName }}</h6>
+            <h6> {{  }}</h6>
           </div>
-          <h7> {{ slicedStartDate }} </h7>
+          <h6> {{ slicedStartDate }} </h6>
 
           <br>
           <div style="display: flex;">
             <div><div class="flex-cell flex-header">프로젝트 이름</div></div>
-            <div><div class="flex-cell">{{this.proName }}</div></div>
+            <div><div class="flex-cell">{{}}</div></div>
             <div><div class="flex-cell flex-header">프로젝트 기간</div></div>
-            <div><div class="flex-cell ">{{ slicedStartDate }}</div></div>
+            <div><div class="flex-cell ">{{  }}</div></div>
           </div>
 
           <div style="display: flex; padding-top: 10px;">
@@ -57,21 +57,21 @@
               <div class="flex-cell flex-header">PM 커뮤니케이션 평가</div>
           </div>
             <div>
-              <div class="flex-cell ">{{ this.PMratingP }}</div>
-              <div class="flex-cell ">{{ this.PMratingC }}</div>
+              <div class="flex-cell ">{{  }}</div>
+              <div class="flex-cell ">{{  }}</div>
             </div>
             <div>
               <div class="flex-cell flex-header">커뮤니케이션 평가</div>
               <div class="flex-cell flex-header">업무수행 평가</div>
           </div>
             <div>
-              <div class="flex-cell ">{{ this.ratingP }}</div>
-              <div class="flex-cell ">{{ this.ratingC }}</div>
+              <div class="flex-cell ">{{ }}</div>
+              <div class="flex-cell ">{{ }}</div>
             </div>
           </div>
           <br>
           <b-card style="padding-top: 10px;">
-           {{ projectEvaluationList.communicationDetail }} {{ projectEvaluationList.performanceDetail}}
+           <!-- {{ projectEvaluationList.communicationDetail }} {{ projectEvaluationList.performanceDetail}} -->
           </b-card>
         </b-card>
       </div>
@@ -92,12 +92,11 @@
           avgflag: true,
           isLoading: true,
           myName: '',
-          pmrating: { performrating: [], communirating: []},
-          rating: { performrating: [], communirating: []},
-projectEvaluationList: [], 
-          PMratingP: 0, PMratingC: 0,
-          ratingP: 0, ratingC: 0,
-          proName: 'None'
+          cowork_eval: {},
+          pm_evla: {},
+          avg_communication_rating:0, 
+          total_avg_rating: 0,
+          avg_performance_rating: 0,
         }
     },
     mounted() {
@@ -106,50 +105,68 @@ projectEvaluationList: [],
       const url = new URL(apiUrl1);
       console.log('URL:', url);
       axios.get(apiUrl1).then((res) => {
-        console.log('API response:', res.data);
-        this.proName = res.projectEvaluationList[0].proName;
-        this.myName = res.data.empName;
+        console.log(res.data);
+        console.log('API response:', res.data.all_eval[0]);
+        this.avg_communication_rating =  res.data.all_eval[0].avg_communication_rating
+        this.total_avg_rating =  res.data.all_eval[0].total_avg_rating
+        this.avg_performance_rating =  res.data.all_eval[0].avg_performance_rating
 
-        console.log("===", res.projectEvaluationList);
+        this.myName = res.data.cowork_eval[0].emp_name
+
+        console.log(res.data.cowork_eval);
+        console.log(res.data.pm_eval);
+
+        for (let i = 0; i<res.data.cowork_eval.length; i++){
+          const proName = res.data.cowork_eval.pro_name;
+          const communication = res.data.cowork_eval.avg_communication_rating;
+          const performance = res.data.cowork_eval.avg_performance_rating;
+
+          this.cowork_eval.push([communication, performance]);
+        }
+
+        // this.proName = res.projectEvaluationList[0].proName;
+        // this.myName = res.data.empName;
+
+        // console.log("===", res.projectEvaluationList);
 
         
-        for (let i = 0; i < res.projectEvaluationList.length; i++) {
-          const roleName = res.projectEvaluationList[i].roleName;
-          console.log(roleName);
-          const parsingdata = res.projectEvaluationList[i].evaluationList
-          for (let j=0; j<parsingdata.length; j++){
-            console.log(parsingdata[j].communicationRating);
-            console.log(parsingdata[j].performanceRating);
+        // for (let i = 0; i < res.projectEvaluationList.length; i++) {
+        //   const roleName = res.projectEvaluationList[i].roleName;
+        //   console.log(roleName);
+        //   const parsingdata = res.projectEvaluationList[i].evaluationList
+        //   for (let j=0; j<parsingdata.length; j++){
+        //     console.log(parsingdata[j].communicationRating);
+        //     console.log(parsingdata[j].performanceRating);
             
-            if (roleName === 'PM'){
-              this.pmrating['performrating'].push(parsingdata[j].performanceRating);
-              this.pmrating['communirating'].push(parsingdata[j].communicationRating);
-            } else{
-              this.rating['performrating'].push(parsingdata[j].performanceRating);
-              this.rating['communirating'].push(parsingdata[j].communicationRating);
-            }
-          }
-          false;
+        //     if (roleName === 'PM'){
+        //       this.pmrating['performrating'].push(parsingdata[j].performanceRating);
+        //       this.pmrating['communirating'].push(parsingdata[j].communicationRating);
+        //     } else{
+        //       this.rating['performrating'].push(parsingdata[j].performanceRating);
+        //       this.rating['communirating'].push(parsingdata[j].communicationRating);
+        //     }
+        //   }
+        //   false;
 
-          if (this.pmrating.communirating.length===0){
-            this.PMratingP = 0
-            this.PMratingC = 0
-          } else{
-            this.PMratingP = this.pmrating.performrating.reduce((acc, curr) => acc + curr);
-            this.PMratingC = this.pmrating.communirating.reduce((acc, curr) => acc + curr);
-          }
+        //   if (this.pmrating.communirating.length===0){
+        //     this.PMratingP = 0
+        //     this.PMratingC = 0
+        //   } else{
+        //     this.PMratingP = this.pmrating.performrating.reduce((acc, curr) => acc + curr);
+        //     this.PMratingC = this.pmrating.communirating.reduce((acc, curr) => acc + curr);
+        //   }
 
-          if (this.rating.communirating.length===0){
-            this.ratingP = 0
-            this.ratingC = 0
-          } else{
-            this.ratingP = this.rating.performrating.reduce((acc, curr) => acc + curr);
-            this.ratingC = this.rating.communirating.reduce((acc, curr) => acc + curr);
-          }
+        //   if (this.rating.communirating.length===0){
+        //     this.ratingP = 0
+        //     this.ratingC = 0
+        //   } else{
+        //     this.ratingP = this.rating.performrating.reduce((acc, curr) => acc + curr);
+        //     this.ratingC = this.rating.communirating.reduce((acc, curr) => acc + curr);
+        //   }
 
-          console.log(this.PMratingP, this.PMratingC, this.ratingP, this.ratingC);
+        //   console.log(this.PMratingP, this.PMratingC, this.ratingP, this.ratingC);
           this.isLoading = false;
-      }
+      // }
        
       });
     } catch (error) {
@@ -182,17 +199,17 @@ projectEvaluationList: [],
   //   return (commavg+peravg)/2;
   // }
    slicedStartDate() {
-    console.log(res.data.projectEvaluationList)
-      if (res.data.projectEvaluationList[0].startDate && res.data.projectEvaluationList[0].endDate) {
-        const startyear = res.data.projectEvaluationList[0].startDate.slice(2, 10);
-        // const startmonth = projectEvaluationList[0].startDate.slice(5, 7);
-        // const startday = projectEvaluationList[0].startDate.slice(8, 10);
+    // console.log(res.data.projectEvaluationList)
+      // if (res.data.projectEvaluationList[0].startDate && res.data.projectEvaluationList[0].endDate) {
+      //   const startyear = res.data.projectEvaluationList[0].startDate.slice(2, 10);
+      //   // const startmonth = projectEvaluationList[0].startDate.slice(5, 7);
+      //   // const startday = projectEvaluationList[0].startDate.slice(8, 10);
 
-        const endyear = res.data.projectEvaluationList[0].startDate.slice(2, 10);
-        // const endmonth =projectEvaluationList[0].startDate.slice(5, 7);
-        // const endday = projectEvaluationList[0].startDate.slice(8, 10);
-        return `${startyear} ~ ${endyear}`}
-      return '';
+      //   const endyear = res.data.projectEvaluationList[0].startDate.slice(2, 10);
+      //   // const endmonth =projectEvaluationList[0].startDate.slice(5, 7);
+      //   // const endday = projectEvaluationList[0].startDate.slice(8, 10);
+      //   return `${startyear} ~ ${endyear}`}
+      // return '';
     }
   }
 }

@@ -8,14 +8,14 @@
         <Header />
       </v-app-bar>
   
-      <v-content>
+      <v-main>
         <v-container fluid>
           <br> <br>
           <MyprofileTable/>
           <hr>
           <ParticipateProjTable/>
         </v-container>
-      </v-content>
+      </v-main>
     </v-app>
   </template>
 
@@ -101,12 +101,12 @@ export default {
 
 /* Update the styles for the background */
 
-.v-content {
+.v-main {
   position: relative;
   background-color: #F8F9FA;
 }
 
-.v-content:before {
+.v-main:before {
   content: "";
   position: fixed !important;
   top: 0;

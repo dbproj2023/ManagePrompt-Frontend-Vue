@@ -8,11 +8,11 @@
       <Header />
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <v-container fluid>
         <EmployeeTable/>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
