@@ -1,5 +1,7 @@
 <template>
     <div>
+        <b-card class="center-card" style="width: 1200px">
+
         <div>
             <hr style="border: solid 1px;">
             <b-container class="bv-example-row" style="display: flex;">
@@ -99,6 +101,7 @@
                 </el-table>
             </b-card>
         </div>
+        </b-card>
     </div>
 </template>
 
