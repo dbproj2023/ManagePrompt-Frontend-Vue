@@ -2,21 +2,11 @@
   <div class="header">
     <div class="icon">
 
-  
+      
+     
       <!-- 로그인 안했을 때 -->
-      <!-- <div class="login-container">
-        <div class="login-text" @click="goToLogin">
-          <i class="login-title fa-solid fa-right-to-bracket fa-2xs" style="color: #ffffff;"></i>
-          <span class="header-text">Sign in</span>
-        </div>
-      </div> -->
-
-
-      <!-- 로그인 안했을 때 -->
-      <div class="header">
-    <div class="icon">
-
-      <!-- 로그인 했을 때 -->
+      <div  v-if = this.isLogIn class="header">
+      <div class="icon">
       <div class="login-container" @click="showDropdown">
         <div class="user-icon">
           <i class="fa-solid fa-circle-user" style="color: #ffffff;"></i>
@@ -27,8 +17,16 @@
           <a class="dropdown-item" href="/logout">Logout</a>
         </div>
       </div>
-</div>
-  </div>
+      </div>
+    </div>
+    
+    <!--로그인 안했을 때 -->
+    <div v-else class="login-container">
+        <div class="login-text" @click="goToLogin">
+          <i class="login-title fa-solid fa-right-to-bracket fa-2xs" style="color: #ffffff;"></i>
+          <span class="header-text">Sign in</span>
+        </div>
+      </div>
 
   </div>
 
@@ -60,30 +58,19 @@ export default {
     return {
       isDropdownVisible: false,
       iconColor: '#AAB1B8',
-      isLoggedIn: false,
+      isLogIn: false,
       myName: ''
 
     };
   },
   mounted(){
-    const apiUrl = `${HOST}/api/v1/user/info/read`;
-    try {
-    const url = new URL(apiUrl);
-    console.log('URL:', url);
-    axios.get(apiUrl).then((res) => {
-      console.log('API response:', res.data);
-      this.myName = res.data.emp_name;
-    });
-  } catch (error) {
-    console.error('Invalid API URL:', apiUrl);
-    console.error(error);
-  }
+    let Login = this.$store.getters.isLogin
+    this.isLogin = Login
 
   },
   methods: {
     showDropdown: function() {
       this.isDropdownVisible = !this.isDropdownVisible;
-      console.log(this.isDropdownVisible);
     },
     goToLogin: function(){
       this.$router.push({path: './login'});

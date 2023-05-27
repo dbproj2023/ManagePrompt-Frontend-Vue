@@ -8,11 +8,11 @@
       <Header />
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <v-container fluid>
         <Main/>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
@@ -30,6 +30,7 @@ export default {
   },
   data() {
     return {
+      drawer:true
     }
   },
   methods: {
