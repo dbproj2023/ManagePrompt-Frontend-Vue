@@ -19,8 +19,8 @@
               'align-middle',
               'icon-spacing',
               { 'text-active': $route.path === '/project', 'gray-icon': $route.path !== '/project' }
-            ]" :style="{ color: ($route.path === '/project') ? '#82CACC' : 'gray' }">list_alt</span>
-            <span :class="[{'align-middle': true, 'text': $route.path !== '/project', 'text-active': $route.path === '/project' }]">프로젝트 관리</span>
+            ]" :style="{ color: ($route.path === '/project') ? '#82CACC' : 'gray'}">list_alt</span>
+            <span :class="[{'align-middle': true, 'text': $route.path !== '/project', 'text-active': $route.path === '/project' }]" style="font-size:15px">프로젝트 관리</span>
           </b-nav-item>
 
           <b-nav-item :class="{ active: $route.path === '/employee' }" href="/employee">
@@ -30,7 +30,7 @@
               'icon-spacing',
               { 'text-active': $route.path === '/employee', 'gray-icon': $route.path !== '/employee' }
             ]" :style="{ color: ($route.path === '/employee') ? '#82CACC' : 'gray' }">recent_actors</span>
-            <span :class="[{'align-middle': true, 'text': $route.path !== '/employee', 'text-active': $route.path === '/employee' }]">직원 관리</span>
+            <span :class="[{'align-middle': true, 'text': $route.path !== '/employee', 'text-active': $route.path === '/employee' }]" style="font-size:15px">직원 관리</span>
           </b-nav-item>
 
           <b-nav-item :class="{ active: $route.path === '/evaluation' }" href="/evaluation">
@@ -40,7 +40,7 @@
               'icon-spacing',
               { 'text-active': $route.path === '/evaluation', 'gray-icon': $route.path !== '/evaluation' }
             ]" :style="{ color: ($route.path === '/evaluation') ? '#82CACC' : 'gray' }">fact_check</span>
-            <span :class="[{'align-middle': true, 'text': $route.path !== '/evaluationuation', 'text-active': $route.path === '/evaluation' }]">평가 보고서 조회</span>
+            <span :class="[{'align-middle': true, 'text': $route.path !== '/evaluationuation', 'text-active': $route.path === '/evaluation' }]" style="font-size:15px">평가 보고서 조회</span>
           </b-nav-item>
 
           <!-- <b-nav-item :class="{ active: $route.path === '/Mypage' }" href="/Mypagel">
@@ -54,10 +54,6 @@
           </b-nav-item> -->
         </b-navbar-nav>
 
-
-        <ul>
-          <li href="/ev"></li>
-        </ul>
 
     </div>
   </div>
@@ -168,7 +164,6 @@ span{
   margin-right: 8px;
   color: black; /* Change the icon color to black */
 }
-
 
 
 .navbar.transparent-bg {
