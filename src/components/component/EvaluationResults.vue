@@ -1,24 +1,48 @@
 <template>
   <div>
     <div class="result-container">
-      <div class="result">
-        <b-card class="avgresult" title="평가결과 종합" >
-          <div class="myProfile">
-            <!-- <img src="./img/theme/team-1.jpg" height="130px" width="130px" alt="로고" class="logo"> -->
-            <p>{{ this.myName }}</p>
+    <div class="p-3 mx-4 text-center card-header">
+      <!-- <div class="icon icon-shape icon-lg bg-gradient-success shadow text-center border-radius-lg" style="margin-left: 80px;"> -->
+        <i class="fa-solid fa-clipboard-list fa-xl"></i>   
+        <h6 class="mb-0 text-center" style="margin-bottom: 10px"> 평가보고서 </h6>
+        <!-- </div> -->
+        <hr class="my-3 horizontal dark" />
+      <div class="p-3 pt-0 text-center card-body">
+        <div class="spinner-div" v-if="isLoading">
+          <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
           </div>
+        </div>
+        <div v-else>
+          <h6 class="mb-0 text-center"> {{this.myName}} </h6>
 
-          <b-card class="rating">종합평가: {{ }}</b-card>
-          <b-card class="rating">커뮤니케이션 평가: {{ }}</b-card>
-          <b-card class="rating">업무수행 평가: {{  }}</b-card>
-       
-        </b-card>
+          <div class="flex-table total-table" style="margin-top: 20px;">
+            <div class="flex-row">
+              <div class="flex-cell flex-header">종합 평가</div>
+              <div class="flex-cell"></div>
+            </div>
+            <div class="flex-row">
+              <div class="flex-cell flex-header">업무수행 평가</div>
+              <div class="flex-cell">{{this.ratingP}}</div>
+            </div>
+            <div class="flex-row">
+              <div class="flex-cell flex-header">커뮤니케이션 평가</div>
+              <div class="flex-cell">{{ this.ratingC }}</div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
 
       <div class="result">
         <b-card class="allresult" title="프로젝트 별 평가결과" >
           <br>
-          <span>{{ }}</span>
+          <div style="display: flex; text-align: center; align-items: center;">
+            <i class="fa-solid fa-folder-open fa-xl"></i>
+            <h6> {{ this.proName }}</h6>
+          </div>
+          <h7> {{ slicedStartDate }} </h7>
+
           <br>
           <div style="display: flex;">
             <div><div class="flex-cell flex-header">프로젝트 이름</div></div>
@@ -47,7 +71,7 @@
           </div>
           <br>
           <b-card style="padding-top: 10px;">
-           {{ this.projectList.communicationDetail }} {{ this.projectList.performanceDetail}}
+           {{ projectEvaluationList.communicationDetail }} {{ projectEvaluationList.performanceDetail}}
           </b-card>
         </b-card>
       </div>
@@ -70,10 +94,10 @@
           myName: '',
           pmrating: { performrating: [], communirating: []},
           rating: { performrating: [], communirating: []},
-          projectList: [], 
+projectEvaluationList: [], 
           PMratingP: 0, PMratingC: 0,
           ratingP: 0, ratingC: 0,
-          proName: ''
+          proName: 'None'
         }
     },
     mounted() {
@@ -83,16 +107,16 @@
       console.log('URL:', url);
       axios.get(apiUrl1).then((res) => {
         console.log('API response:', res.data);
-        this.proName = res.data.projectEvaluationList[0].proName;
+        this.proName = res.projectEvaluationList[0].proName;
         this.myName = res.data.empName;
 
-        console.log("===", res.data.projectEvaluationList);
+        console.log("===", res.projectEvaluationList);
 
         
-        for (let i = 0; i < res.data.projectEvaluationList.length; i++) {
-          const roleName = res.data.projectEvaluationList[i].roleName;
+        for (let i = 0; i < res.projectEvaluationList.length; i++) {
+          const roleName = res.projectEvaluationList[i].roleName;
           console.log(roleName);
-          const parsingdata = res.data.projectEvaluationList[i].evaluationList
+          const parsingdata = res.projectEvaluationList[i].evaluationList
           for (let j=0; j<parsingdata.length; j++){
             console.log(parsingdata[j].communicationRating);
             console.log(parsingdata[j].performanceRating);
@@ -124,6 +148,7 @@
           }
 
           console.log(this.PMratingP, this.PMratingC, this.ratingP, this.ratingC);
+          this.isLoading = false;
       }
        
       });
@@ -157,17 +182,17 @@
   //   return (commavg+peravg)/2;
   // }
    slicedStartDate() {
-    // console.log(this.projectList)
-    //   if (this.projectList[0].startDate && this.projectList[0].endDate) {
-    //     const startyear = this.projectList[0].startDate.slice(2, 4);
-    //     const startmonth = this.projectList[0].startDate.slice(5, 7);
-    //     const startday = this.projectList[0].startDate.slice(8, 10);
+    console.log(res.data.projectEvaluationList)
+      if (res.data.projectEvaluationList[0].startDate && res.data.projectEvaluationList[0].endDate) {
+        const startyear = res.data.projectEvaluationList[0].startDate.slice(2, 10);
+        // const startmonth = projectEvaluationList[0].startDate.slice(5, 7);
+        // const startday = projectEvaluationList[0].startDate.slice(8, 10);
 
-    //     const endyear = this.projectList[0].startDate.slice(2, 4);
-    //     const endmonth =this.projectList[0].startDate.slice(5, 7);
-    //     const endday = this.projectList[0].startDate.slice(8, 10);
-    //     return `${startyear}-${startmonth}-${startday} ~ ${endyear}-${endmonth}-${endday}`}
-    //   return '';
+        const endyear = res.data.projectEvaluationList[0].startDate.slice(2, 10);
+        // const endmonth =projectEvaluationList[0].startDate.slice(5, 7);
+        // const endday = projectEvaluationList[0].startDate.slice(8, 10);
+        return `${startyear} ~ ${endyear}`}
+      return '';
     }
   }
 }
@@ -224,12 +249,7 @@
     width: 850px;
     height: 785px;
   }
-  
-  .result{
-    margin: 5px;
-    padding: 5px;
-    height: 150px;
-  }
+
   
   .myProfile{
     padding-top: 10px;
@@ -241,42 +261,53 @@
     margin: 10px;
   }
 
-  .flex-table {
+ 
+.flex-table {
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
+  border: 0.5px solid #F6F6F6; 
   border-collapse: collapse;
   font-size: small;
 }
 
-  .flex-header{
+.flex-row {
+  display: flex;
+  border: 0.5px solid #F6F6F6; 
+
+}
+
+.flex-header{
   /* font-weight: bold; */
-  background-color: #f0f0f0;
+  border: 0.5px solid #F6F6F6; 
+  background-color: #E8ECEC;
 }
 
 .flex-cell {
   flex: 1;
   padding: 8px;
-  width: 200px;
-  border: 1px solid #ccc;
+  /* border: 0.5px solid #ccc; */
   white-space: pre-wrap;
   text-align: center;
+  border: 0.5px solid #F6F6F6; /* Set a lighter border color */
 }
 
-.flex-cell1 {
-  flex: 1;
-  padding: 8px;
-  width: 200px;
-  border: 1px solid #ccc;
-  white-space: pre-wrap;
-  text-align: center;
-  height: 84px;
-}
 
 .flex-header1{
   text-align: center;
   /* font-weight: bold; */
   background-color: #f0f0f0;
   height: 84px;
+}
+
+.card-header{
+  width: 300px;
+  height: 300px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.total-table{
+  width: 250px;
+  margin: auto;
 }
 </style>
