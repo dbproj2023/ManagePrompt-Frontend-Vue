@@ -1,15 +1,15 @@
 <template>
   <div>
-    <b-card class="center-card">
+    <b-card class="center-card" style="width: 1200px">
     <div>
       <hr style="border: solid 1px; color: #1D3876">  
       <!-- 검색창 -->
-      <b-container class="bv-example-row" style="display: flex">
+      <b-container class="bv-example-row" style="display: flexwidth: 1000px">
         <div>
         <b-row>
           <b-col class="col-3.5">
             <div>
-              <select v-model="selectedStatus"  @change="onChange($event)" class="form-select form-control">
+              <select v-model="selectedStatus" style=" height: 50px;"  @change="onChange($event)" class="form-select form-control">
               <option value="">상태</option>
               <option value="진행중">진행중</option>
               <option value="완료">완료</option>
@@ -21,7 +21,7 @@
 
           <b-col class="col-3.5">
             <div>
-              <select v-model="selectedStatus"  @change="onChange($event)" class="form-select form-control">
+              <select v-model="selectedYear" style=" height: 50px;" @change="onChange($event)" class="form-select form-control">
               <option value="">년도</option>
               <option value="2021">2021</option>
               <option value="2022">2022</option>
@@ -31,9 +31,9 @@
           </b-col>
           
           <b-col class="col-7" style="display: flex; align-items: center;" >
-           <b-form-datepicker class="input-data" v-model="startDate" placeholder="시작일시" style="width:250px; margin-right: 5px;"  @input="handleDateInput"></b-form-datepicker>
+           <b-form-datepicker class="input-data" v-model="startDate" placeholder="시작일시" style="width:250px; height: 50px; margin-right: 5px;"  @input="handleDateInput"></b-form-datepicker>
             ~ 
-            <b-form-datepicker class="input-data" v-model="endDate" placeholder="종료일시" style="width:250px; margin-left: 5px;"></b-form-datepicker>
+            <b-form-datepicker class="input-data" v-model="endDate" placeholder="종료일시" style="width:250px;  height: 50px; margin-left: 5px;"></b-form-datepicker>
           </b-col>
         
         
@@ -96,7 +96,7 @@
 
             <el-table-column label="참여기간" min-width="150px" prop="name">
              <template v-slot="{row}">
-               <span class="font-weight-600 name mb-0 text-sm ">{{row.startDate.slice(0,10)}} ~ {{row.endDate.slice(0,10)}}</span>
+               <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC">{{row.startDate.slice(0,10)}} ~ {{row.endDate.slice(0,10)}}</span>
               </template>
             </el-table-column>
 
@@ -115,7 +115,7 @@
               </template>
             </el-table-column> -->
 
-            <!-- <el-table-column label="Status" min-width="100px" prop="status"></el-table-column> -->
+            <el-table-column label="진행상태" min-width="100px" prop="status"></el-table-column>
 
             <el-table-column min-width="50px">
               <template slot-scope="scope">
@@ -177,6 +177,7 @@ const HOST =  "http://localhost:8080";
         pageSize: 10,
         proName: '',
         selectedStatus: '',
+        selectedYear: '',
         clientName: '',
         startDate: '',
         endDate: '',

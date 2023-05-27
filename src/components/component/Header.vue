@@ -2,16 +2,42 @@
   <div class="header">
     <div class="icon">
 
-      <span v-if="isLogin" class="material-symbols-outlined group-icon" :style="{ color: iconColor }" @click="showDropdown">group</span>
+  
+      <!-- 로그인 안했을 때 -->
+      <!-- <div class="login-container">
+        <div class="login-text" @click="goToLogin">
+          <i class="login-title fa-solid fa-right-to-bracket fa-2xs" style="color: #ffffff;"></i>
+          <span class="header-text">Sign in</span>
+        </div>
+      </div> -->
 
-      <span v-else class="material-symbols-outlined">login</span>
-      <span class="material-symbols-outlined arrow-icon" @click="showDropdown">arrow_drop_down</span>
-      <ul v-if="isDropdownVisible" class="dropdown-menu">
-        <li>마이페이지</li>
-        <li>Logout</li>
-      </ul>
-    </div>
+
+      <!-- 로그인 안했을 때 -->
+      <div class="header">
+    <div class="icon">
+
+      <!-- 로그인 했을 때 -->
+      <div class="login-container" @click="showDropdown">
+        <div class="user-icon">
+          <i class="fa-solid fa-circle-user" style="color: #ffffff;"></i>
+        </div>
+        <span class="header-text">{{ myName }}</span>
+        <div :class="{'dropdown-menu': true, 'show': isDropdownVisible}">
+          <a class="dropdown-item" href="/mypage">MyPage</a>
+          <a class="dropdown-item" href="/logout">Logout</a>
+        </div>
+      </div>
+</div>
   </div>
+
+  </div>
+
+
+
+
+  </div>
+
+
 </template>
 
 <style scoped>
@@ -26,21 +52,42 @@
 </style>
 
 <script>
+import axios from "axios"; // http 통신을 위한 라이브러리
+const HOST =  "http://localhost:8080";
 export default {
   name: "Header",
   data() {
     return {
       isDropdownVisible: false,
       iconColor: '#AAB1B8',
-      isLoggedIn: false
+      isLoggedIn: false,
+      myName: ''
+
     };
   },
+  mounted(){
+    const apiUrl = `${HOST}/api/v1/user/info/read`;
+    try {
+    const url = new URL(apiUrl);
+    console.log('URL:', url);
+    axios.get(apiUrl).then((res) => {
+      console.log('API response:', res.data);
+      this.myName = res.data.emp_name;
+    });
+  } catch (error) {
+    console.error('Invalid API URL:', apiUrl);
+    console.error(error);
+  }
+
+  },
   methods: {
-    
     showDropdown: function() {
       this.isDropdownVisible = !this.isDropdownVisible;
       console.log(this.isDropdownVisible);
     },
+    goToLogin: function(){
+      this.$router.push({path: './login'});
+    }
   },
 };
 </script>
@@ -70,6 +117,90 @@ export default {
 }
 
 .dropdown-menu li:hover {
+  background-color: #f5f5f5;
+}
+
+.material-symbols-outlined,
+span {
+  color: white;
+  font-size: 18px; 
+  text-align: center;
+}
+
+.header-text{
+  padding-left: 10px;
+  font-family: 'ONE-Mobile-Title';
+  color: #ffffff;
+
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Adjust the height as needed */
+  position: relative;
+  cursor: pointer;
+}
+
+.login-text {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.login-title {
+  margin-right: 5px;
+}
+
+
+
+
+
+
+.header {
+  position: relative;
+  height: 50px;
+  background-color: #33508A;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 20px;
+}
+
+
+
+.user-icon {
+  margin-right: 8px;
+}
+
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 200px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: none;
+  padding: 8px 0;
+  z-index: 1;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 8px 16px;
+  color: #33508A;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
   background-color: #f5f5f5;
 }
 </style>

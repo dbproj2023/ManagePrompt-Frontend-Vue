@@ -7,16 +7,16 @@ import Enroll from './components/component/Enroll.vue'
 import Employee from './components/Employee.vue'
 import Project from './components/Project.vue'
 import Evaluation from './components/Evaluation.vue'
-// import Mypage from './components/component/Mypage.vue'
+import Mypage from './components/MyPage.vue'
 import ProDetail from './components/ProjectDetail.vue'
 // import page2 from './components/.vue'
-import ProjectInput from './components/component/ProjectInput.vue'
+import ProjectInput from './components/ProjectInput.vue'
 // import Project_detail from './components/component/Project_detail.vue'
 import ProjectModify from './components/component/ProjectModify.vue'
 // import Change_pw from './components/Change_pw.vue'
 // import Access from './components/Access.vue'
 import FindAccount from './components/component/FindAccount.vue'
-// import EvalResult from './components/component/EvalResults.vue'
+import EvaluationInput from './components/EvaluationInput.vue'
 // import NewEnroll from './components/component/NewEnroll.vue'
 // import cusEval from './components/component/EvaluationCustomer.vue'
 
@@ -57,14 +57,14 @@ export default new Router({
             component: Project
         },
         {
-            path: '/evaluation',
-            component: Evaluation
+            path: '/evaluation/input',
+            component: EvaluationInput
         },
-        // {
-        //     path: '/mypage',
-        //     component: Mypage,
-        //     beforeEnter: Authentication()
-        // },
+        {
+            path: '/mypage',
+            component: Mypage
+            // beforeEnter: Authentication()
+        },
         {
             path: '/project/detail/:id',
             component: ProDetail
@@ -85,10 +85,10 @@ export default new Router({
             path: '/findAccount',
             component: FindAccount
         },
-        // {
-        //     path: '/eval',
-        //     component: EvalResult 
-        // },
+        {
+            path: '/evaluation',
+            component: Evaluation 
+        },
         // {
         //     path: '/newEnroll',
         //     component: NewEnroll

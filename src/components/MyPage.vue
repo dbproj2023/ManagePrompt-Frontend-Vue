@@ -1,41 +1,39 @@
 <template>
-  <v-app>
-    <v-navigation-drawer v-model="drawer" app width="250px" class="no-border" style=" background-color: #F8F9FA;">
-      <Nav />
-    </v-navigation-drawer>
+    <v-app>
+      <v-navigation-drawer v-model="drawer" app width="250px" class="no-border" style=" background-color: #F8F9FA;">
+        <Nav />
+      </v-navigation-drawer>
+  
+      <v-app-bar app style="background-color: #394F86;" class="no-border">
+        <Header />
+      </v-app-bar>
+  
+      <v-content>
+        <v-container fluid>
+          <mypage />
+        </v-container>
+      </v-content>
+    </v-app>
+  </template>
 
-  <v-app-bar app style="background-color: #394F86;">
-      <Header />
-    </v-app-bar>
-
-    <v-content>
-      <v-container fluid>
-        <Detail/>
-      </v-container>
-    </v-content>
-  </v-app>
-</template>
-
-
+  
 <script>
 import router from '@/router';
 // import ProjectInput from '../components/ProjectInput.vue'
 import Header from './component/Header.vue';
 import Nav from './component/Nav.vue'
-import Detail from './component/Detail.vue'
+import mypage from './component/Mypage.vue'
 export default {
-  name: "ProjectDetail",
+  name: "Mypage",
   components:{
-    Detail,
+    mypage,
     Nav,
     Header
   },
   data() {
     return {
-      isLoading: true,
       drawer: true
-
-    }
+        }
   },
   methods: {
   }
@@ -69,17 +67,17 @@ export default {
   border-color: #aaa;
 }
 
-.ProjectTableCard {
+.mypageCard {
   border: none !important;
   border-radius: 10px;
 }
 
 .addButton {
-  
-  color: white !important;
-  background-color: #394F86 !important;
+  color: #394F85;
+  height: 30px;
+  width: 100px;
+  background-color: #F4F8F8 !important;
 }
-
 
 .center-card {
   overflow: hidden;
@@ -91,25 +89,26 @@ export default {
   background-color: aliceblue;
 }
 
-.ProjectTableCard {
+.mypageCard {
   border: none !important;
   border-radius: 10px;
 }
 
 /* Update the styles for the background */
-.v-content{
+
+.v-content {
+  position: relative;
   background-color: #F8F9FA;
 }
 
-.v-content:before
- {
+.v-content:before {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 300px;
-  background-color:#394F86;
+  background-color: #33508A;
 }
 
 
