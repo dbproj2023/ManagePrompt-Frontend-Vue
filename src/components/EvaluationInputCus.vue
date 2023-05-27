@@ -1,44 +1,39 @@
 <template>
-    <v-app>
-      <v-navigation-drawer v-model="drawer" app width="250px" class="no-border" style=" background-color: #F8F9FA;">
-        <Nav />
-      </v-navigation-drawer>
-  
-      <v-app-bar app style="background-color: #394F86;" class="no-border">
-        <Header />
-      </v-app-bar>
-  
-      <v-content>
-        <v-container fluid>
-          <br> <br>
-          <MyprofileTable/>
-          <hr>
-          <ParticipateProjTable/>
-        </v-container>
-      </v-content>
-    </v-app>
-  </template>
+  <v-app>
+    <v-navigation-drawer v-model="drawer" app width="250px" class="no-border" style=" background-color: #F8F9FA;">
+      <Nav />
+    </v-navigation-drawer>
 
-  
+  <v-app-bar app style="background-color: #394F86;">
+      <Header />
+    </v-app-bar>
+
+    <v-content>
+      <v-container fluid>
+        <EvaluationFormForCus/>
+      </v-container>
+    </v-content>
+  </v-app>
+</template>
+
+
 <script>
-import router from '@/router';
-// import ProjectInput from '../components/ProjectInput.vue'
 import Header from './component/Header.vue';
 import Nav from './component/Nav.vue'
-import MyprofileTable from './component/MyprofileTable.vue'
-import ParticipateProjTable from './component/ParticipateProjTable.vue'
-
+import EvaluationFormForCus from './component/EvaluationFormForCus.vue'
 export default {
-  name: "Mypage",
+  name: "EvalutionInputCus",
   components:{
-    MyprofileTable , ParticipateProjTable,
+    EvaluationFormForCus,
     Nav,
     Header
   },
   data() {
     return {
+      isLoading: true,
       drawer: true
-        }
+
+    }
   },
   methods: {
   }
@@ -72,17 +67,17 @@ export default {
   border-color: #aaa;
 }
 
-.mypageCard {
+.ProjectTableCard {
   border: none !important;
   border-radius: 10px;
 }
 
 .addButton {
-  color: #394F85;
-  height: 30px;
-  width: 100px;
-  background-color: #F4F8F8 !important;
+  
+  color: white !important;
+  background-color: #394F86 !important;
 }
+
 
 .center-card {
   overflow: hidden;
@@ -94,26 +89,25 @@ export default {
   background-color: aliceblue;
 }
 
-.mypageCard {
+.ProjectTableCard {
   border: none !important;
   border-radius: 10px;
 }
 
 /* Update the styles for the background */
-
-.v-content {
-  position: relative;
+.v-content{
   background-color: #F8F9FA;
 }
 
-.v-content:before {
+.v-content:before
+ {
   content: "";
-  position: fixed !important;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 300px;
-  background-color: #33508A
+  background-color:#394F86;
 }
 
 

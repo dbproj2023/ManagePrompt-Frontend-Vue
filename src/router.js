@@ -6,19 +6,25 @@ import Login from  './components/Login.vue'
 import Enroll from './components/component/Enroll.vue'
 import Employee from './components/Employee.vue'
 import Project from './components/Project.vue'
-import Evaluation from './components/Evaluation.vue'
 import Mypage from './components/MyPage.vue'
 import ProDetail from './components/ProjectDetail.vue'
 // import page2 from './components/.vue'
 import ProjectInput from './components/ProjectInput.vue'
+
 // import Project_detail from './components/component/Project_detail.vue'
 import ProjectModify from './components/component/ProjectModify.vue'
 // import Change_pw from './components/Change_pw.vue'
 // import Access from './components/Access.vue'
 import FindAccount from './components/component/FindAccount.vue'
-import EvaluationInput from './components/EvaluationInput.vue'
 // import NewEnroll from './components/component/NewEnroll.vue'
 // import cusEval from './components/component/EvaluationCustomer.vue'
+
+import notacc from './components/component/notacces.vue'
+// 프로젝트 평가
+import Evaluation from './components/EvaluationResult.vue'
+import EvaluationInput from './components/EvaluationInput.vue'
+import EvaluationInputForCus from './components/EvaluationInputCus'
+
 
 
 // const Authentication = () => (to, from, next) => {
@@ -57,10 +63,6 @@ export default new Router({
             component: Project
         },
         {
-            path: '/evaluation/input',
-            component: EvaluationInput
-        },
-        {
             path: '/mypage',
             component: Mypage
             // beforeEnter: Authentication()
@@ -89,6 +91,18 @@ export default new Router({
             path: '/evaluation',
             component: Evaluation 
         },
+        {
+            path: '/evaluation/input/employee',
+            component: EvaluationInput
+        },
+        {
+            path:'/evaluation/input/customer',
+            component: EvaluationInputForCus
+        },
+        {
+            path:'/not',
+            component: notacc
+        }
         // {
         //     path: '/newEnroll',
         //     component: NewEnroll

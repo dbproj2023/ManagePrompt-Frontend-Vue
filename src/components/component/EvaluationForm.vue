@@ -72,7 +72,7 @@
           </div>
         </div>
         <div class="button-container">
-          <b-button  @click="registerEval"  style="margin-top: 10px">평가 등록</b-button>
+          <button class="login100-form-btn input-button" type="button" @click="registerEval"  style="margin-top: 10px">평가 등록</button>
         </div>
       </b-card>
       </div>
@@ -277,6 +277,17 @@ span{
   width: 80%;
   padding: auto;
   margin-left: 30px;
+}
+
+.input-button {
+  margin-top: 10px;
+  width: 120px;
+  height: 40px;
+  background-color: #394F85;
+  /* background-color: #c1d9db; */
+  /* #33508A; */
+  color: white;
+  font-size: 12px;
 }
 
 
