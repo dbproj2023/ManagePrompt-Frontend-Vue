@@ -15,7 +15,7 @@
       <div class="card-warpper1"> 
         <div>
         <b-card class="table-card" style="width: 560px; height: 340px;">
-          <h8>프로젝트 정보</h8>
+          <h6>프로젝트 정보</h6>
         <div class="flex-table" style="margin-top: 20px;">
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트 이름</div>
@@ -66,7 +66,7 @@
      <!-- 1-2번 card -->
      <div style="margin-top: 20px;">
           <b-card class="table-card" style="width: 560px; height: 320px; overflow: auto;">
-            <h8>프로젝트 참여 직원</h8>
+            <h6>프로젝트 참여 직원</h6>
             <br>
             <br>
           
@@ -119,7 +119,7 @@
          <!-- 2번 card -->
       <div class="card-wrapper2">
         <b-card class="table-card" style="width: 600px; height: 685px;">
-          <h8>직원 정보 조회</h8>
+          <h6>직원 정보 조회</h6>
           <div class="employee-search-bar" style="display:flex; align-items: center;">
             <div style="margin-right: 10px; width: 150px">
               <select name="cards_id"  class="form-select form-control"  v-model="selectedValue">
@@ -226,7 +226,7 @@ export default {
         },
         communicationRatingList: [],
         performanceRatingList:[],
-        name: 'H8'
+        name: 'H6'
       }
   },
   mounted(){
