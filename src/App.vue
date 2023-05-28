@@ -18,14 +18,14 @@ export default {
     let accGrade = this.$store.getters.getAccGrade
     // let status = this.$store.getters.status
 
-    // 홈(메인), 로그인, 계정찾기 제외 나머지 페이지 로그인 후 접근
-    if( path != '/' && path != '/login' && path != '/findAccount' && isLogin == false ){
+    // 홈(메인), 로그인, 계정찾기, 비밀번호 변경(찾기) 제외 나머지 페이지 로그인 후 접근
+    if( path != '/' && path != '/login' && path != '/findAccount' && path != '/logoutChangePw' && isLogin == false ){
       this.$router.push('/login');
     }
-    // 로그인 한 사람 다시 로그인 접근 금지
-    else if( path.startsWith('/login') && isLogin == true ) {
-      this.$router.go(-1);
-    }
+    // // 로그인 한 사람 다시 로그인 접근 금지
+    // else if( path.startsWith('/login') && isLogin == true ) {
+    //   this.$router.go(-1);
+    // }
     // 권한 2(관리자)만 신규 직원 초기 등록 가능
     else if( path.startsWith('/newEnroll') && accGrade != 2 ) {
       console.log("test code /newEnroll")
@@ -48,8 +48,18 @@ export default {
       alert("접근 권한이 없습니다.");
       this.$router.go(-1);
     }
-    // 권한 4(발주처) 이상 평가 페이지 접근 가능
-    else if( path.startsWith('/evaluation') && accGrade >= 5 ) {
+    // 권한 4(발주처)만 고객평가 페이지 접근 가능
+    else if( path.startsWith('/evaluation/input/customer') && accGrade != 4 ) {
+      alert("접근 권한이 없습니다.");
+      this.$router.go(-1);
+    }
+    // 권한 3(직원) 이상 동료평가 페이지 접근 가능
+    else if( path.startsWith('/evaluation/input/customer') && accGrade >= 3 ) {
+      alert("접근 권한이 없습니다.");
+      this.$router.go(-1);
+    }
+    // 권한 3(직원) 이상 평가 결과 페이지 접근 가능
+    else if( path.startsWith('/evaluation') && accGrade >= 3 ) {
       alert("접근 권한이 없습니다.");
       this.$router.go(-1);
     }
