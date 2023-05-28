@@ -1,6 +1,13 @@
 <template>
   <div class="Evaluation">
-      <div>
+    <div class="spinner-div" v-if="isLoading">
+      <b-card class="ProjectTableCard" style="height: 800px; width: 1200px;">
+        <div class="spinner-container" style="display: flex; justify-content: center; align-items: center; height: 100%;">
+          <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
+        </div>
+      </b-card>
+      </div>
+      <div v-else>
       <br>
       <b-card class="project-card">
         <div class="flex-row">
@@ -99,7 +106,9 @@ data() {
     proList: {},
     commInput: '',
     perfomInput:'',
-    myName: ''
+    myName: '',
+    isLoading: true,
+    proId: ''
   }
 },
 mounted(){
@@ -108,48 +117,49 @@ mounted(){
 
     const apiUrl1 = `${HOST}/api/v1/user/search/proj/list`;
     console.log("여기  !!!!!")
-    try {
-    const url = new URL(apiUrl1);
-    console.log('URL:', url);
-    axios.get(apiUrl1).then((res) => {
-      console.log('API response:', res.data);
-      // console.log(res.data.participantList[0])
-      this.project = res.data;
+    const proId = this.$route.query.pro_id;
+    const proName = this.$route.query.pro_name;
 
-      for (let i = 0; i < this.project.projectList.length; i++) {
-        const proId = this.project.projectList[i].proId;
-        const proName = this.project.projectList[i].proName;
-        this.proList[proId] = proName;
-              // Store empName and empId in the dictionary
-      }
+
+    this.proList[proId] = proName;
+    this.isLoading = false
+
+    console.log(this.proList);
+
+
+  //   try {
+  //   const url = new URL(apiUrl1);
+  //   console.log('URL:', url);
+  //   axios.get(apiUrl1).then((res) => {
+  //     console.log('API response:', res.data);
+  //     this.project = res.data;
+
+  //     for (let i = 0; i < this.project.projectList.length; i++) {
+  //       const proId = this.project.projectList[i].proId;
+  //       const proName = this.project.projectList[i].proName;
+  //       this.proList[proId] = proName;
+  //     }
+  //     this.isLoading = false
       
-    });
-  } catch (error) {
-    console.error('Invalid API URL:', apiUrl1);
-    console.error(error);
-  }
-  // proId = this.selectedPro
-  // proId = 'pro001'
-
+  //   });
+  // } catch (error) {
+  //   console.error('Invalid API URL:', apiUrl1);
+  //   console.error(error);
+  // }
  },
  computed: {
     slicedStartDate() {
-      if (this.project.startDate && this.project.endDate) {
-        const startyear = this.project.startDate.slice(2, 4);
-        const startmonth = this.project.startDate.slice(5, 7);
-        const startday = this.project.startDate.slice(8, 10);
-
-        const endyear = this.project.startDate.slice(2, 4);
-        const endmonth = this.project.startDate.slice(5, 7);
-        const endday = this.project.startDate.slice(8, 10);
-        return `${startyear}-${startmonth}-${startday} ~ ${endyear}-${endmonth}-${endday}`}
-      return '';
+      if  (this.project.startDate && this.project.endDate){
+        return `${this.project.startDate.slice(0,10)} ~ ${this.project.endDate.slice(0,10)} `
+      }
     }
   }
 ,
  methods: {
   proSelection() {
     // 선택된 값에 따라 작업 수행
+    this.isLoading = true;
+
     console.log(this.selectedPro); 
     console.log(this.proList); 
 
@@ -169,7 +179,10 @@ mounted(){
     const selectedProId = Object.entries(this.proList).find(
       ([proId, proName]) => proName === this.selectedPro
     );
+
     console.log(selectedProId);
+
+    
     const apiUrl2 = `${HOST}/api/v1/proj/${selectedProId[0]}`;
     try {
     const url = new URL(apiUrl2);
@@ -178,12 +191,12 @@ mounted(){
       console.log('API response:', res.data);
       console.log(res.data.participantList[0].employee)
       this.project = res.data;
-      this.isLoading = false;
 
       for (let i = 0; i < res.data.participantList.length; i++) {
         const empName = res.data.participantList[i].employee.empName;
         const empId = res.data.participantList[i].employee.empId;
 
+        console.log(this.myName, empName);
         if (this.myName != empName){
           this.empList[empId] = empName;
         }
@@ -191,6 +204,8 @@ mounted(){
         // Store empName and empId in the dictionary
       }
       console.log(this.empList);
+      this.isLoading = false;
+
 
     });
   } catch (error) {
@@ -199,6 +214,7 @@ mounted(){
   }
   },
   registerEval(){
+    this.isLoading = true;
     const selectedEmpId = Object.keys(this.empList).find(
       (empId) => this.empList[empId] === this.selectedEmpName
     );
