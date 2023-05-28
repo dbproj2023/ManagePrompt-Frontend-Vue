@@ -12,7 +12,7 @@
                 
                             <div class="wrap-input100 validate-input m-b-16">
                             <label>사번</label>
-                            <p class="input100" id="emp_id" name="emp_id" ref="memberIdInput">{{ empID }}</p>
+                            <p class="input100" id="emp_id" name="emp_id" ref="memberIdInput">{{ empId }}</p>
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -46,7 +46,7 @@
                             </div>
 
                             <div class="container-login100-form-btn m-t-17">
-                            <button class="login100-form-btn" type="button" @click="setPermission()">수정</button>
+                            <button class="login100-form-btn" type="button" @click="setPermission()">권한</button>
                             </div>
                         </form>
                         </div>
@@ -70,7 +70,7 @@
         },
         data() {
             return {
-                empID: "",
+                empId: "",
                 empName: "",
                 accessGrade: ""
             }
@@ -78,7 +78,7 @@
         methods: {
             setPermission() {
                 const formData = new FormData();
-                formData.append('emp_id', this.empID);
+                formData.append('emp_id', this.empId);
                 formData.append('emp_name', this.empName);
                 formData.append('access_grade', this.accessGrade);
 
