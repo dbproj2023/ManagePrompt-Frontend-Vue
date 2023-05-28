@@ -226,7 +226,6 @@ export default {
         },
         communicationRatingList: [],
         performanceRatingList:[],
-        name: 'H6'
       }
   },
   mounted(){
