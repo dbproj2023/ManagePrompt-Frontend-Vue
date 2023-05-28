@@ -212,7 +212,7 @@ const HOST =  "http://localhost:8080";
       this.currentPage = page;
     },
     goToProjectInput() {
-      this.$router.push('/projectInput');
+      this.$router.push('/project/input');
     },
       sendData() {
         console.log("dajflak")

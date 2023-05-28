@@ -1,18 +1,18 @@
 <template>
   <v-app>
+    
     <v-navigation-drawer v-model="drawer" app width="250px" class="no-border" style=" background-color: #F8F9FA;">
       <Nav />
     </v-navigation-drawer>
 
+
   <v-app-bar app style="background-color: #33508A;">
       <Header />
-    </v-app-bar>
+  </v-app-bar>
 
-    <v-main>
-      <v-container fluid>
+  <v-main class="full-img">
         <Main/>
-      </v-container>
-    </v-main>
+  </v-main>
   </v-app>
 </template>
 
@@ -30,8 +30,14 @@ export default {
   },
   data() {
     return {
-      drawer:true
+      drawer:true,
+      isLogin: false
     }
+  },
+  mounted(){
+    let Login = this.$store.getters.isLogin
+    this.isLogIn = Login
+    console.log("login:", this.isLogIn);
   },
   methods: {
   }
@@ -95,7 +101,12 @@ li {
   /* #f5f8f9; */
 }
 
-.title { 
-  font-family: 'KimjungchulGothic-Bold', 'Sans-serif'; 
+.full-img{
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  object-fit: cover;
 }
-</style>
+
+
+</style> 

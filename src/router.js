@@ -9,8 +9,9 @@ import Project from './components/Project.vue'
 import Mypage from './components/MyPage.vue'
 import ProDetail from './components/ProjectDetail.vue'
 // import page2 from './components/.vue'
-import ProjectInput from './components/ProjectInput.vue'
-
+// import ProjectInput from './components/ProjectInput.vue'
+import ProjectInput from './components/component/ProjectInput.vue'
+// src/components/component/ProjectInput.vue
 // import Project_detail from './components/component/Project_detail.vue'
 import ProjectModify from './components/component/ProjectModify.vue'
 import Change_pw from './components/component/Change_pw.vue'
@@ -19,7 +20,6 @@ import FindAccount from './components/component/FindAccount.vue'
 import NewEnroll from './components/component/NewEnroll.vue'
 // import cusEval from './components/component/EvaluationCustomer.vue'
 
-import notacc from './components/component/notacces.vue'
 // 프로젝트 평가
 import Evaluation from './components/EvaluationResult.vue'
 import EvaluationInput from './components/EvaluationInput.vue'
@@ -71,12 +71,8 @@ export default new Router({
             path: '/project/detail/:id',
             component: ProDetail
         },
-        // {
-        //     path: '/project_detail',
-        //     component: Project_detail
-        // },
         {
-            path: '/projectInput',
+            path: '/project/input',
             component: ProjectInput
         },
         {
@@ -98,10 +94,6 @@ export default new Router({
         {
             path:'/evaluation/input/customer',
             component: EvaluationInputForCus
-        },
-        {
-            path:'/not',
-            component: notacc
         },
         {
             path: '/newEnroll',

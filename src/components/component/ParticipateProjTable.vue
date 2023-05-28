@@ -1,7 +1,15 @@
 <template>
     <div>
-        <div>
+        <div class="spinner-div" v-if="isLoading">
+        <b-card class="spinner-table">
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
+            </div>
+        </b-card>
+        </div>
+        <div v-else>
             <b-card class="participate_table">
+                <p class="text-uppercase text-sm">My Project</p>
                 <el-table v-if="project_list.length > 0" class="table-responsive table" header-row-class-name="thead-light" :data="project_list">
                     <el-table-column label="번호" prop="number" min-width="60px"></el-table-column>
 
@@ -13,13 +21,14 @@
 
                     <el-table-column label="직무" prop="role" min-width="80px"></el-table-column>
 
-                    <el-table-column label="진행 상태" prop="progress_state" min-width="150px"></el-table-column>
+                    <el-table-column label="진행 상태" prop="progress_state" min-width="80px"></el-table-column>
 
                     <!-- 완료된 평가에만 버튼 만들어 평가할 수 있도록 -->
+
                     <el-table-column label="평가" prop="evaluation" min-width="150px">
                         <template slot-scope="scope">
                             <div class="avatar-group">
-                                <button @click="navigateToAccess(scope.row.pro_name, scope.row.roll, scope.row.participation_period)" style="cursor: pointer">평가</button>
+                                <button v-if="(scope.row.progress_state === '종료')" class="login100-form-btn profile-button eval-button" @click="navigateToAccess(scope.row.pro_name, scope.row.roll, scope.row.participation_period)" style="cursor: pointer">평가</button>
                             </div>
                         </template>
                     </el-table-column>
@@ -46,6 +55,9 @@
         data() {
             return {
                 project_list: [],
+                isLoading: true,
+                state: ''
+
             }
         },
         mounted() {
@@ -57,29 +69,62 @@
                     console.log('API response:', res.data.projectList);
 
                     for(let i=0; i < res.data.projectList.length; i++) {
+                        const startDate = res.data.projectList[i].startDate.slice(0, 10);
+                        const endDate = res.data.projectList[i].endDate.slice(0, 10);
+                        const currentDate = new Date().toISOString().slice(0, 10);
+
+                        if (currentDate < startDate) {
+                        } else if (currentDate >= startDate && currentDate <= endDate) {
+                            this.state = "진행중";
+                        } else if (currentDate > endDate) {
+                            this.state = "종료";
+                        } else if (startDate === endDate){
+                            this.state = "취소"
+                        }
+
                         var obj = {
                             number : i+1,
                             progress_year : res.data.projectList[i].startDate.charAt(0) + res.data.projectList[i].startDate.charAt(1) + res.data.projectList[i].startDate.charAt(2) + res.data.projectList[i].startDate.charAt(3),
-                            participation_period : "기간",
+                            participation_period : res.data.projectList[i].startDate.slice(0,10)+'-'+res.data.projectList[i].endDate.slice(0,10),
                             pro_name : res.data.projectList[i].proName,
                             role : res.data.projectList[i].roleName,
-                            progress_state : "상태",
+                            progress_state: this.state
                         };
-
+                                                
                         this.project_list.push( obj );
                     }
+                    this.isLoading = false;
                 });
             } catch (error) {
                 console.error('Invalid API URL:', apiUrl);
                 console.error(error);
             }
+
+
         },
         methods: {
             navigateToAccess(pro_name, roll, participation_period) {
                 this.$router.push('/evaluation/input/employee');
-            }
+            },
+            getCurrentDate() {
+                const date = new Date();
+                const year = date.getFullYear();
+                const month = ('0' + (date.getMonth() + 1)).slice(-2);
+                const day = ('0' + date.getDate()).slice(-2);
+                this.currentDate = `${year}-${month}-${day}`;
+                }
         }
     }
 </script>
 
 <style>
+.spinner-div{
+    width: 1214px;
+    height: 162px;
+}
+
+.eval-button{
+    height: 30px;
+}
+
+</style>
