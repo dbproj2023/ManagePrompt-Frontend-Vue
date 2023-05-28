@@ -1,5 +1,7 @@
 <template>
-  <v-app>
+  <ProjectInput/>
+
+  <!-- <v-app>
     <v-navigation-drawer v-model="drawer" app width="250px" class="no-border" style=" background-color: #F8F9FA;">
       <Nav />
     </v-navigation-drawer>
@@ -13,14 +15,14 @@
         <ProjectInput/>
       </v-container>
     </v-main>
-  </v-app>
+  </v-app> -->
 </template>
 
 
 <script>
 import Header from './component/Header.vue';
 import Nav from './component/Nav.vue'
-import ProjectInput from './component/ProjectInput.vue'
+import ProjectInput from './component/componenets/ProjectInput.vue'
 export default {
   name: "ProjectInput",
   components:{

@@ -62,15 +62,15 @@
 <style scoped>
 .nav-wrapper {
   margin: 15px;
-  height: 8
-  00px;
+  height: 800px;
   background-color: #FDFDFD;
   border-radius: 20px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: hidden; 
+  /* overflow-y: hidden;  */
+
 
 }
 

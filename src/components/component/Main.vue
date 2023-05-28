@@ -1,29 +1,10 @@
 <template>
   <div id="Main">
-      <div id="Main-head">
-          dd
-      </div>
-
-      <div class="card1">
-        <b-card class="mini-card" >
-          
-        </b-card>
-
-        <b-card class="mini-card">
-
-        </b-card>
-
-        <b-card class="mini-card">
-
-        </b-card>
-        
-        <b-card class="mini-card">
-
-        </b-card>
-      </div>
+    <!-- <img src="../assets/img/그림1.png" class="full-image"> -->
 
   </div>
 </template>
+
 
 
 <style scoped>
@@ -38,6 +19,12 @@ div {
   height: 130px;
   margin: 5px;
   border-radius: 20px;
+}
+
+.full-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
 
