@@ -15,6 +15,7 @@ import ProjectInput from './components/component/ProjectInput.vue'
 // import Project_detail from './components/component/Project_detail.vue'
 import ProjectModify from './components/component/ProjectModify.vue'
 import Change_pw from './components/component/Change_pw.vue'
+import LogoutChangePw from './components/component/LogoutChangePw.vue'
 import Access from './components/component/Access.vue'
 import FindAccount from './components/component/FindAccount.vue'
 import NewEnroll from './components/component/NewEnroll.vue'
@@ -92,7 +93,7 @@ export default new Router({
             component: EvaluationInput
         },
         {
-            path:'/evaluation/input/customer',
+            path: '/evaluation/input/customer',
             component: EvaluationInputForCus
         },
         {
@@ -108,8 +109,12 @@ export default new Router({
             component: Access
         },
         {
-            path: '/changePW',
+            path: '/changePw',
             component: Change_pw
+        },
+        {
+            path: '/logoutChangePw',
+            component: LogoutChangePw
         }
     ]
 })
