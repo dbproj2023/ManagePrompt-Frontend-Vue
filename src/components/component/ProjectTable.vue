@@ -50,9 +50,9 @@
             </b-form-input>
           </b-col>
           <b-col class="col-7" style="display: flex; align-items: center;" >
-            <b-form-input type="number" v-model="budge_start" placeholder="최소 예산" style="width: 250px; margin-right: 5px;"/>
+            <b-form-input type="number" v-model="budget_start" placeholder="최소 예산" style="width: 250px; margin-right: 5px;"/>
             ~
-            <b-form-input type="number" v-model="budge_end" placeholder="최대 예산" style="width: 250px;  margin-left: 5px; margin-right:5px" />
+            <b-form-input type="number" v-model="budget_end" placeholder="최대 예산" style="width: 250px;  margin-left: 5px; margin-right:5px" />
             원
           </b-col>
 
@@ -61,12 +61,6 @@
         <div>
 
         </div>
-
-        <!-- <div>
-          <button @click="goToProjectInput" class="login100-form-btn pro-button addButton" type="button">프로젝트 추가</button>
-
-          <b-button @click="sendData" style="height: 100px; width: 100px"> 검색 </b-button>
-        </div> -->
       </b-container>
       <hr style="color: #1D3876;"/>
     </div>
@@ -75,8 +69,8 @@
       <button @click="sendData" class="login100-form-btn pro-button addButton" style="width: 200px" type="button">검색</button>
       <button @click="goToProjectInput" class="login100-form-btn pro-button addButton" style="width: 200px" type="button">프로젝트 추가</button>
     </div>
-   
     
+    <div>
     <div class="spinner-div" v-if="isLoading">
       <b-card class="ProjectTableCard" style="min-height: 450px;">
         <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
@@ -85,37 +79,33 @@
       </b-card>
     </div>
 
-    
 
     <div v-else style="padding-top: 20px;">
     <!-- 프로젝트 테이블 -->   
     <b-card class="ProjectTableCard">
-      <el-table v-if="projects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="pagedProjects">
+      <el-table v-if="projects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="this.projects">
             <el-table-column label="프로젝트 이름" prop="proName" min-width="100px" >
             </el-table-column>
 
-            <el-table-column label="참여기간" min-width="150px" prop="name">
+            <el-table-column label="참여기간" min-width="180px" prop="name">
              <template v-slot="{row}">
-               <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC">{{row.startDate.slice(0,10)}} ~ {{row.endDate.slice(0,10)}}</span>
+               <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC">{{row.startDate | moment('YYYY-MM-DD')}} ~ {{row.endDate | moment('YYYY-MM-DD')}}</span>
               </template>
             </el-table-column>
 
             <el-table-column label="예산" prop="budget" min-width="140px"></el-table-column>
 
-            <el-table-column label="발주처명" prop="clientName" min-width="140px"></el-table-column>
+            <el-table-column label="발주처명" prop="clientName" min-width="180px"></el-table-column>
 
-
-
-            <!-- <el-table-column label="Status" min-width="200px" prop="status">
+            <el-table-column label="진행상태" min-width="200px">
               <template v-slot="{ row }">          
                 <badge class="badge-dot mr-4" type="">
-                  <i :class="`bg-${projectStatus(row)[1]}`"></i>
-                  <span class="status" :class="`text-${projectStatus(row)[1]}`"></span>
+                  <i :class="`bg-${projectStatus(row.startDate, row.endDate)[1]}`"></i>
+                  <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC"> {{projectStatus(row.startDate, row.endDate)[0]}} </span>
                 </badge>
               </template>
-            </el-table-column> -->
+            </el-table-column>
 
-            <el-table-column label="진행상태" min-width="100px" prop="status"></el-table-column>
 
             <el-table-column min-width="50px">
               <template slot-scope="scope">
@@ -131,13 +121,13 @@
               </template>
             </el-table-column>
 
-            <el-pagination v-if="projects.length > 0"
+            <!-- <el-pagination v-if="projects.length > 0"
             class="pagination"
             :current-page="currentPage"
             :page-size="pageSize"
             :total="projects.length"
             @current-change="handlePageChange"
-          ></el-pagination>
+          ></el-pagination> -->
         </el-table>
 
         <div v-else style="padding-top: 20px;">
@@ -145,7 +135,13 @@
         </div>
 
         
-    </b-card>
+        <span v-if="this.cntflag" class="font-weight-600 name mb-0 text-sm text-right"  style="color: #939CAC">
+          총 프로젝트 수: {{ this.cnt }}개 / 발주금액: {{ this.total_budget }}원
+        </span>
+
+      </b-card>
+
+    </div>
   </div>
 </b-card>
 
@@ -158,6 +154,7 @@
 //  import projects from 'projects'
 // import RangeDatePicker from 'vue-easy-range-date-picker'; 
 import { Pagination, Table, TableColumn } from 'element-ui';
+import moment from 'moment';
 
 
 import axios from "axios"; // http 통신을 위한 라이브러리
@@ -173,39 +170,25 @@ const HOST =  "http://localhost:8080";
     },
     data() {
       return {
-        currentPage: 1,
-        pageSize: 10,
         proName: '',
         selectedStatus: '',
         selectedYear: '',
         clientName: '',
-        startDate: '',
-        endDate: '',
-        budge_start: '',
-        budge_end: '',
-        // responsePosts: [],
+        startDate: '', endDate: '',
+        budget_start: '',
+        budget_end: '',
         projects: [],
-        isLoading: true
+        isLoading: true,
+        cnt: 0, total_budget: 0 , 
+        cntflag: false
         }
     },
   computed: {
-    pagedProjects() {
-      const startIndex = (this.currentPage - 1) * this.pageSize;
-      const endIndex = startIndex + this.pageSize;
-      return this.projects.slice(startIndex, endIndex);
-    },
-    slicedStartDate() {
-      if (this.project.startDate && this.project.endDate) {
-        const startyear = this.project.startDate.slice(2, 4);
-        const startmonth = this.project.startDate.slice(5, 7);
-        const startday = this.project.startDate.slice(8, 10);
-
-        const endyear = this.project.startDate.slice(2, 4);
-        const endmonth = this.project.startDate.slice(5, 7);
-        const endday = this.project.startDate.slice(8, 10);
-        return `${startyear}-${startmonth}-${startday} ~ ${endyear}-${endmonth}-${endday}`}
-      return '';
-  }
+    // pagedProjects() {
+    //   const startIndex = (this.currentPage - 1) * this.pageSize;
+    //   const endIndex = startIndex + this.pageSize;
+    //   return this.projects.slice(startIndex, endIndex);
+    // }
   },
   methods: {
     handlePageChange(page) {
@@ -214,38 +197,68 @@ const HOST =  "http://localhost:8080";
     goToProjectInput() {
       this.$router.push('/project/input');
     },
-      sendData() {
-        console.log("dajflak")
-        this.isLoading = true;
-        const apiUrl = `${HOST}/api/v1/proj/lists/search`;
-        console.log("나 여기")
+    sendData() {
+      this.isLoading = true;
+      const apiUrl = `${HOST}/api/v1/proj/lists/search`;
+      console.log('프로젝트 검색', this.isLoading);
 
-        // console.log(this.clientName)
-        // console.log(this.startDate)
-        // console.log(this.budge_start)
-
-        const params = {
+      const params = {
         period_start: this.startDate,
         period_end: this.endDate,
         pro_name: this.proName,
         client_name: this.clientName,
-        budge_start: this.budge_start,
-        budge_end: this.budge_end,
+        budget_start: this.budget_start,
+        budget_end: this.budget_end,
         page: 0,
         size: 30,
         sort: "emp_id,desc",
-      };
-      
+    };
+    
       axios.get(apiUrl, {params})
         .then((res) => {
           console.log(apiUrl, { params })
           console.log('API response:', res.data);
           this.projects = res.data;
           this.isLoading = false
+          if (res.status===200){
+            // 년도 검색
+            if (this.selectedYear !== '') {
+              this.projects = this.projects.filter(project => {
+                const projectYear = moment(project.startDate).format('YYYY');
+                this.cntflag = true;
+                return projectYear === this.selectedYear;
+              });
+
+            const apiUrl2 = `${HOST}/api/v1/proj/lists/search/summary`;
+            const params2 = {year: parseInt(this.selectedYear)};
+            axios.get(apiUrl2, {params: params2})
+            .then((res) => {
+              console.log(apiUrl2, { params: params2 })
+              console.log('API response:', res.data);
+              this.cnt = res.data.cnt;
+              this.total_budget = res.data.total_budget;
+              
+            })
+            .catch((error) => {
+              console.error('Failed to fetch data:', error);
+            });
+          } 
+         }
+
+        //  상태 검색 수정 안됨 ㄱ- 하
+        if (this.selectedStatus != ''){
+          this.projects = this.projects.filter(project => {
+            console.log(this.projects.status, this.selectedStatus);
+            return this.projects.status === this.selectedStatus;
+          });
+        }
         })
         .catch((error) => {
           console.error('Failed to fetch data:', error);
         });
+
+      
+        this.isLoading = false;
     },
     navigateToDetail(id) {
       console.log("나 여깄어")
@@ -262,20 +275,24 @@ const HOST =  "http://localhost:8080";
         this.value = null;
       }
     },
-    projectStatus(row) {
-      const currentDate = new Date();
-      const startDate = new Date(row.startDate.slice(0,10));
-      const endDate = new Date(row.endDate.slice(0,10));
+    projectStatus(rowstartDate, rowendDate) {
+      console.log(rowstartDate);
+      const currentDate = moment().format('YYYY-MM-DD');
+      const startDate = moment(rowstartDate).format('YYYY-MM-DD');
+      const endDate = moment(rowendDate).format('YYYY-MM-DD');
 
-      if (currentDate < startDate) {
+      console.log(startDate, endDate, startDate === endDate);
+
+      if (startDate === endDate){
+        return ["취소", 'secondary']
+      } else if (currentDate < startDate) {
         return ["예정",'danger'];
       } else if (currentDate > endDate) {
         return ["완료","success"];
-      } else if (currentDate = endDate){
-        return ["취소", 'secondary']
-      } else {
+      }  else {
         return ["진행중",'warning'];
       }
+
   },
 },
   mounted() {
@@ -353,5 +370,6 @@ const HOST =  "http://localhost:8080";
   border: none !important;
   border-radius: 10px;
 }
+
 
 </style>
