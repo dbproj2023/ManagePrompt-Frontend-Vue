@@ -17,7 +17,7 @@
             </div>
   
             <div class="wrap-input100 validate-input m-b-16">
-              <input class="input100" type="password" id="auth_pw" name="auth_pw" ref="memberPasswordInput" v-model="input.auth_pw" placeholder="비밀번호">
+              <input class="input100" type="password" id="auth_pw" name="auth_pw" ref="memberPasswordInput" v-model="input.auth_pw" @keyup.enter="doLogin()" placeholder="비밀번호">
               <span class="focus-input100"></span>
               <span class="symbol-input100">
                 <i class="fa fa-lock" aria-hidden="true"></i>
@@ -27,7 +27,7 @@
             <div class="flex-sb-m w-full p-t-3 p-b-24">
   
               <div>
-                <a href="find_accoun" class="txt1">
+                <a href="findAccount" class="txt1">
                   비밀번호 찾기
                 </a>
               </div>

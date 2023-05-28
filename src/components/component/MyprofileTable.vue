@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label">이메일</label>
-                  <input  class="form-control" type="textarea" id="emp_skill" name="emp_skill" v-model="emp_skill" @input="emp_skill = $event.target.value"/>
+                  <input  class="form-control" type="email" id="emp_email" name="emp_email" v-model="emp_email" @input="emp_email = $event.target.value"/>
                 </div>
                 </div>
               </div>
@@ -143,6 +143,8 @@
                 try{
                     axios.patch('/api/v1/user/info/update', formData).then((res) => {
                         console.log("res.data:", res.data);
+                        alert(res.data.message);
+                        window.location.reload();
                     });
                 } catch(error) {
                     console.error(error);

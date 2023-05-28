@@ -19,7 +19,7 @@
                     <el-table-column label="평가" prop="evaluation" min-width="150px">
                         <template slot-scope="scope">
                             <div class="avatar-group">
-                                <button @click="navigateToAccess(scope.row.pro_name, scope.row.roll, scope.row.participation_period)" style="cursor: pointer">권한</button>
+                                <button @click="navigateToAccess(scope.row.pro_name, scope.row.roll, scope.row.participation_period)" style="cursor: pointer">평가</button>
                             </div>
                         </template>
                     </el-table-column>
@@ -58,7 +58,7 @@
 
                     for(let i=0; i < res.data.projectList.length; i++) {
                         var obj = {
-                            number : i,
+                            number : i+1,
                             progress_year : res.data.projectList[i].startDate.charAt(0) + res.data.projectList[i].startDate.charAt(1) + res.data.projectList[i].startDate.charAt(2) + res.data.projectList[i].startDate.charAt(3),
                             participation_period : "기간",
                             pro_name : res.data.projectList[i].proName,
@@ -76,7 +76,7 @@
         },
         methods: {
             navigateToAccess(pro_name, roll, participation_period) {
-                
+                this.$router.push('/evaluation/input/employee');
             }
         }
     }

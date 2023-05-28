@@ -16,7 +16,7 @@
   import Login from  './component/Login.vue'
 
   export default {
-    name: "Project",
+    name: "LogIn",
     components:{
     Login,
     Nav,
