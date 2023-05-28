@@ -64,7 +64,7 @@
                 </div>
               </div>
               <div class="button-container" style="display:felx; margin:10px">
-                <button class="login100-form-btn profile-button changePW-button" type="button" @click="navigateToChangePW()">비밀번호 변경</button>
+                <button class="login100-form-btn profile-button changePw-button" type="button" @click="navigateToChangePw()">비밀번호 변경</button>
                 <button class="login100-form-btn profile-button modify-button" type="button" @click="saveData()">내 정보 수정</button>
               </div>
               <br>
@@ -123,8 +123,8 @@
                 const extracted = date.toISOString().slice(0, 10); // 날짜만 추출 (YYYY-MM-DD 형식)
                 return extracted;
             },
-            navigateToChangePW() {
-                this.$router.push(`/changePW`);
+            navigateToChangePw() {
+                this.$router.push(`/changePw`);
             },
             saveData() {
                 const formData = new FormData();
@@ -159,7 +159,7 @@
   font-size: 12px;
 }
 
-.changePW-button{
+.changePw-button{
     margin-right: 10px;
 }
 
