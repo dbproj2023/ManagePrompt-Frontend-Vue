@@ -11,7 +11,7 @@
             <b-card class="participate_table">
                 <p class="text-uppercase text-sm">My Project</p>
                 <el-table v-if="project_list.length > 0" class="table-responsive table" header-row-class-name="thead-light" :data="project_list">
-                    <el-table-column label="번호" prop="number" min-width="60px"></el-table-column>
+                    <el-table-column label="번호" prop="pro_id" min-width="60px"></el-table-column>
 
                     <el-table-column label="연도" prop="progress_year" min-width="80px"></el-table-column>
 
@@ -28,7 +28,7 @@
                     <el-table-column label="평가" prop="evaluation" min-width="150px">
                         <template slot-scope="scope">
                             <div class="avatar-group">
-                                <button v-if="(scope.row.progress_state === '종료')" class="login100-form-btn profile-button eval-button" @click="navigateToAccess(scope.row.pro_name, scope.row.roll, scope.row.participation_period)" style="cursor: pointer">평가</button>
+                                <button v-if="(scope.row.progress_state === '종료')" class="login100-form-btn profile-button eval-button" @click="navigateToAccess(scope.row.pro_id, scope.row.pro_name)" style="cursor: pointer">평가</button>
                             </div>
                         </template>
                     </el-table-column>
@@ -84,6 +84,7 @@
 
                         var obj = {
                             number : i+1,
+                            pro_id: res.data.projectList[i].proId,
                             progress_year : res.data.projectList[i].startDate.charAt(0) + res.data.projectList[i].startDate.charAt(1) + res.data.projectList[i].startDate.charAt(2) + res.data.projectList[i].startDate.charAt(3),
                             participation_period : res.data.projectList[i].startDate.slice(0,10)+'-'+res.data.projectList[i].endDate.slice(0,10),
                             pro_name : res.data.projectList[i].proName,
@@ -103,8 +104,15 @@
 
         },
         methods: {
-            navigateToAccess(pro_name, roll, participation_period) {
-                this.$router.push('/evaluation/input/employee');
+            navigateToAccess(pro_id, pro_name) {
+                // this.$router.push('/evaluation/input/employee');
+                this.$router.push({
+                    path: '/evaluation/input/employee',
+                    query: {
+                        pro_id : pro_id,
+                        pro_name: pro_name
+                    }
+                });
             },
             getCurrentDate() {
                 const date = new Date();
