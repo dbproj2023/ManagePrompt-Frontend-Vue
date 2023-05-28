@@ -283,7 +283,7 @@ span{
   font-weight: bold;
 }
 .project-card{
-  height: 85px;
+  height: 80px;
   width: 80%;
   padding: auto;
   margin-left: 30px;
