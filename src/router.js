@@ -13,10 +13,10 @@ import ProjectInput from './components/ProjectInput.vue'
 
 // import Project_detail from './components/component/Project_detail.vue'
 import ProjectModify from './components/component/ProjectModify.vue'
-// import Change_pw from './components/Change_pw.vue'
-// import Access from './components/Access.vue'
+import Change_pw from './components/component/Change_pw.vue'
+import Access from './components/component/Access.vue'
 import FindAccount from './components/component/FindAccount.vue'
-// import NewEnroll from './components/component/NewEnroll.vue'
+import NewEnroll from './components/component/NewEnroll.vue'
 // import cusEval from './components/component/EvaluationCustomer.vue'
 
 import notacc from './components/component/notacces.vue'
@@ -68,11 +68,6 @@ export default new Router({
             // beforeEnter: Authentication()
         },
         {
-            path: '/mypage',
-            component: Mypage,
-            // beforeEnter: Authentication()
-        },
-        {
             path: '/project/detail/:id',
             component: ProDetail
         },
@@ -107,14 +102,22 @@ export default new Router({
         {
             path:'/not',
             component: notacc
-        }
+        },
+        {
+            path: '/newEnroll',
+            component: NewEnroll
+        },
         // {
-        //     path: '/newEnroll',
-        //     component: NewEnroll
-        // },
-        // {
-        //     path:'/cusEval',
+        //     path: '/cusEval',
         //     component: cusEval
-        // }
+        // },
+        {
+            path: '/employee/access',
+            component: Access
+        },
+        {
+            path: '/changePW',
+            component: Change_pw
+        }
     ]
 })

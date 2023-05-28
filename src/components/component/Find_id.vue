@@ -60,7 +60,13 @@ export default {
                 if( res.data.status == 1 ){
                     alert(res.data.message);
                     
-                    // this.$router.push('/Login');
+                    axios.get('/api/v1/auth/help/findID').then((res) => {
+                        if( res.data.status == 1 ) {
+                            alert(res.data.auth_id);
+                        }
+                    });
+                    
+                    this.$router.push('/Login');
                 }
                 else if( res.data.status == 0 ){
                     alert(res.data.message);
