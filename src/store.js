@@ -10,8 +10,8 @@ export default new Vuex.Store({
   })],
   state: {
     isLogin: false, // 로그인 여부
-    accGrade: 9, // 0-관리자 / 9-승인전
-    // status: 0,
+    accGrade: 9, // 초기에는 승인 전
+    status: 0, // 정보 등록 전
   },
   getters: {
     isLogin(state) {
@@ -20,21 +20,20 @@ export default new Vuex.Store({
     getAccGrade(state) {
       return state.accGrade;
     },
-    // getStatus(state) {
-    //   return state.status;
-    // },
+    getStatus(state) {
+      return state.status;
+    },
   },
   mutations: {
     setLogin(state, data) {
       state.isLogin = data;
-      console.log("state.isLogin data:", data);
     },
     setAccGrade(state, accGrade) {
       state.accGrade = accGrade;
     },
-    // setStatus(state, status) {
-    //   state.status = status;
-    // },
+    setStatus(state, status) {
+      state.status = status;
+    },
     // setLogout(state, data) {
     //   state.isLogin = data;
     // }

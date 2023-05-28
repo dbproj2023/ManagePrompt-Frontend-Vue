@@ -28,16 +28,6 @@ import EvaluationInputForCus from './components/EvaluationInputCus'
 
 
 
-// const Authentication = () => (to, from, next) => {
-//     const isLogin = store.getters['loginStore/isLogin'];
-//     if (!isLogin) {
-//         next('/login?returnUrl=' + to.fullPath);
-//     } else {
-//         next();
-//     }
-// };
-
-
 Vue.use(Router)
 
 export default new Router({
@@ -66,7 +56,6 @@ export default new Router({
         {
             path: '/mypage',
             component: Mypage
-            // beforeEnter: Authentication()
         },
         {
             path: '/project/detail/:id',

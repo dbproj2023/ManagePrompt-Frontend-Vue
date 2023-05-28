@@ -46,8 +46,6 @@
   
   <script>
   import axios from "axios";
-  const HOST =  "http://localhost:8080";
-  // import loginStore from './login.js'
   
   export default {
       data() {
@@ -72,66 +70,34 @@
                   this.$refs.memberPasswordInput.focus();
                   return;
               }
-      
-              // test 소스 권한 0의 경영진
-              // this.input.auth_id = 'qafffwad';
-              // this.input.auth_pw = 'abc01!~!';
-  
-              // test 소스 권한 2의 관리자
-              // this.input.auth_id = 'rege1212';
-              // this.input.auth_pw = 'abc01!~!';
-  
-              // test 소스 권한 3의 직원
-              // this.input.auth_id = 'awfawfwf';
-              // this.input.auth_pw = 'abc01!~!';
-  
+
               let formData = new FormData();
               formData.append("authId", this.input.auth_id);
               formData.append("authPw", this.input.auth_pw);
   
-              axios.post(`/api/v1/auth/login`, formData ).then((res) => {
-                  if( res.data != null && res.data != undefined && res.data != '' ){
-                      alert("로그인에 성공했습니다")
+              axios.post('/api/v1/auth/login', formData).then((res) => {
+                  if( res.data != null && res.data != undefined && res.data != '' ) {
+                      alert("로그인에 성공했습니다.");
   
-                      this.$store.commit('setLogin', true)
-                      this.$store.commit('setAccGrade', res.data.accessGrade)
-                      console.log("test code isLogin-2 : ", this.$store.getters.isLogin)
+                      this.$store.commit('setLogin', true);
+                      this.$store.commit('setAccGrade', res.data.accessGrade);
+                      this.$store.commit('setStatus', res.data.status);
   
-                      // // 새로운 직원이면
-                      // if( res.data.isNewbie == true ){
-                      //     // 회원 정보 등록 페이지로 이동
-                      //     this.$router.push('/Enroll')
-                      // }else{
-                      //     // 이전 페이지로 이동
-                      //     // this.$router.push('/');
-                      //     this.$router.go(-1);
-                      // }
-                      this.$router.go(-1);
+                      // 새로운 직원이면
+                      if( res.data.status == 0 ) {
+                          // 회원 정보 등록 페이지로 이동
+                          this.$router.push('/Enroll');
+                      } else {
+                          // 이전 페이지로 이동
+                          this.$router.go(-1);
+                      }
                   }
-                  else if( res.data == '' ){
-                      alert("로그인에 실패했습니다.")
+                  else if( res.data == '' ) {
+                      alert("로그인에 실패했습니다.");
                   }
               });
           },
-          // doLogout() {
-          //   console.log("test code click doLogout")
-
-          //   axios.get('api/v1/auth/logout').then((res) => {
-          //       if( res.data == 'logout' ) {
-          //           alert("로그아웃 되었습니다.");
-
-          //           this.$store.commit('setLogin', false);
-          //           this.$store.commit('setAccGrade', '');
-          //           console.log("test code isLogout : ", this.$store.getters.isLogin)
-
-          //           this.$router.push('/');
-          //       }
-          //   });
-          // }
       },
-      // modules: {
-      //     loginStore: loginStore
-      // }
   }
   </script>
 
