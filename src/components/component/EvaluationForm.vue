@@ -229,7 +229,7 @@ mounted(){
 
 
     const formData = new FormData();
-    formData.append("pro_name", selectedProId[1]);
+    formData.append("pro_id", selectedProId[0]);
     formData.append("coworker_emp_id", selectedEmpId);
     formData.append("communication_rating",parseInt(this.selectedOption_c));
     formData.append("communication_desc", this.commInput);
@@ -250,6 +250,7 @@ mounted(){
               if (res.status === 200) {
 
                 console.log("평가 등록 성공!");
+                alert(res.data.message);
                 console.log(res);
                 window.location.reload();
               }
