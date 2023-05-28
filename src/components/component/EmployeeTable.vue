@@ -8,7 +8,6 @@
                 <div>
                     <b-row style="width: 1050px;">
                         <b-col class="col-6.3" style="display: flex; align-items: center;">
-                            <div style="margin-right: 10px;">프로젝트 참여 기간</div>
                             <b-form-datepicker class="input_date" v-model="inputDate" placeholder="투입일자" style="width:250px; margin-right: 5px;"  @input="handleDateInput"></b-form-datepicker>
                             ~
                             <b-form-datepicker class="output_date" v-model="outputDate" placeholder="탈출일자" style="width:250px; margin-left: 5px;"></b-form-datepicker>
