@@ -16,7 +16,7 @@ export default {
     let path = this.$route.path
     let isLogin = this.$store.getters.isLogin
     let accGrade = this.$store.getters.getAccGrade
-    let status = this.$store.getters.status
+    let status = this.$store.getters.getStatus
 
     // 홈(메인), 로그인, 계정찾기, 비밀번호 변경(찾기) 제외 나머지 페이지 로그인 후 접근
     if( path != '/' && path != '/login' && path != '/findAccount' && path != '/logoutChangePw' && isLogin == false ){
@@ -34,11 +34,11 @@ export default {
     }
     // 신규 직원만 회원 정보 등록 페이지 접근 가능
     else if( path.startsWith('/enroll') && status == 1 ) {
-      console.log("test code /enroll")
+      console.log("test code status:", status);
       alert("접근 권한이 없습니다.");
       this.$router.go(-1);
     }
-    // else if( path.startsWith('/enroll') && accGrade != 9 && status == 1 ) {
+    // else if( path.startsWith('/enroll') && status === 1 ) {
     //   console.log("test code /enroll")
     //   alert("접근 권한이 없습니다.");
     //   this.$router.go(-1);
@@ -59,7 +59,7 @@ export default {
       this.$router.go(-1);
     }
     // 권한 3(직원) 이상 동료평가 페이지 접근 가능
-    else if( path.startsWith('/evaluation/input/customer') && accGrade >= 3 ) {
+    else if( path.startsWith('/evaluation/input/employee') && accGrade >= 4 ) {
       alert("접근 권한이 없습니다.");
       this.$router.go(-1);
     }
