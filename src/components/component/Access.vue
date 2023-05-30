@@ -5,12 +5,13 @@
       <br>
       <br>
 
-      <b-form-input class="input-data" v-model="empId" placeholder="사번"></b-form-input>
+      <b-form-input class="input-data" v-model="empId" placeholder="사번" readonly></b-form-input>
       
-      <b-form-input class="input-data" v-model="empName" placeholder="이름"></b-form-input>
+      <b-form-input class="input-data" v-model="empName" placeholder="이름" readonly></b-form-input>
       
       <div style="display: flex;">
         <select class="form-select form-control" style="width: 130px;" name="access_grade" v-model="accessGrade">
+          <option value="">권한</option>
           <option value="0">대표</option>
           <option value="1">이사</option>
           <option value="2">관리자</option>
@@ -48,6 +49,12 @@ export default {
       axios.patch('/api/v1/auth/role/update', formData).then((res) => {
         console.log({ formData });
         console.log('API response:', res.data);
+        
+        if(res.data.status == 1) {
+          alert(res.data.message); // 권한 변경 완료
+        } else {
+          alert(res.data.message); // 권한 변경 실패
+        }
       }).catch((error) => {
         console.error('Failed to fetch data:', error);
       });
