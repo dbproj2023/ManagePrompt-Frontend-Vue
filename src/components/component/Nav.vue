@@ -62,7 +62,7 @@
 <style scoped>
 .nav-wrapper {
   margin: 15px;
-  height: 800px;
+  height: 700px;
   background-color: #FDFDFD;
   border-radius: 20px;
   padding: 20px;

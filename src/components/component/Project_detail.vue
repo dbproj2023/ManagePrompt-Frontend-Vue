@@ -136,63 +136,6 @@ export default {
   },
   data() {
     return {
-      projects: [
-    {
-      id: 1,
-      title: 'Argon Design System',
-      발주금액: '$2500 USD',
-      참여인원: 10,
-      PM: '정은',
-      기간:'2023/03/01-2023/10/01',
-      status: 'pending',
-      statusType: 'warning',
-      completion: 60
-    },
-    {
-      id: 2,
-      title: 'Angular Now UI Kit PRO',
-      발주금액: '$1800 USD',
-      참여인원: 8,
-      PM: '정은',
-      기간:'2023/03/01-2023/10/01',
-      status: 'completed',
-      statusType: 'success',
-      completion: 100
-    },
-    {
-      id: 3,
-      title: 'Black Dashboard',
-      발주금액: '$3150 USD',
-      참여인원: 5,
-      PM: '양슬빈',
-      기간:'2023/03/01-2023/10/01',
-      status: 'delayed',
-      statusType: 'danger',
-      completion: 72
-    },
-    {
-      id: 4,
-      title: 'React Material Dashboard',
-      발주금액: '$4400 USD',
-      참여인원: 2,
-      PM: '양슬빈',
-      기간:'2023/03/01-2023/10/01',
-      status: 'on schedule',
-      statusType: 'info',
-      completion: 90
-    },
-    {
-      id: 5,
-      title: 'Vue Paper UI Kit PRO',
-      발주금액: '$2200 USD',
-      참여인원: 2,
-      PM: '정은',
-      기간:'2023/03/01-2023/10/01',
-      status: 'completed',
-      statusType: 'success',
-      completion: 100
-    },
-  ],
   }
   },
   methods: {

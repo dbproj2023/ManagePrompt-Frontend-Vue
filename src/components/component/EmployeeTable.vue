@@ -61,8 +61,7 @@
             </div>
           </b-card>
         </div>
-  
-  
+    
         <div v-else style="padding-top: 20px;">
           <!-- 직원 테이블 -->   
           <b-card class="ProjectTableCard">
@@ -312,7 +311,6 @@
         console.error(error);
       });
     }
-  }
 </script>
 
 <style>
