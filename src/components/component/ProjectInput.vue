@@ -18,7 +18,11 @@
       <b-form-input class="input-data" v-model="clientEmpName" placeholder="발주처 담당자"></b-form-input>
       <b-form-input class="input-data" v-model="clientEmpPh" placeholder="발주처 담당자 전화번호"></b-form-input>
       <b-form-input class="input-data" v-model="clientEmpEmail" placeholder="발주처 담당자 이메일"></b-form-input>
-      <b-button @click="createPro">프로젝트 등록</b-button>
+
+      <div style="display:flex;">
+        <b-button  class="login100-form-btn pro-button addButton inputButton button1"  @click="goBack">취소</b-button>
+        <b-button  class="login100-form-btn pro-button addButton inputButton"  @click="createPro">프로젝트 등록</b-button>
+      </div>
 
     </div>
   </div>
@@ -47,9 +51,12 @@ export default {
     closeDetail() {
       this.$emit('');
     },
+    goBack(){
+      this.$router.go(-1);
+    },
     createPro() {
       // if (this.checkInput() === false) {
-      //   alert(this.err_message);
+      //   alert(this.err_message); 
       // } else {
         const formData = new FormData();
         formData.append("pro_id", this.proId);
@@ -113,5 +120,16 @@ export default {
 .input-data{
 margin-bottom: 10px;
 width: 300px;
+}
+
+.inputButton{
+  text-align: center;
+  align-items: center;
+  width: 145px;
+  height: 40px;
+}
+
+.button1 {
+  margin-right: 10px;
 }
 </style>

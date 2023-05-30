@@ -144,14 +144,9 @@ export default {
         },
         slicedStartDate() {
             if (this.employee.startDate && this.employee.endDate) {
-                const startyear = this.employee.startDate.slice(2, 4);
-                const startmonth = this.employee.startDate.slice(5, 7);
-                const startday = this.employee.startDate.slice(8, 10);
-
-                const endyear = this.employee.startDate.slice(2, 4);
-                const endmonth = this.employee.startDate.slice(5, 7);
-                const endday = this.employee.startDate.slice(8, 10);
-                return `${startyear}-${startmonth}-${startday} ~ ${endyear}-${endmonth}-${endday}`
+                const startDate = moment(this.employee.startDate).format('YYYY-MM-DD');
+                const endDate = moment(this.employee.endDate).format('YYYY-MM-DD');
+                return `${startDate} ~ ${endDate}`
             }
             return '';
         },
