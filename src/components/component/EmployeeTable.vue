@@ -310,7 +310,8 @@
         console.error('Invalid API URL:', apiUrl);
         console.error(error);
       });
-    }
+    
+    }}
 </script>
 
 <style>

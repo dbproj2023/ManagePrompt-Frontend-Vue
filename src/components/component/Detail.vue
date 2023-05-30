@@ -540,6 +540,9 @@ li {
   display: flex;
   position: absolute;
   padding-top: 30px;
+  overflow: hidden;
+  touch-action: none;
+  
   /* width: 100%; */
   /* height: 100%; */
   /* left: 200px; */
