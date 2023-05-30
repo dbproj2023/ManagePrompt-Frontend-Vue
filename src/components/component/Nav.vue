@@ -43,6 +43,16 @@
             <span :class="[{'align-middle': true, 'text': $route.path !== '/evaluationuation', 'text-active': $route.path === '/evaluation' }]" style="font-size:15px">평가 보고서 조회</span>
           </b-nav-item>
 
+          <b-nav-item :class="{ active: $route.path === '/employee/unauthorized' }" href="/employee/unauthorized">
+            <span :class="[
+              'material-symbols-outlined',
+              'align-middle',
+              'icon-spacing',
+              { 'text-active': $route.path === '/employee/unauthorized', 'gray-icon': $route.path !== '/employee/unauthorized' }
+            ]" :style="{ color: ($route.path === '/employee/unauthorized') ? '#82CACC' : 'gray' }">badge</span>
+            <span :class="[{'align-middle': true, 'text': $route.path !== '/employee/unauthorized', 'text-active': $route.path === '/employee/unauthorized' }]" style="font-size:15px">미승인 직원 조회</span>
+          </b-nav-item>
+
           <!-- <b-nav-item :class="{ active: $route.path === '/Mypage' }" href="/Mypagel">
             <span :class="[
               'material-symbols-outlined',

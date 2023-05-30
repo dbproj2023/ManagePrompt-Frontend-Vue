@@ -19,6 +19,7 @@ import LogoutChangePw from './components/component/LogoutChangePw.vue'
 import Access from './components/component/Access.vue'
 import FindAccount from './components/component/FindAccount.vue'
 import NewEnroll from './components/component/NewEnroll.vue'
+import UnauthorizedEmp from './components/component/UnauthorizedEmp.vue'
 // import cusEval from './components/component/EvaluationCustomer.vue'
 
 // 프로젝트 평가
@@ -93,6 +94,10 @@ export default new Router({
         //     path: '/cusEval',
         //     component: cusEval
         // },
+        {
+            path: '/employee/unauthorized',
+            component: UnauthorizedEmp
+        },
         {
             path: '/employee/access/:id',
             component: Access
