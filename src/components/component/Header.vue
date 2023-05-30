@@ -96,9 +96,11 @@ export default {
 
               this.$store.commit('setLogin', false);
               this.$store.commit('setAccGrade', '');
+              this.$store.commit('setStatus', 0);
               console.log("test code isLogout : ", this.$store.getters.isLogin)
 
               this.$router.push('/');
+              window.location.reload();
           }
       });
     }

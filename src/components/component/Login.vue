@@ -86,7 +86,7 @@
                       // 새로운 직원이면
                       if( res.data.status == 0 ) {
                           // 회원 정보 등록 페이지로 이동
-                          this.$router.push('/Enroll');
+                          this.$router.push('/enroll');
                       } else {
                           // 이전 페이지로 이동
                           this.$router.go(-1);

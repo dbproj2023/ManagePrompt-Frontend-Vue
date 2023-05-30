@@ -94,7 +94,7 @@ export default new Router({
         //     component: cusEval
         // },
         {
-            path: '/employee/access',
+            path: '/employee/access/:id',
             component: Access
         },
         {
