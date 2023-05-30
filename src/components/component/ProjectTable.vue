@@ -87,7 +87,7 @@
             <el-table-column label="프로젝트 이름" prop="proName" min-width="100px" >
             </el-table-column>
 
-            <el-table-column label="참여기간" min-width="180px" prop="name">
+            <el-table-column label="기간" min-width="180px" prop="name">
              <template v-slot="{row}">
                <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC">{{row.startDate | moment('YYYY-MM-DD')}} ~ {{row.endDate | moment('YYYY-MM-DD')}}</span>
               </template>
@@ -248,6 +248,7 @@ const HOST =  "http://localhost:8080";
         //  상태 검색 수정 안됨 ㄱ- 하
         if (this.selectedStatus != ''){
           this.projects = this.projects.filter(project => {
+            console.log()
             console.log(this.projects.status, this.selectedStatus);
             return this.projects.status === this.selectedStatus;
           });
@@ -256,12 +257,9 @@ const HOST =  "http://localhost:8080";
         .catch((error) => {
           console.error('Failed to fetch data:', error);
         });
-
-      
         this.isLoading = false;
     },
     navigateToDetail(id) {
-      console.log("나 여깄어")
       this.$router.push(`/project/detail/${id}`);
     },
     onChange(e) {
@@ -276,12 +274,10 @@ const HOST =  "http://localhost:8080";
       }
     },
     projectStatus(rowstartDate, rowendDate) {
-      console.log(rowstartDate);
       const currentDate = moment().format('YYYY-MM-DD');
       const startDate = moment(rowstartDate).format('YYYY-MM-DD');
       const endDate = moment(rowendDate).format('YYYY-MM-DD');
 
-      console.log(startDate, endDate, startDate === endDate);
 
       if (startDate === endDate){
         return ["취소", 'secondary']

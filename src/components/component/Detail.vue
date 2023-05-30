@@ -25,7 +25,7 @@
         </div>
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트 </div>
-          <div class="flex-cell">{{ project.startDate.slice(0,10) }} ~ {{ project.endDate.slice(0,10)  }}</div>
+          <div class="flex-cell">{{project.startDate | moment('YYYY-MM-DD')}} ~ {{project.endDate | moment('YYYY-MM-DD')}}</div>
           <div class="flex-cell flex-header">프로젝트 참여 인원</div>
           <div class="flex-cell">{{ project.numOfParicipant}}</div>
         </div>
@@ -67,9 +67,7 @@
      <div style="margin-top: 20px;">
           <b-card class="table-card" style="width: 560px; height: 320px; overflow: auto;">
             <h6>프로젝트 참여 직원</h6>
-            <br>
-            <br>
-          
+            <br>          
             <el-table class="table-responsive table text-center"  header-row-class-name="thead-light"  :data="project.participantList" @selection-change="handleSelectionChange"  size="small">
             <el-table-column type="selection" width="20px"></el-table-column>
 
@@ -97,8 +95,7 @@
             <el-table-column label="참여기간" min-width="200px" prop="name">
               <template v-slot="{ row }">
                 <span class="font-weight-600 name mb-0 text-sm" @click="editPeriod(row)">
-                  {{ row.startDate.slice(0,10) }}~
-                  {{ row.endDate.slice(0,10)}}
+                  {{row.startDate | moment('YYYY-MM-DD')}} ~ {{row.endDate | moment('YYYY-MM-DD')}}
                 </span>
                 <el-input v-model="row.editing" v-show="row.isEditing" @blur="savePeriod(row)" ref="periodInput"></el-input>
               </template>
@@ -345,11 +342,11 @@ export default {
           console.error('Failed to fetch data:', error);
         });
 
-        params = {
-          emp_id: "",
-          emp_name: "",
-          emp_skill: ""
-        };
+        this.emp_id = "";
+        this.emp_name = "";
+        this.emp_skil = "";
+
+        
     },
     handleSelectionChange(selection) {
       this.selectedRows = selection;
@@ -385,6 +382,7 @@ export default {
             .then((res) => {
               if (res.status === 200) {
                 console.log("프로젝트 참여 직원 등록 성공!");
+                alert(res.data.message);
                 console.log(res);
                 window.location.reload();
               }
@@ -416,7 +414,6 @@ export default {
       formData.append("role_id",  this.mapping[row.roleId.roleName]);
       formData.append("emp_name", row.employee.empName);
 
-      console.log("=============")
 
       for (const [key, value] of formData.entries()) {
         console.log(key, value);
@@ -431,9 +428,9 @@ export default {
               if (res.status === 200) {
                 console.log("프로젝트 참여 직원 업데이트 성공!");
                 console.log(res);
-                setTimeout(() => {
-                window.location.href = window.location.href;
-              }, 4000);
+              //   setTimeout(() => {
+              //   window.location.href = window.location.href;
+              // }, 4000);
               }
             });
         } catch (error) {
@@ -543,6 +540,9 @@ li {
   display: flex;
   position: absolute;
   padding-top: 30px;
+  overflow: hidden;
+  touch-action: none;
+  
   /* width: 100%; */
   /* height: 100%; */
   /* left: 200px; */

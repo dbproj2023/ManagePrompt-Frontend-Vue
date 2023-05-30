@@ -1,11 +1,17 @@
 <!-- DetailView.vue -->
 <template>
   <div class="wrapper">
+    
     <div class="container">
-      <h2>프로젝트 추가</h2>
+      <div v-if="this.isLoading"> 
+        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+          <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
+        </div>
+      </div>
+      <div v-else>
+      <h2 style="text-align: center;">프로젝트 추가</h2>
       <br>
       <br>
-
       <b-form-input class="input-data" v-model="proName" placeholder="프로젝트 이름"></b-form-input>      
       <b-form-input class="input-data" v-model="proId" placeholder="프로젝트 아이디"></b-form-input>              
       <b-form-input class="input-data" v-model="clientName" placeholder="발주처 이름"></b-form-input>
@@ -18,8 +24,12 @@
       <b-form-input class="input-data" v-model="clientEmpName" placeholder="발주처 담당자"></b-form-input>
       <b-form-input class="input-data" v-model="clientEmpPh" placeholder="발주처 담당자 전화번호"></b-form-input>
       <b-form-input class="input-data" v-model="clientEmpEmail" placeholder="발주처 담당자 이메일"></b-form-input>
-      <b-button @click="ModifyPro">프로젝트 수정</b-button>
 
+      <div style="display:flex;">
+        <b-button  class="login100-form-btn pro-button addButton inputButton button1"  @click="goBack">취소</b-button>
+        <b-button  class="login100-form-btn pro-button addButton inputButton"  @click="ModifyPro">프로젝트 수정</b-button>
+      </div>
+    </div>
     </div>
   </div>
 </template>
@@ -40,7 +50,8 @@ export default {
       budget: '',
       clientEmpName: '',
       clientEmpPh: '',
-      clientEmpEmail: ''
+      clientEmpEmail: '',
+      isLoading: true,
     }
   },
   mounted(){
@@ -126,14 +137,13 @@ export default {
     } catch (error) {
       console.log(error);
     }
-
-     
     this.$router.push(`/project/detail/${this.proId}`);
     window.location.reload();
-    
-    }
-    
+    },
+  goBack(){
+    this.$router.go(-1);
   }
+}
 };
 </script>
 
@@ -166,5 +176,17 @@ export default {
 .input-data{
 margin-bottom: 10px;
 width: 300px;
+}
+
+
+.button1 {
+  margin-right: 10px;
+}
+
+.inputButton{
+  text-align: center;
+  align-items: center;
+  width: 145px;
+  height: 40px;
 }
 </style>
