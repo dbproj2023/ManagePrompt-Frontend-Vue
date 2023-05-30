@@ -40,7 +40,7 @@
               </b-col>
 
               <b-col class="col-5" style="display: flex; align-items: center;" >
-                <b-checkbox style="margin-right: 10px;" v-model="isWork">프로젝트에 참여하지 않는 사람만</b-checkbox>
+                <b-checkbox style="margin-right: 10px;" v-model="isWork" value="1" unchecked-value="0">프로젝트에 참여하지 않는 사람만</b-checkbox>
               </b-col>
             </b-row>
           </div>
@@ -105,12 +105,8 @@
             </el-table>
   
             <div v-else style="padding-top: 20px;">
-              해당 프로젝트가 없습니다.
+              해당 직원이 없습니다.
             </div>
-          
-            <!-- <span v-if="this.cntflag" class="font-weight-600 name mb-0 text-sm text-right"  style="color: #939CAC">
-              총 직원 수: {{ this.cnt }}명
-            </span> -->
           </b-card>
         </div>
       </div>
@@ -138,44 +134,24 @@
         inputDate: '',
         outputDate: '',
         role: '',
-        // proName: '',
         skill: '',
-        isWork: '',
+        isWork: 0,
         employees: [],
         isLoading: true,
-        // searchProjValue: '',
-        // searchSkillValue: '',
-        // cnt: 0,
-        // cntflag: false,
-        // currentPage: 1,
-        // pageSize: 10
-      }
-    },
-    computed: {
-      // pagedEmployees() {
-      //   const startIndex = (this.currentPage - 1) * this.pageSize;
-      //   const endIndex = startIndex + this.pageSize;
-      //   return this.employees.slice(startIndex, endIndex);
-      // },
-      filteredEmployees() {
-        if (!this.inputDate && !this.outputDate && !this.role && !this.skill && !this.isWork) {
-          return this.employees;
-        }
-
-        return this.employees.filter(employee => {
-          return (!this.inputDate || employee.emp_id.includes(this.inputDate)) &&
-                 (!this.outputDate || employee.emp_id.includes(this.outputDate)) &&
-                 (!this.role || employee.role === this.role) &&
-                 (!this.skill || employee.skill_name.includes(this.skill)) &&
-                 (!this.isWork || employee.pro_cnt === 0);
-        });
       }
     },
     methods: {
-      // handlePageChange(page) {
-      //   this.currentPage = page;
-      // },
+      isWorkChange() {
+        if( this.isWork == 0 ) {
+          this.isWork = 1;
+          console.log(this.isWork);
+        } else if( this.isWork == 1 ) {
+          this.isWork = 0;
+          console.log(this.isWork);
+        }
+      },
       sendData() {
+        this.employees = [];
         this.isLoading = true;
         const apiUrl = '/api/v1/user/list/search';
 
@@ -183,21 +159,57 @@
           period_start: this.inputDate,
           period_end: this.outputDate,
           role: this.role,
-          // pro_name: this.proName,
           skill_name: this.skill,
           is_work: this.isWork,
-          // page: 0,
-          // size: 30,
-          // sort: "emp_id,desc",
         };
 
-        axios.get(apiUrl, { params }).then((res) => {
-          console.log(apiUrl, { params });
+        axios.get(apiUrl, {params}).then((res) => {
+          console.log(apiUrl, {params});
           console.log('API response res.data:', res.data);
-          this.employees = res.data;
+          // this.employees = res.data;
           this.isLoading = false;
 
-          this.employees = this.filteredEmployees;
+          for( let i = 0 ; i < res.data.length ; i++ ){
+            let roleName = "";
+
+            if (res.data[i][0]?.role == 0) {
+              roleName = "경영진";
+            } else if (res.data[i][0]?.role == 1) {
+              roleName = "PM";
+            } else if (res.data[i][0]?.role == 2) {
+              roleName = "PL";
+            } else if (res.data[i][0]?.role == 3) {
+              roleName = "분석가";
+            } else if (res.data[i][0]?.role == 4) {
+              roleName = "설계자";
+            } else if (res.data[i][0]?.role == 5) {
+              roleName = "프로그래머";
+            } else if (res.data[i][0]?.role == 6) {
+              roleName = "테스터";
+            } else if (res.data[i][0]?.role == 7) {
+              roleName = "디자이너";
+            } else {
+              roleName = "";
+            }
+
+            if( i % 2 == 0 ){
+              var obj = {
+                emp_id : res.data[i][0].emp_id,
+                emp_name : res.data[i][0].emp_name,
+                emp_ssn : res.data[i][0].emp_ssn,
+                emp_email : res.data[i][0].emp_email,
+                emp_edu : res.data[i][0].emp_edu,
+                emp_workex : res.data[i][0].emp_workex + "년",
+                skill_name : res.data[i][0].skill_name,
+                role : roleName,
+                pro_cnt : res.data[i+1][0]?.proj_count || 0,
+              };
+              
+              this.employees.push( obj );
+            }
+            console.log("===========================================");
+          }
+          console.log('API response employees:', this.employees);
         }).catch((error) => {
             console.log('Failed to fetch data:', error);
         });
@@ -292,7 +304,7 @@
           }
           console.log("===========================================");
         }
-        console.log("test code employees : ", this.employees);
+        // console.log("test code employees : ", this.employees);
         
         this.isLoading = false;
       }).catch ((error) => {
