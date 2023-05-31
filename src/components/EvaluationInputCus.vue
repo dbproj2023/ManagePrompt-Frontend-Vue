@@ -47,7 +47,6 @@ export default {
   background-color: #E3F5F5;
 }
 
-
 .button-container {
   display: flex;
   justify-content: flex-end;
