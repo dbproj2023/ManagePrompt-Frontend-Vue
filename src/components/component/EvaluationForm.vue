@@ -57,7 +57,7 @@
               <b-form-radio v-model="selectedOption_p" value="5"> 매우 높은 편이다</b-form-radio>
             </div>
             <div style="padding-top: 20px;">
-              <b-form-input style="height:100px" v-model="perfomInput" placeholder="Enter your name"></b-form-input>
+              <b-form-input style="height:100px" v-model="perfomInput"></b-form-input>
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@
               <b-form-radio v-model="selectedOption_c" value="5"> 매우 높은 편이다</b-form-radio>
             </div>
             <div style="padding-top: 20px;">
-              <b-form-input style="height:100px" v-model="commInput" placeholder="Enter your name"></b-form-input>
+              <b-form-input style="height:100px" v-model="commInput"></b-form-input>
             </div>
           </div>
         </div>
