@@ -203,12 +203,12 @@ const HOST =  "http://localhost:8080";
       console.log('프로젝트 검색', this.isLoading);
 
       const params = {
-        period_start: this.startDate,
-        period_end: this.endDate,
+        period_start: this.startDate.toString(),
+        period_end: this.endDate.toString(),
         pro_name: this.proName,
         client_name: this.clientName,
-        budget_start: parseInt(this.budget_start),
-        budget_end: parseInt(this.budget_end),
+        budge_start: this.budget_start,
+        budge_end: this.budget_end,
         page: 0,
         size: 30,
         sort: "emp_id,desc",
