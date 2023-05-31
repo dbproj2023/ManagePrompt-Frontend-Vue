@@ -68,7 +68,7 @@
           <b-card class="table-card" style="width: 560px; height: 320px; overflow: auto;">
             <h6>프로젝트 참여 직원</h6>
             <br>          
-            <el-table class="table-responsive table text-center"  header-row-class-name="thead-light"  :data="project.participantList" @selection-change="handleSelectionChange"  size="small">
+            <el-table v-if="project.participantList.length>0" class="table-responsive table text-center"  header-row-class-name="thead-light"  :data="project.participantList" @selection-change="handleSelectionChange"  size="small">
             <el-table-column type="selection" width="20px"></el-table-column>
 
             <el-table-column label="사번" min-width="100px" prop="name">
@@ -100,15 +100,18 @@
                 <el-input v-model="row.editing" v-show="row.isEditing" @blur="savePeriod(row)" ref="periodInput"></el-input>
               </template>
             </el-table-column>
-
             </el-table>
+
+        <div v-else style="padding-top: 20px;">
+              해당 프로젝트가 없습니다.
+        </div>
             <div class="button-container">
               <button class="login100-form-btn pro-button" type="button" @click="modifyRow">직원 수정</button>
                 <b-modal id="modal-1" title="프로젝트 직원 관리">
                   <p class="my-4">해당 직원을 프로젝트에서 수정하시겠습니까?</p>
                 </b-modal>
-
             </div>
+
           </b-card>
         </div>
         </div>
@@ -194,6 +197,7 @@
 // import ProjectTable from './ProjectTable.vue';
 import axios from "axios"; // http 통신을 위한 라이브러리
 const HOST =  "http://localhost:8080";
+import moment from 'moment';
 
 export default {
   name: "Detail",
@@ -275,28 +279,23 @@ export default {
       this.$router.push(`/project/${this.project.proId}/modify`);
     },
     // 프로젝트 참여 기간 수정
-      editPeriod(row) {
+    editPeriod(row) {
         this.$set(row, 'isEditing', true);
-        // this.$set(row, 'editing', `${row.startDate || moment('YYYY-MM-DD')}~${row.endDate || moment('YYYY-MM-DD')}`);
-        // this.$set(row,'editing',`${moment(row.startDate).format('YYYY-MM-DD')}~${moment(row.endDate).format('YYYY-MM-DD')}`);
-        const start_date = row.startDate || moment('YYYY-MM-DD');
-        const end_date = row.endDate || moment('YYYY-MM-DD')
-        console.log(start_date, end_date);
-        this.$set(row, 'editing', `${start_date }~${end_date}`);
+        const start_date = moment(row.startDate).format('YYYY-MM-DD');
+        const end_date = moment(row.endDate).format('YYYY-MM-DD');
+        this.$set(row, 'editing', `${start_date}~${end_date}`);
         this.$nextTick(() => {
           const inputEl = this.$refs.periodInput.$refs.input;
+          inputEl.value = `${start_date}~${end_date}`;
           inputEl.focus();
         });
       },
-      //  프로젝트 참여 기간 저장
       savePeriod(row) {
         this.$set(row, 'isEditing', false);
-        // Extract the start and end dates from the edited value
         const [start, end] = row.editing.split('~');
-
         row.startDate = start;
         row.endDate = end;
-      }, 
+      },
       // 직무 수정
       editRole(row) {
         this.$set(row, 'isEditing', true);
@@ -306,15 +305,13 @@ export default {
           inputEl.focus();
         });
       },
-      //  ㅈ
       saveRole(row) {
         this.$set(row, 'isEditing', false);
         const role = row.editing;
         row.roleId.roleName = role;
-
-       
         row.roleId.roleId = this.mapping[role];
       },
+      // 직원 검색
       sendData() {
         const apiUrl = `${HOST}/api/v1/user/search/`;
         console.log("나 여기");
@@ -371,7 +368,6 @@ export default {
         console.log(row.job,this.mapping[row.job])
 
    
-
         formData.append("pro_id", this.project.proId);
         formData.append("emp_id", row.empId);
         formData.append("start_date", row.startDate);
@@ -448,34 +444,27 @@ export default {
     },
   computed:{
     averageValues(){
+      console.log("=============");
       console.log(this.project.empEvaluationList);
 
       if (this.project.empEvaluationList.length === 0) {
         return 0
       }
+      
 
       console.log(this.project.empEvaluationList , this.project.empEvaluationList.length)
 
       for (let i =0; i<this.project.empEvaluationList.length; i++){
         for (let j = 0; j<this.project.empEvaluationList[i].evaluationList.length; j++){
-          console.log(this.project.empEvaluationList[i].evaluationList[j].communicationRating);
-          console.log(this.project.empEvaluationList[i].evaluationList[j].performanceRating);
-
           this.communicationRatingList.push(this.project.empEvaluationList[i].evaluationList[j].communicationRating);
           this.performanceRatingList.push(this.project.empEvaluationList[i].evaluationList[j].performanceRating);
         }
       }
-      console.log("=======");
-      console.log(this.communicationRatingList.length);
-      console.log(this.performanceRatingList.length);
-
       if (this.communicationRatingList.length===0 && this.performanceRatingList.length===0 ){
         return {}
       }
       const commavg = this.communicationRatingList.reduce((acc, curr) => acc + curr) /  this.communicationRatingList.length;
       const peravg = this.performanceRatingList.reduce((acc, curr) => acc + curr) /  this.performanceRatingList.length;
-
-
       return {commavg, peravg}
 
     },
