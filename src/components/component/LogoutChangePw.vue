@@ -9,7 +9,15 @@
                             <span class="login100-form-title p-b-51">
                             비밀번호 변경
                             </span>
-                
+
+                            <div class="wrap-input100 validate-input m-b-16">
+                            <input class="input100" type="text" id="auth_id" name="auth_id" ref="memberIdInput" v-model="authId" placeholder="아이디">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                            </div>
+
                             <div class="wrap-input100 validate-input m-b-16">
                             <input class="input100" type="password" id="new_pw" name="new_pw" ref="memberIdInput" v-model="newPw" placeholder="새로운 비밀번호">
                             <span class="focus-input100"></span>
@@ -42,7 +50,6 @@
     import axios from 'axios';
     import Header from './Header.vue';
     import Nav from './Nav.vue'
-    import FindPW from './FindPw.vue';
 
     export default {
         name: "LogoutChangePw",
@@ -58,8 +65,8 @@
             }
         },
         mounted() {
-            this.authId = this.$route.params.authId;
-            console.log("authId:", this.authId);
+            // this.authId = this.$route.params.authId;
+            // console.log("authId:", this.authId);
         },
         methods: {
             sendData() {
