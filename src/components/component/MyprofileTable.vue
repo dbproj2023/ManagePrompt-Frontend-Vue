@@ -16,13 +16,13 @@
             </div>
         </div>
 
-        <br>
-        <br>
-    <div class="card shadow-lg mt-n6">
+    <br>
+    <br>
+    <div class="card shadow-lg mt-n6 myprofileBox">
       <div class="row">
         <div class="col-md-12">
           <div class="card">
-       <div class="card-body p-3">
+            <div class="card-body p-3">
               <p class="text-uppercase text-sm">User Information</p>
               <div class="row">
                 <div class="col-md-6">
@@ -162,5 +162,10 @@
 .changePw-button{
     margin-right: 10px;
 }
+
+.myprofileBox{
+    height: 550px !important;
+}
+
 
 </style>

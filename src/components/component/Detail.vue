@@ -633,6 +633,8 @@ li {
   border: 0.5px solid #F6F6F6; 
   border-collapse: collapse;
   font-size: small;
+  height: 250px;
+
 }
 
 .flex-row {
@@ -643,6 +645,7 @@ li {
 
 .flex-header{
   /* font-weight: bold; */
+  height: 50px;
   border: 0.5px solid #F6F6F6; 
   background-color: #E8ECEC;
 }
@@ -650,6 +653,7 @@ li {
 .flex-cell {
   flex: 1;
   padding: 8px;
+  height: 50px;
   /* border: 0.5px solid #ccc; */
   white-space: pre-wrap;
   text-align: center;
