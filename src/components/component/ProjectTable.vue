@@ -84,24 +84,24 @@
     <!-- 프로젝트 테이블 -->   
     <b-card class="ProjectTableCard">
       <el-table v-if="projects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="this.projects">
-            <el-table-column label="프로젝트 이름" prop="proName" min-width="100px" >
+            <el-table-column label="프로젝트 이름" prop="pro_name" min-width="100px" >
             </el-table-column>
 
             <el-table-column label="기간" min-width="180px" prop="name">
              <template v-slot="{row}">
-               <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC">{{row.startDate | moment('YYYY-MM-DD')}} ~ {{row.endDate | moment('YYYY-MM-DD')}}</span>
+               <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC">{{row.start_date | moment('YYYY-MM-DD')}} ~ {{row.end_date | moment('YYYY-MM-DD')}}</span>
               </template>
             </el-table-column>
 
             <el-table-column label="예산" prop="budget" min-width="140px"></el-table-column>
 
-            <el-table-column label="발주처명" prop="clientName" min-width="180px"></el-table-column>
+            <el-table-column label="발주처명" prop="client_name" min-width="180px"></el-table-column>
 
             <el-table-column label="진행상태" min-width="200px">
               <template v-slot="{ row }">          
                 <badge class="badge-dot mr-4" type="">
-                  <i :class="`bg-${projectStatus(row.startDate, row.endDate)[1]}`"></i>
-                  <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC"> {{projectStatus(row.startDate, row.endDate)[0]}} </span>
+                  <i :class="`bg-${projectStatus(row.start_date, row.end_date)[1]}`"></i>
+                  <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC"> {{projectStatus(row.start_date, row.end_date)[0]}} </span>
                 </badge>
               </template>
             </el-table-column>
@@ -114,7 +114,7 @@
                     alt="Image placeholder"
                     height="30px"
                     src="../assets/img/more.png"
-                    @click="navigateToDetail(scope.row.proId)"
+                    @click="navigateToDetail(scope.row.pro_id)"
                     style="cursor: pointer"
                   >
                 </div>
@@ -180,7 +180,7 @@ const HOST =  "http://localhost:8080";
         projects: [],
         isLoading: true,
         cnt: 0, total_budget: 0 , 
-        cntflag: false
+        cntflag: false,
         }
     },
   computed: {
@@ -207,8 +207,8 @@ const HOST =  "http://localhost:8080";
         period_end: this.endDate,
         pro_name: this.proName,
         client_name: this.clientName,
-        budget_start: this.budget_start,
-        budget_end: this.budget_end,
+        budget_start: parseInt(this.budget_start),
+        budget_end: parseInt(this.budget_end),
         page: 0,
         size: 30,
         sort: "emp_id,desc",
@@ -224,7 +224,7 @@ const HOST =  "http://localhost:8080";
             // 년도 검색
             if (this.selectedYear !== '') {
               this.projects = this.projects.filter(project => {
-                const projectYear = moment(project.startDate).format('YYYY');
+                const projectYear = project.start_date.slice(0,4);
                 this.cntflag = true;
                 return projectYear === this.selectedYear;
               });
@@ -237,27 +237,42 @@ const HOST =  "http://localhost:8080";
               console.log('API response:', res.data);
               this.cnt = res.data.cnt;
               this.total_budget = res.data.total_budget;
-              
             })
             .catch((error) => {
               console.error('Failed to fetch data:', error);
             });
           } 
          }
-
-        //  상태 검색 수정 안됨 ㄱ- 하
-        if (this.selectedStatus != ''){
-          this.projects = this.projects.filter(project => {
-            console.log()
-            console.log(this.projects.status, this.selectedStatus);
-            return this.projects.status === this.selectedStatus;
-          });
-        }
-        })
-        .catch((error) => {
-          console.error('Failed to fetch data:', error);
-        });
+        console.log("=========");
+        console.log(this.projects);
+        console.log("=========");
         this.isLoading = false;
+
+      //    var obj = {
+      //         number : i+1,
+      //         pro_id: res.data.projectList[i].proId,
+      //         progress_year : res.data.projectList[i].startDate.charAt(0) + res.data.projectList[i].startDate.charAt(1) + res.data.projectList[i].startDate.charAt(2) + res.data.projectList[i].startDate.charAt(3),
+      //         participation_period : res.data.projectList[i].startDate.slice(0,10)+'-'+res.data.projectList[i].endDate.slice(0,10),
+      //         pro_name : res.data.projectList[i].proName,
+      //         role : res.data.projectList[i].roleName,
+      //         progress_state: this.state
+      //     };
+                                  
+      //     this.project_list.push( obj );
+      // }
+      
+        // //  상태 검색 수정 안됨 ㄱ- 하
+        // if (this.selectedStatus != ''){
+        //   this.projects = this.projects.filter(project => {
+        //     console.log()
+        //     console.log(this.projects.status, this.selectedStatus);
+        //     return this.projects.status === this.selectedStatus;
+        //   });
+        // }
+        // })
+        // .catch((error) => {
+        //   console.error('Failed to fetch data:', error);
+         });
     },
     navigateToDetail(id) {
       this.$router.push(`/project/detail/${id}`);
@@ -293,11 +308,11 @@ const HOST =  "http://localhost:8080";
 },
   mounted() {
   const apiUrl = '/api/v1/proj/lists';
-  console.log("여기  !!!!!")
   try {
     // const url = new URL(apiUrl);
     // console.log('URL:', url);
     axios.get(apiUrl).then((res) => {
+      console.log("=======");
       console.log('API response:', res.data);
       this.projects = res.data;
       this.isLoading = false
