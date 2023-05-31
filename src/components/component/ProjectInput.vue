@@ -6,8 +6,11 @@
       <br>
       <br>
 
-      <b-form-input class="input-data" v-model="proName" placeholder="프로젝트 이름"></b-form-input>      
-      <b-form-input class="input-data" v-model="proId" placeholder="프로젝트 아이디"></b-form-input>              
+      <b-form-input class="input-data" v-model="proName" placeholder="프로젝트 이름"></b-form-input>  
+
+       <b-form-input class="input-data" v-model="proId" placeholder="프로젝트 아이디"></b-form-input>
+      <b-button class="login100-form-btn button1" style="width: 300px; height: 35px;" @click="CheckID">중복 확인</b-button>
+
       <b-form-input class="input-data" v-model="clientName" placeholder="발주처 이름"></b-form-input>
       <div style="display: flex;">
         <b-form-datepicker class="input-data" v-model="startDate" placeholder="시작일시" style="width:145px"></b-form-datepicker>
@@ -53,6 +56,29 @@ export default {
     },
     goBack(){
       this.$router.go(-1);
+    },
+    CheckID(){
+      const formData = new FormData();
+      formData.append("pro_id", this.proId);
+      console.log(formData);
+      console.log(this.proId);
+      try {
+          axios
+            .post(`${HOST}api/v1/proj/checkProid`, formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                console.log("프로젝트 등록 성공!");
+                console.log(res);
+                alert(res.data.message);
+                this.$router.push("/project");
+              }
+            });
+        } catch (error) {
+          console.log(error);
+        }
+
     },
     createPro() {
       // if (this.checkInput() === false) {
@@ -120,6 +146,10 @@ export default {
 .input-data{
 margin-bottom: 10px;
 width: 300px;
+}
+
+.checkId{
+  height: 35px !important;
 }
 
 .inputButton{
