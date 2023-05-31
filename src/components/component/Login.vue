@@ -85,11 +85,14 @@
   
                       // 새로운 직원이면
                       if( res.data.status == 0 ) {
-                          // 회원 정보 등록 페이지로 이동
-                          this.$router.push('/enroll');
+                        // 회원 정보 등록 페이지로 이동
+                        this.$router.push('/enroll');
+                      } else if( res.data.status == 4 ) {
+                        // 발주처는 고객평가 페이지로 이동
+                        this.$router.push('/evaluation/input/customer');
                       } else {
-                          // 이전 페이지로 이동
-                          this.$router.go(-1);
+                        // 이전 페이지로 이동
+                        this.$router.go(-1);
                       }
                   }
                   else if( res.data == '' ) {
