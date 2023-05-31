@@ -63,6 +63,8 @@
         <button @click="sendData()" class="login100-form-btn pro-button addButton" style="width: 200px" type="button">검색</button>
       
         <button @click="navigateToUnauthorizedEmp()" class="login100-form-btn pro-button addButton" style="width: 200px" type="button">미승인 직원 조회</button>
+
+        <button @click="navigateToNewEnroll()" class="login100-form-btn pro-button addButton" style="width: 200px" type="button">직원 초기 정보 등록</button>
       </div>
       
       <div>
@@ -149,7 +151,7 @@
         skill: '',
         isWork: 0,
         employees: [],
-        isLoading: true,
+        isLoading: true
       }
     },
     methods: {
@@ -228,6 +230,9 @@
       },
       navigateToUnauthorizedEmp() {
         this.$router.push('/employee/unauthorized');
+      },
+      navigateToNewEnroll() {
+        this.$router.push('/newEnroll');
       },
       navigateToAccess(id, name) {
         this.$router.push({
