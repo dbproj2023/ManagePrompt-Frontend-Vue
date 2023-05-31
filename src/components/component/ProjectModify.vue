@@ -12,9 +12,9 @@
       <h2 style="text-align: center;">프로젝트 수정</h2>
       <br>
       <br>
-      <b-form-input class="input-data" v-model="proName" placeholder="프로젝트 이름"></b-form-input>      
-      <b-form-input class="input-data" v-model="proId" placeholder="프로젝트 아이디"></b-form-input>              
-      <b-form-input class="input-data" v-model="clientName" placeholder="발주처 이름"></b-form-input>
+      <b-form-input class="input-data" v-model="proName" placeholder="프로젝트 이름" readonly></b-form-input>
+      <b-form-input class="input-data" v-model="proId" placeholder="프로젝트 아이디" readonly></b-form-input>              
+      <b-form-input class="input-data" v-model="clientName" placeholder="발주처 이름" readonly></b-form-input>
       <div style="display: flex;">
         <b-form-datepicker class="input-data" v-model="startDate" placeholder="시작일시" style="width:145px"></b-form-datepicker>
         ~ 
