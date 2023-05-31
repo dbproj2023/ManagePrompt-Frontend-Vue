@@ -43,16 +43,16 @@
           <div class="flex-cell">{{project.clientEmpPh}}</div>
         </div>
 
-        <div class="flex-row">
+        <div class="flex-row" style="font-size:12px;">
           <div class="flex-cell flex-header"> 사내 평가</div>
           <div class="flex-cell">
             커뮤니케이션 평가:  {{ averageValues.commavg }}
             업무수행 평가: {{ averageValues.peravg }}
           </div>
           <div class="flex-cell flex-header">고객 평가</div>
-          <div class="flex-cell">
-            커뮤니케이션 평가: {{ project.clientEvaluationList.communicationRating}}
-            업무수행 평가: {{ project.clientEvaluationList.performanceRating}}
+          <div class="flex-cell" >
+            커뮤니케이션 평가: {{this.cusPerform}}
+            업무수행 평가: {{ this.cusCommu}}
           </div>
         </div>
     </div>
@@ -103,7 +103,7 @@
             </el-table>
 
         <div v-else style="padding-top: 20px;">
-              해당 프로젝트가 없습니다.
+              해당 참여 직원이 없습니다.
         </div>
             <div class="button-container">
               <button class="login100-form-btn pro-button" type="button" @click="modifyRow">직원 수정</button>
@@ -227,6 +227,8 @@ export default {
         },
         communicationRatingList: [],
         performanceRatingList:[],
+        cusPerform: '',
+        cusCommu: ''
       }
   },
   mounted(){
@@ -267,6 +269,13 @@ export default {
     console.error(error);
   }
 
+  if (project.clientEvaluationList.length === 0) {
+    this.cusPerform = ''
+    this.cusCommu = ''
+  } else{
+    this.cusPerform =  project.clientEvaluationList[0].communicationRating
+    this.cusCommu = project.clientEvaluationList[0].erformanceRating
+  }
 }
     ,
     onChange(e) {
@@ -445,6 +454,9 @@ export default {
   computed:{
     averageValues(){
       console.log("=============");
+      console.log(this.project);
+      console.log("=============");
+
       console.log(this.project.empEvaluationList);
 
       if (this.project.empEvaluationList.length === 0) {

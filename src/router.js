@@ -24,7 +24,7 @@ import UnauthorizedEmp from './components/component/UnauthorizedEmp.vue'
 // 프로젝트 평가
 import Evaluation from './components/EvaluationResult.vue'
 import EvaluationInput from './components/EvaluationInput.vue'
-import EvaluationInputForCus from './components/EvaluationInputCus.vue'
+import EvaluationInputCus from './components/EvaluationInputCus.vue'
 
 
 
@@ -83,7 +83,7 @@ export default new Router({
         },
         {
             path: '/evaluation/input/customer',
-            component: EvaluationInputForCus
+            component: EvaluationInputCus
         },
         {
             path: '/newEnroll',
