@@ -1,6 +1,6 @@
 <template>
     <v-app>
-      <v-navigation-drawer v-model="drawer" app width="250px" class="no-border" style=" background-color: #F8F9FA;">
+      <v-navigation-drawer v-model="drawer" app width="250px" class="no-border" style="background-color: #F8F9FA;">
         <Nav />
       </v-navigation-drawer>
   
@@ -10,9 +10,11 @@
   
       <v-main>
         <v-container fluid>
-          <br> <br>
+          <br><br>
           <MyprofileTable/>
-          <hr>
+          <br>
+          <hr> 
+          <br> 
           <ParticipateProjTable/>
         </v-container>
       </v-main>
@@ -21,7 +23,6 @@
 
   
 <script>
-import router from '@/router';
 // import ProjectInput from '../components/ProjectInput.vue'
 import Header from './component/Header.vue';
 import Nav from './component/Nav.vue'
@@ -48,9 +49,9 @@ export default {
 <style>
 
 
-.wrapper {
+/* .wrapper {
   background-color: #E3F5F5;
-}
+} */
 
 
 .button-container {
@@ -86,8 +87,8 @@ export default {
 
 .center-card {
   overflow: hidden;
-  width: 1000px; /* Adjust the width as needed */
-  height: auto; /* Adjust the height as needed */
+  width: 1000px; 
+  height: auto;
   margin: auto;
   padding: 20px;
   border-radius: 10px;

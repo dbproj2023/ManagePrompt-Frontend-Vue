@@ -144,10 +144,11 @@ span {
 }
 
 .header-text{
+  font-size: 15px; 
   padding-left: 10px;
   font-family: 'ONE-Mobile-Title';
   color: #ffffff;
-
+  white-space:nowrap;
 }
 
 .login-container {
