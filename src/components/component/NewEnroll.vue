@@ -1,10 +1,8 @@
 <template>
   <div class="wrapper">
     <div class="container">
-      <h2>직원 초기 정보 등록</h2>
-      <h2>(관리자용)</h2>
-      <br>
-      <br>
+      <h3>직원 초기 정보 등록</h3>
+      <h3>(관리자용)</h3>
 
       <div style="display: flex;">
         <select class="form-select form-control" style="width: 130px;" name="join_year" v-model="selectedYear" @change="checkJoinYear($event)">
@@ -39,9 +37,9 @@
       </div>
 
       <div>
-        <button type="button" @click="createEmpId()">사번 생성</button>
+        <button type="button" class="small-btn" style="cursor: pointer" @click="createEmpId()">사번 생성</button>
         <b-form-input class="input-data" v-model="empId" placeholder="사번" readonly></b-form-input>
-        <button type="button" @click="checkEmpId()">중복 확인</button>
+        <button type="button" class="small-btn" style="cursor: pointer; float: right;" @click="checkEmpId()">중복 확인</button>
       </div>
       
       <div>
@@ -50,15 +48,14 @@
       </div>
 
       <div>
-        <button type="button" @click="createAuthId()">아이디 생성</button>
+        <button type="button" class="small-btn" style="cursor: pointer" @click="createAuthId()">아이디 생성</button>
         <b-form-input class="input-data" v-model="authId" placeholder="아이디" readonly></b-form-input>
-        <button type="button" @click="checkAuthId()">중복 확인</button>
+        <button type="button" class="small-btn" style="cursor: pointer; float: right;" @click="checkAuthId()">중복 확인</button>
       </div>
 
       <div>
-        <button type="button" @click="createAuthPw()">비밀번호 생성</button>
+        <button type="button" class="small-btn" style="cursor: pointer" @click="createAuthPw()">비밀번호 생성</button>
         <b-form-input class="input-data" v-model="authPw" placeholder="비밀번호" readonly></b-form-input>
-        <!-- <button type="button" @click="checkAuthPw()">중복 확인</button> -->
       </div>
 
       <div>
@@ -78,7 +75,7 @@
       </div>
 
       <div>
-        <button @click="enrollSubmit()" class="login100-form-btn pro-button search-button" type="button">등록</button>
+        <button @click="enrollSubmit()" class="login100-form-btn profile-button eval-button" style="cursor: pointer" type="button">등록</button>
       </div>
     </div>
   </div>
@@ -346,5 +343,21 @@
   .input-data{
   margin-bottom: 10px;
   width: 300px;
+  }
+
+  .small-btn {
+    width: 100px;
+    height: 25px;
+    font-size: 10px;
+    line-height: 1.5;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 25px;
+    background: #33508A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s;
+    cursor: pointer;
   }
 </style>

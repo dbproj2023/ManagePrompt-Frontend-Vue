@@ -5,33 +5,33 @@
       <br>
       <br>
 
-      <div style="display: flex;">
-        <b-form-input type="text" class="input-data" v-model="authId" @change="setAuthId()" @cplaceholder="아이디"></b-form-input>
-        <button type="button" @click="checkAuthId()">중복 확인</button>
+      <div>
+        <b-form-input type="text" class="input-data" v-model="authId" @change="setAuthId()" placeholder="아이디"></b-form-input>
+        <button type="button" class="small-btn" style="cursor: pointer; float: right;" @click="checkAuthId()">중복 확인</button>
       </div>
 
-      <div style="display: flex;">
+      <div>
         <b-form-input type="password" class="input-data" v-model="authPw" @change="setAuthPw()" placeholder="비밀번호"></b-form-input>
         <p>{{ messageAuthPw }}</p>
       </div>
 
-      <div style="display: flex;">
+      <div>
         <b-form-input type="password" class="input-data" v-model="checkPw" @change="matchAuthPw()" placeholder="비밀번호 확인"></b-form-input>
         <p>{{ messageCheckPw }}</p>
       </div>
 
-      <div style="display: flex;">
+      <div>
         <b-form-input type="tel" class="input-data" v-model="empPh" placeholder="전화번호"></b-form-input>
         <!-- <p>{{ messageEmpPh }}</p> -->
       </div>
 
-      <div style="display: flex;">
+      <div>
         <b-form-input type="email" class="input-data" v-model="empEmail" @change="setEmpEmail()" placeholder="이메일"></b-form-input>
-        <button type="button" @click="checkEmpEmail()">중복 확인</button>
+        <button type="button" class="small-btn" style="cursor: pointer; float: right;" @click="checkEmpEmail()">중복 확인</button>
       </div>
 
       <div>
-        <button @click="enrollSubmit()" class="login100-form-btn pro-button search-button" type="button">등록</button>
+        <button @click="enrollSubmit()" class="login100-form-btn profile-button eval-button" style="cursor: pointer" type="button">등록</button>
       </div>
     </div>
   </div>
@@ -293,5 +293,21 @@
   .input-data{
   margin-bottom: 10px;
   width: 300px;
+  }
+  
+  .small-btn {
+    width: 100px;
+    height: 25px;
+    font-size: 10px;
+    line-height: 1.5;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 25px;
+    background: #33508A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s;
+    cursor: pointer;
   }
 </style>
