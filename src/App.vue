@@ -22,10 +22,10 @@ export default {
     if( path != '/' && path != '/login' && path != '/findAccount' && path != '/logoutChangePw' && isLogin == false ){
       this.$router.push('/login');
     }
-    // // 로그인 한 사람 다시 로그인 접근 금지
-    // else if( path.startsWith('/login') && isLogin == true ) {
-    //   this.$router.go(-1);
-    // }
+    // 로그인 한 사람 다시 로그인 접근 금지
+    else if( path.startsWith('/login') && isLogin == true ) {
+      this.$router.go(-1);
+    }
     // 권한 2(관리자)만 신규 직원 초기 등록 가능
     else if( path.startsWith('/newEnroll') && accGrade != 2 ) {
       console.log("test code /newEnroll")

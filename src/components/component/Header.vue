@@ -92,7 +92,7 @@ export default {
       axios.get('/api/v1/auth/logout/').then((res) => { // logout 뒤에 슬래시 빼야하는데 왜 붙어야 실행될까...
         console.log("test code: 로그아웃 들어오나여");
           if( res.data == 'logout' ) {
-              alert("로그아웃 되었습니다.");
+              // alert("로그아웃 되었습니다.");
 
               this.$store.commit('setLogin', false);
               this.$store.commit('setAccGrade', '');
