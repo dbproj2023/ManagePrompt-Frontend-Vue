@@ -4,11 +4,21 @@
       <h2>직원 권한 설정</h2>
       <br>
       <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
 
       <b-form-input class="input-data" v-model="empId" placeholder="사번" readonly></b-form-input>
       
+      <br>
+
       <b-form-input class="input-data" v-model="empName" placeholder="이름" readonly></b-form-input>
       
+      <br>
+    
       <div style="display: flex;">
         <select class="form-select form-control" style="width: 130px;" name="access_grade" v-model="accessGrade">
           <option value="">권한</option>
@@ -21,8 +31,18 @@
         </select>
       </div>
       
-      <div>         
-        <button @click="setPermission()" class="login100-form-btn pro-button search-button" type="button">권한 설정</button>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <div style="display: flex;">         
+        <button @click="setPermission()" class="login100-form-btn profile-button eval-button" style="cursor: pointer" type="button">권한 설정</button>
+        <button @click="cancle()" class="login100-form-btn profile-button eval-button" style="cursor: pointer" type="button">취소</button>
       </div>
     </div>
   </div>
@@ -58,6 +78,9 @@ export default {
       }).catch((error) => {
         console.error('Failed to fetch data:', error);
       });
+    },
+    cancle() {
+      this.$router.go(-1);
     }
   }
 };
@@ -93,4 +116,20 @@ export default {
 margin-bottom: 10px;
 width: 300px;
 }
+
+.small-btn {
+    width: 100px;
+    height: 25px;
+    font-size: 10px;
+    line-height: 1.5;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 25px;
+    background: #33508A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s;
+    cursor: pointer;
+  }
 </style>
