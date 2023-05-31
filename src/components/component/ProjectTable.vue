@@ -246,32 +246,6 @@ const HOST =  "http://localhost:8080";
         console.log(this.projects);
         console.log("=========");
         this.isLoading = false;
-
-      //    var obj = {
-      //         number : i+1,
-      //         pro_id: res.data.projectList[i].proId,
-      //         progress_year : res.data.projectList[i].startDate.charAt(0) + res.data.projectList[i].startDate.charAt(1) + res.data.projectList[i].startDate.charAt(2) + res.data.projectList[i].startDate.charAt(3),
-      //         participation_period : res.data.projectList[i].startDate.slice(0,10)+'-'+res.data.projectList[i].endDate.slice(0,10),
-      //         pro_name : res.data.projectList[i].proName,
-      //         role : res.data.projectList[i].roleName,
-      //         progress_state: this.state
-      //     };
-                                  
-      //     this.project_list.push( obj );
-      // }
-      
-        //  상태 검색 수정 안됨 ㄱ- 하
-        // if (this.selectedStatus != ''){
-        //   this.projects = this.projects.filter(project => {
-        //     console.log()
-        //     console.log(this.projects.status, this.selectedStatus);
-        //     return this.projects.status === this.selectedStatus;
-        //   });
-        // }
-        // })
-        // .catch((error) => {
-        //   console.error('Failed to fetch data:', error);
-        //  });
     })
     },
     navigateToDetail(id) {
