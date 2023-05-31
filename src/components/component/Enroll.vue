@@ -6,27 +6,27 @@
       <br>
 
       <div style="display: flex;">
-        <b-form-input type="text" class="input-data" v-model="authId" placeholder="아이디"></b-form-input>
+        <b-form-input type="text" class="input-data" v-model="authId" @change="setAuthId()" @cplaceholder="아이디"></b-form-input>
         <button type="button" @click="checkAuthId()">중복 확인</button>
       </div>
 
       <div style="display: flex;">
-        <b-form-input type="password" class="input-data" v-model="authPw" placeholder="비밀번호"></b-form-input>
+        <b-form-input type="password" class="input-data" v-model="authPw" @change="setAuthPw()" placeholder="비밀번호"></b-form-input>
         <p>{{ messageAuthPw }}</p>
       </div>
 
       <div style="display: flex;">
-        <b-form-input type="password" class="input-data" v-model="checkPw" placeholder="비밀번호 확인"></b-form-input>
+        <b-form-input type="password" class="input-data" v-model="checkPw" @change="matchAuthPw()" placeholder="비밀번호 확인"></b-form-input>
         <p>{{ messageCheckPw }}</p>
       </div>
 
       <div style="display: flex;">
         <b-form-input type="tel" class="input-data" v-model="empPh" placeholder="전화번호"></b-form-input>
-        <p>{{ messageEmpPh }}</p>
+        <!-- <p>{{ messageEmpPh }}</p> -->
       </div>
 
       <div style="display: flex;">
-        <b-form-input type="email" class="input-data" v-model="empEmail" placeholder="이메일"></b-form-input>
+        <b-form-input type="email" class="input-data" v-model="empEmail" @change="setEmpEmail()" placeholder="이메일"></b-form-input>
         <button type="button" @click="checkEmpEmail()">중복 확인</button>
       </div>
 
@@ -54,9 +54,12 @@
         empEdu: "",
         empWorkEx: "",
         empSkill: "",
+        changeAuthId: false,
+        changeAuthPw: false,
+        changeEmpEmail: false,
         messageAuthPw: "",
         messageCheckPw: "",
-        messageEmpPh: ""
+        // messageEmpPh: ""
       }
     },
     mounted() {
@@ -78,25 +81,43 @@
     methods: {
       enrollSubmit() {
         if( this.authId == '' ) {
-          alert("아이디를 생성해 주세요.");
+            alert("아이디를 입력해 주세요.");
+            return;
+        }
+
+        if(this.changeAuthId == true) {
+          alert("아이디 중복 여부를 확인해주세요.");
           return;
-        } else if( this.authId.length < 6 || this.authId.length > 12 ) {
-          alert("아이디는 6자리 이상, 12자리 이하로 생성해야 합니다.");
+        }
+
+        const validatePw = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/;
+        if( this.authPw == '' ) {
+          alert("비밀번호를 입력해 주세요.");
+          return;
+        } else if( !validatePw.test(this.authPw) ) {
+          alert("비밀번호는 8글자 이상, 20글자 이하이며 영문, 숫자, 특수문자가 포함되어야 합니다.");
+          return;
+        }
+
+        if( this.checkPw == '' ) {
+          alert("비밀번호 확인을 입력해 주세요.");
+          return;
+        }
+
+        if(this.changeAuthPw == true) {
+          alert("비밀번호와 일치 여부를 확인해주세요.");
           return;
         }
         
-        this.checkAuthPw();
-
-        this.matchAuthPw();
-
         this.checkEmpPh();
 
-        const validateEmail = /^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\.[A-Za-z0-9\\-]+/;
         if( this.empEmail == '' ) {
           alert("이메일을 입력해 주세요.");
           return;
-        } else if( !validateEmail.test(this.empEmail) ) {
-          alert("이메일 형식에 맞게 입력해야 합니다. (aaa@aaa.aaa)");
+        }
+
+        if(this.changeEmpEmail == true) {
+          alert("이메일 중복 여부를 확인해주세요.");
           return;
         }
 
@@ -111,6 +132,15 @@
         //   return;
         // } else if( !validatePw.test(this.authPw) ) {
         //   alert("비밀번호는 8글자 이상, 20글자 이하이며 영문, 숫자, 특수문자가 포함되어야 합니다.");
+        //   return;
+        // }
+
+        // const validateEmail = /^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\.[A-Za-z0-9\\-]+/;
+        // if( this.empEmail == '' ) {
+        //   alert("이메일을 입력해 주세요.");
+        //   return;
+        // } else if( !validateEmail.test(this.empEmail) ) {
+        //   alert("이메일 형식에 맞게 입력해야 합니다. (aaa@aaa.aaa)");
         //   return;
         // }
 
@@ -133,6 +163,9 @@
           }
         });
       },
+      setAuthId() {
+        this.changeAuthId = true;
+      },
       checkAuthId() {
         if( this.authId == '' ) {
             alert("아이디를 입력해 주세요.");
@@ -152,6 +185,11 @@
               alert("사용 가능한 아이디입니다.");
             }
         });
+        this.changeAuthId = false;
+      },
+      setAuthPw() {
+        this.changeAuthPw = true;
+        this.checkAuthPw();
       },
       checkAuthPw() {
         const validatePw = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/;
@@ -176,11 +214,32 @@
           return;
         } else {
           this.messageCheckPw = "";
+          this.changeAuthPw = false;
           return;
         }
       },
+      checkEmpPh() {
+        const validatePh = /^\d{3}-\d{3,4}-\d{4}$/;
+        
+        if( this.empPh == '' ) {
+          // this.messageEmpPh = "전화번호를 입력해 주세요.";
+          alert("전화번호를 입력해 주세요.");
+          return;
+        } else if( !validatePh.test(this.empPh) ) {
+          // this.messageEmpPh = "전화번호 형식에 맞게 입력해야 합니다. (010-XXXX-XXXX)";
+          alert("전화번호 형식에 맞게 입력해야 합니다. (010-XXXX-XXXX)");
+          return;
+        } else {
+          // this.messageEmpPh = "";
+          return;
+        }
+      },
+      setEmpEmail() {
+        this.changeEmpEmail = true;
+      },
       checkEmpEmail() {
         const validateEmail = /^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\.[A-Za-z0-9\\-]+/;
+
         if( this.empEmail == '' ) {
           alert("이메일을 입력해 주세요.");
           return;
@@ -199,20 +258,7 @@
             alert("사용 가능한 이메일입니다.");
           }
         });
-      },
-      checkEmpPh() {
-        const validatePh = /^\d{3}-\d{3,4}-\d{4}$/;
-        
-        if( this.empPh == '' ) {
-          this.messageEmpPh = "전화번호를 입력해 주세요.";
-          return;
-        } else if( !validatePh.test(this.empPh) ) {
-          this.messageEmpPh = "전화번호 형식에 맞게 입력해야 합니다. (010-0000-0000)";
-          return;
-        } else {
-          this.messageEmpPh = "";
-          return;
-        }
+        this.changeEmpEmail = false;
       }
     }
   };
