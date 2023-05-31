@@ -7,13 +7,13 @@
         <b-container class="bv-example-row" style="display: flex; width: 1000px">
           <div>
             <b-row>
-              <b-col class="col-7" style="display: flex; align-items: center;">
+              <b-col class="col-5" style="display: flex; align-items: center;">
                 <b-form-datepicker class="input_date" v-model="inputDate" placeholder="투입일자" style="width: 250px; height: 50px; margin-right: 5px;" @input="handleDateInput"></b-form-datepicker>
                 ~
                 <b-form-datepicker class="output_date" v-model="outputDate" placeholder="탈출일자" style="width: 250px; height: 50px; margin-right: 5px;"></b-form-datepicker>
               </b-col>
 
-              <b-col class="col-3">
+              <b-col class="col-2">
                 <!-- <div> -->
                   <select v-model="role" style=" height: 50px;" @change="onChange($event)" class="form-select form-control">
                     <option value="">직무</option>
@@ -28,6 +28,16 @@
                   </select>
                 <!-- </div> -->
               </b-col>
+
+              <b-col class="col-2" style="display: flex; align-items: center;">
+                <b-form-input v-model="skill" placeholder="스킬"></b-form-input>
+              </b-col>
+
+              <b-col class="col-3" style="display: flex; align-items: center;" >
+                <b-checkbox style="margin-right: 10px;" v-model="isWork" value="1" unchecked-value="0">프로젝트에 참여하지 않는 사람만</b-checkbox>
+              </b-col>
+
+              
             </b-row>
           
             <b-row style="margin-top: 15px;">
@@ -35,13 +45,13 @@
                 <b-form-input v-model="proName" placeholder="프로젝트명"></b-form-input>
               </b-col> -->
 
-              <b-col class="col-6" style="display: flex; align-items: center;">
+              <!-- <b-col class="col-6" style="display: flex; align-items: center;">
                 <b-form-input v-model="skill" placeholder="스킬"></b-form-input>
               </b-col>
 
               <b-col class="col-5" style="display: flex; align-items: center;" >
                 <b-checkbox style="margin-right: 10px;" v-model="isWork" value="1" unchecked-value="0">프로젝트에 참여하지 않는 사람만</b-checkbox>
-              </b-col>
+              </b-col> -->
             </b-row>
           </div>
 
@@ -51,6 +61,8 @@
   
       <div style="display: flex; justify-content: flex-end;">
         <button @click="sendData()" class="login100-form-btn pro-button addButton" style="width: 200px" type="button">검색</button>
+      
+        <button @click="navigateToUnauthorizedEmp()" class="login100-form-btn pro-button addButton" style="width: 200px" type="button">미승인 직원 조회</button>
       </div>
       
       <div>
@@ -98,7 +110,7 @@
                 <el-table-column label="권한 지정" prop="auth" min-width="100px">
                   <template slot-scope="scope">
                     <div class="avatar-group">
-                        <button @click="navigateToAccess(scope.row.emp_id, scope.row.emp_name)" style="cursor: pointer">권한</button>
+                        <button @click="navigateToAccess(scope.row.emp_id, scope.row.emp_name)" class="login100-form-btn profile-button eval-button" style="cursor: pointer">권한</button>
                     </div>
                   </template>
                 </el-table-column>
@@ -213,6 +225,9 @@
         }).catch((error) => {
             console.log('Failed to fetch data:', error);
         });
+      },
+      navigateToUnauthorizedEmp() {
+        this.$router.push('/employee/unauthorized');
       },
       navigateToAccess(id, name) {
         this.$router.push({
@@ -368,5 +383,14 @@
   .ProjectTableCard {
     border: none !important;
     border-radius: 10px;
+  }
+
+  .profile-button {
+  margin-top: 10px;
+  width: 80px;
+  height: 40px;
+  background-color: #394F85;
+  color: white !important;
+  font-size: 12px;
   }
 </style>
