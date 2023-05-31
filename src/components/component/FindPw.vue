@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>비밀번호 찾기</h3>
+    <h3>비밀번호 변경</h3>
     <div>
       <b-form-input type="text" id="auth_id" name="auth_id" v-model="authId" placeholder="아이디"/>
       <b-form-input type="email" id="emp_email" name="emp_email" v-model="empEmail" placeholder="이메일"/>
