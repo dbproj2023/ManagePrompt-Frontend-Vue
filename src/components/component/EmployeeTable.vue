@@ -100,9 +100,15 @@
                 </el-table-column>
 
                 <el-table-column label="참여 프로젝트 수" prop="pro_cnt" min-width="150px">
-                  <!-- <template v-slot="{row}">
-                    <span class="font-weight-600 name mb-0 text-sm" style="color: #939CAC">{{ row.pro_cnt }}</span>
-                  </template> -->
+                  <template slot="header">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                      <label>참여 프로젝트 수</label>
+                      <i class="el-icon-arrow-down sort-icon" @click="sortByProjectCount()"></i>
+                    </div>
+                  </template>
+                  <template slot-scope="scope">
+                    {{ scope.row.pro_cnt }}
+                  </template>
                 </el-table-column>
 
                 <el-table-column label="직무" prop="role" min-width="100px"></el-table-column>
@@ -151,7 +157,8 @@
         skill: '',
         isWork: 0,
         employees: [],
-        isLoading: true
+        isLoading: true,
+        sortByClick: 0
       }
     },
     methods: {
@@ -239,6 +246,15 @@
           path: `/employee/access/${id}`,
           query: { name: name }
         });
+      },
+      sortByProjectCount() {
+        this.sortByClick += 1;
+        
+        if(this.sortByClick % 2 == 1) {
+          this.employees.sort((a, b) => b.pro_cnt - a.pro_cnt);
+        } else if(this.sortByClick % 2 == 0) {
+          this.employees.sort((a, b) => a.pro_cnt - b.pro_cnt)
+        }
       },
       onChange(e) {
         this.searchType = e.target.value;
