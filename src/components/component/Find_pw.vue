@@ -41,11 +41,11 @@ export default {
 
             axios.post('/api/v1/auth/checkEmail', formData).then((res) => {
                 if( res.data == true ) {
-                    let formData2 = new FormData();
-                    formData2.append("id", this.authId);
-                    formData2.append("email", this.empEmail);
+                    // let formData2 = new FormData();
+                    // formData2.append("id", this.authId);
+                    // formData2.append("email", this.empEmail);
                     
-                    axios.post('/api/v1/auth/help/resetPW/checkAccountInfo', formData2).then((res) => {
+                    axios.get('/api/v1/auth/help/resetPW/checkAccountInfo', { params: { id: this.authId, email: this.empEmail }}).then((res) => {
                         if( res.data.status == 1 ) { // 이메일과 일치하는 아이디 있음
                             this.showInput();
 
