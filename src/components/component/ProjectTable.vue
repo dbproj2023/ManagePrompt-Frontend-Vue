@@ -96,12 +96,11 @@
             <el-table-column label="예산" prop="budget" min-width="120px"></el-table-column>
 
             <el-table-column label="발주처명" prop="client_name" min-width="180px"></el-table-column>
-
-            <el-table-column label="진행상태" min-width="100px"  prop="status">
-              <template v-slot="{ row }">          
-                <badge class="badge-dot mr-4" type="">
-                  <i :class="`bg-${projectStatus(row.start_date, row.end_date)[1]}`"></i>
-                  <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC" prop="status"> {{projectStatus(row.start_date, row.end_date)[0]}} </span>
+            <el-table-column label="진행상태" min-width="200px" prop="status">
+              <template v-slot="{ row, $index }">          
+                <badge class="badge-dot mr-4">
+                  <i :class="`bg-${projectStatus(row.start_date, row.end_date, $index)[1]}`"></i>
+                  <span class="font-weight-600 name mb-0 text-sm" style="color: #939CAC" prop="status">{{projectStatus(row.start_date, row.end_date, $index )[0]}} </span>
                 </badge>
               </template>
             </el-table-column>
@@ -120,39 +119,22 @@
                 </div>
               </template>
             </el-table-column>
-
-            <!-- <el-pagination v-if="projects.length > 0"
-            class="pagination"
-            :current-page="currentPage"
-            :page-size="pageSize"
-            :total="projects.length"
-            @current-change="handlePageChange"
-          ></el-pagination> -->
         </el-table>
 
         <div v-else style="padding-top: 20px;">
               해당 프로젝트가 없습니다.
         </div>
-
-        
         <span v-if="this.cntflag" class="font-weight-600 name mb-0 text-sm text-right"  style="color: #939CAC">
           총 프로젝트 수: {{ this.cnt }}개 / 발주금액: {{ this.total_budget }}원
         </span>
-
       </b-card>
-
     </div>
   </div>
 </b-card>
-
-  </div>
-
-  
+</div>
 </template>
 
-<script>
-//  import projects from 'projects'
-// import RangeDatePicker from 'vue-easy-range-date-picker'; 
+<script>; 
 import { Pagination, Table, TableColumn } from 'element-ui';
 import moment from 'moment';
 
@@ -183,13 +165,6 @@ const HOST =  "http://localhost:8080";
         cntflag: false,
         }
     },
-  computed: {
-    // pagedProjects() {
-    //   const startIndex = (this.currentPage - 1) * this.pageSize;
-    //   const endIndex = startIndex + this.pageSize;
-    //   return this.projects.slice(startIndex, endIndex);
-    // }
-  },
   methods: {
     handlePageChange(page) {
       this.currentPage = page;
@@ -218,7 +193,19 @@ const HOST =  "http://localhost:8080";
         .then((res) => {
           console.log(apiUrl, { params })
           console.log('API response:', res.data);
+
+        
           this.projects = res.data;
+
+          for (let i = 0; i < this.projects.length; i++) {
+            const project = this.projects[i];
+            const startDate = project.start_date;
+            const endDate = project.end_date;
+
+            const [status, color] = this.projectStatus(startDate, endDate, i);
+            this.projects.state = status;           
+              }
+
           this.isLoading = false
           if (res.status===200){
             // 년도 검색
@@ -228,6 +215,16 @@ const HOST =  "http://localhost:8080";
                 this.cntflag = true;
                 return projectYear === this.selectedYear;
               });
+            }
+            if (this.selectedStatus !== '') {
+              this.projects = this.projects.filter(project => {
+                console.log(project);
+                const projectState = project.state;
+                console.log(projectState, "adkfjalkdfjkalfjkl");
+                return projectState === this.selectedStatus;
+              });
+              }
+
 
             const apiUrl2 = `${HOST}/api/v1/proj/lists/search/summary`;
             const params2 = {year: parseInt(this.selectedYear)};
@@ -240,8 +237,10 @@ const HOST =  "http://localhost:8080";
             })
             .catch((error) => {
               console.error('Failed to fetch data:', error);
-            });
-          } 
+            }
+            
+            );
+
          }
         console.log("=========");
         console.log(this.projects);
@@ -273,14 +272,6 @@ const HOST =  "http://localhost:8080";
         // .catch((error) => {
         //   console.error('Failed to fetch data:', error);
         //  });
-
-        if (this.selectedStatus !== '') {
-          console.log('adjfklajklfalk')
-          console.log(this.projects.status);
-         return this.projects.filter(project => project.status === this.selectedStatus);
-        } else {
-        return this.projects;
-      }
     })
     },
     navigateToDetail(id) {
@@ -297,20 +288,25 @@ const HOST =  "http://localhost:8080";
         this.value = null;
       }
     },
-    projectStatus(rowstartDate, rowendDate) {
+    projectStatus(rowstartDate, rowendDate, index) {
       const currentDate = moment().format('YYYY-MM-DD');
       const startDate = moment(rowstartDate).format('YYYY-MM-DD');
       const endDate = moment(rowendDate).format('YYYY-MM-DD');
 
       if (startDate === endDate){
+        this.projects[index].state = '취소';
         return ["취소", 'secondary']
       } else if (currentDate < startDate) {
+        this.projects[index].state = '예정';
         return ["예정",'danger'];
       } else if (currentDate > endDate) {
+        this.projects[index].state = '완료'; 
         return ["완료","success"];
       }  else {
+        this.projects[index].state = '진행중';
         return ["진행중",'warning'];
       }
+
 
   },
 },
