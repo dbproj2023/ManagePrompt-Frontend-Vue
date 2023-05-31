@@ -75,7 +75,7 @@ export default {
           alert(res.data.message); // 인증번호 일치
           
           // 비밀번호 변경 페이지로 이동
-          this.$router.push('/logoutChangePw');
+          this.$router.push({ path: '/logoutChangePw', params: { data: this.authId } });
         }
         else if( res.data.status == 0 ){
           alert(res.data.message); // 인증번호 불일치

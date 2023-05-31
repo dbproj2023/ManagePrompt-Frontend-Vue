@@ -52,13 +52,14 @@
         },
         data() {
             return {
-                authId: FindPW.authId,
+                authId: "",
                 newPw: "",
                 newPwRe: ""
             }
         },
         mounted() {
-            this.authId = FindPW.authId;
+            this.authId = this.$route.params.authId;
+            console.log("authId:", this.authId);
         },
         methods: {
             sendData() {
