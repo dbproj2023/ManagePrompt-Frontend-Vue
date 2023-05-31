@@ -130,10 +130,12 @@
 
         this.myName = res.data.cowork_eval[0].emp_name
 
-        console.log(res.data.cowork_eval);
-        console.log(res.data.pm_eval);
+        console.log("cowork", res.data.cowork_eval.length);
+        console.log("pm", res.data.pm_eval.length);
+
 
         for (let i = 0; i < res.data.cowork_eval.length; i++) {
+          console.log('==========')
           const proName = res.data.cowork_eval[i].pro_name;
           const communication1 = res.data.cowork_eval[i].avg_communication_rating ?? 0;
           const performance1 = res.data.cowork_eval[i].avg_performance_rating ?? 0;
@@ -142,23 +144,35 @@
           const endDate =  moment(res.data.cowork_eval[i].end_date).format('YY-MM-DD');
           console.log(startDate, endDate);
 
-
           this.project_list.push(proName);
           this.cowork_eval[proName] = [communication1, performance1];
           this.period_list[proName] = [startDate, endDate];
 
-          const communication2 = 0;
-          const performance2 = 0;
+
+
+          let communication2 = 0;
+          let performance2 = 0;
 
           for (let j=0; j<res.data.pm_eval.length; j++){
+            console.log("==============");
+            console.log(res.data.pm_eval.length);
             if (proName == res.data.pm_eval[i].pro_name){
-              communication2 = res.data.pm_eval[i].avg_communication_rating;
-              performance2 = res.data.pm_eval[i].avg_performance_rating;
+              console.log("=~~~~~~~~~~~``=")
+              console.log(res.data.pm_eval[j].avg_communication_rating);
+              console.log(res.data.pm_eval[j].avg_performance_rating);
+              communication2 = res.data.pm_eval[j].avg_communication_rating;
+              performance2 = res.data.pm_eval[j].avg_performance_rating;
+              console.log(res.data.pm_eval[j].avg_communication_rating);
+              console.log(res.data.pm_eval[j].avg_performance_rating);
             }
           }
+          console.log("========================");
+          console.log(proName, communication2,performance2);
           this.pm_eval[proName] = [communication2, performance2];
-        }
+          console.log(this.pm_eval);
 
+          console.log("PM", this.pm_eval);
+        }
         this.isLoading = false;
        
       });
