@@ -28,7 +28,8 @@
   
               <div>
                 <a href="findAccount" class="txt1">
-                  아이디/비밀번호 찾기
+                  아이디/비밀번호 변경
+                  
                 </a>
               </div>
             </div>

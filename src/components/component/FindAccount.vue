@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="container">
-      <h2>아이디/비밀번호 찾기</h2>
+      <h2>아이디/비밀번호 변경</h2>
       <br>
       <br>
       <br>
