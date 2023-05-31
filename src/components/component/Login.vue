@@ -75,29 +75,53 @@
               formData.append("authId", this.input.auth_id);
               formData.append("authPw", this.input.auth_pw);
   
-              axios.post('/api/v1/auth/login', formData).then((res) => {
-                  if( res.data != null && res.data != undefined && res.data != '' ) {
-                      alert("로그인에 성공했습니다.");
-  
-                      this.$store.commit('setLogin', true);
-                      this.$store.commit('setAccGrade', res.data.accessGrade);
-                      this.$store.commit('setStatus', res.data.status);
-  
-                      // 새로운 직원이면
-                      if( res.data.status == 0 ) {
-                        // 회원 정보 등록 페이지로 이동
-                        this.$router.push('/enroll');
-                      } else if( res.data.status == 4 ) {
-                        // 발주처는 고객평가 페이지로 이동
-                        this.$router.push('/evaluation/input/customer');
-                      } else {
-                        // 이전 페이지로 이동
-                        this.$router.go(-1);
-                      }
+              axios.post('/api/v1/auth/login/', formData).then((res) => {
+                console.log("login res.data:", res.data);
+                  // if( res.data != null && res.data != undefined && res.data != '' ) {
+                  if( res.data.accessGrade == '' || res.data.accessGrade == null || res.data.accessGrade == undefined ) {
+                    alert(res.data.message);
+                  } else {
+                    alert("로그인에 성공했습니다.");
+
+                    this.$store.commit('setLogin', true);
+                    this.$store.commit('setAccGrade', res.data.accessGrade);
+                    this.$store.commit('setStatus', res.data.status);
+
+                    // 새로운 직원이면
+                    if( res.data.status == 0 ) {
+                      // 회원 정보 등록 페이지로 이동
+                      this.$router.push('/enroll');
+                    } else if( res.data.status == 4 ) {
+                      // 발주처는 고객평가 페이지로 이동
+                      this.$router.push('/evaluation/input/customer');
+                    } else {
+                      // 이전 페이지로 이동
+                      this.$router.go(-1);
+                    }
                   }
-                  else if( res.data == '' ) {
-                      alert("로그인에 실패했습니다.");
-                  }
+
+                  // if( !res.data.accessGrade == '' && !res.data.accessGrade == null && !res.data.accessGrade == undefined ) {
+                  //   alert("로그인에 성공했습니다.");
+
+                  //   this.$store.commit('setLogin', true);
+                  //   this.$store.commit('setAccGrade', res.data.accessGrade);
+                  //   this.$store.commit('setStatus', res.data.status);
+
+                  //   // 새로운 직원이면
+                  //   if( res.data.status == 0 ) {
+                  //     // 회원 정보 등록 페이지로 이동
+                  //     this.$router.push('/enroll');
+                  //   } else if( res.data.status == 4 ) {
+                  //     // 발주처는 고객평가 페이지로 이동
+                  //     this.$router.push('/evaluation/input/customer');
+                  //   } else {
+                  //     // 이전 페이지로 이동
+                  //     this.$router.go(-1);
+                  //   }
+                  // }
+                  // else if( res.data.accessGrade == '' || res.data.accessGrade == null || res.data.accessGrade == undefined ) {
+                  //   alert(res.data.message);
+                  // }
               });
           },
       },
