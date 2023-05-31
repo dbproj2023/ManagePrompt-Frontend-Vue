@@ -52,13 +52,13 @@
         },
         data() {
             return {
-                authId: "",
+                authId: FindPW.authId,
                 newPw: "",
                 newPwRe: ""
             }
         },
         mounted() {
-            this.authId = FindPW.auth_id;
+            this.authId = FindPW.authId;
         },
         methods: {
             sendData() {
