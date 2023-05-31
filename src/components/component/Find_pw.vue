@@ -37,7 +37,7 @@ export default {
     methods: {
         sendToEmail() {
             let formData = new FormData();
-            formData.append("empEmail", this.empEmail);
+            formData.append("emp_email", this.empEmail);
 
             axios.post('/api/v1/auth/checkEmail', formData).then((res) => {
                 if( res.data == true ) {
