@@ -1,18 +1,18 @@
 <template>
   <v-app>
     
-    <v-navigation-drawer v-model="drawer" app width="250px" class="no-border" style=" background-color: #F8F9FA;">
+      <v-navigation-drawer v-model="drawer" app width="250px" class="no-border" style=" background-color: #F8F9FA;">
       <Nav />
-    </v-navigation-drawer>
+      </v-navigation-drawer>
 
+      <v-app-bar app style="background-color: #33508A;">
+          <Header />
+      </v-app-bar>
 
-  <v-app-bar app style="background-color: #33508A;">
-      <Header />
-  </v-app-bar>
-
-  <v-main class="full-img">
-        <Main/>
-  </v-main>
+      <v-main class="full-img">
+            <Main/>
+      </v-main>
+    
   </v-app>
 </template>
 
@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       drawer:true,
-      isLogin: false
+      isLogIn: false
     }
   },
   mounted(){

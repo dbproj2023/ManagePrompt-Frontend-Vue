@@ -28,6 +28,7 @@
           
               <div v-else style="padding-top: 20px;">
                 <b-card class="ProjectTableCard">
+                  <h5>미승인 직원 목록</h5>
                   <el-table v-if="this.employees.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="this.employees">
                       <el-table-column label="사번" prop="emp_id" min-width="150px" ></el-table-column>
           
