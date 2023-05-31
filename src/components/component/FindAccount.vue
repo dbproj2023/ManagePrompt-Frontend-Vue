@@ -1,85 +1,82 @@
 <template>
-    <div id="find_account">
-      <div id="find_account-head">
-        <h2>아이디/비밀번호 찾기</h2>
-      </div>
-      <hr>
-      <div>
-        <Find_id/>
-        <Find_pw/>
-      </div>
+  <div class="wrapper">
+    <div class="container">
+      <h2>아이디/비밀번호 찾기</h2>
+      <br>
+      <br>
+      <br>
+      <FindId/>
+      <FindPw/>
+      <br>
+      <br>
+      <br>
     </div>
-  </template>
-  
-  <script>
-    import Find_id from './Find_id.vue'
-    import Find_pw from './Find_pw.vue'
-  
-    export default {
-      name: "FindAccount",
-      components: {
-        Find_id,
-        Find_pw
-      },
-      data() {
-        return {
-        }
-      },
-      methods: {
+  </div>
+</template>
+
+<script>
+import FindId from './FindId.vue'
+import FindPw from './FindPw.vue'
+
+  export default {
+    name: "FindAccount",
+    components: {
+      FindId,
+      FindPw
+    },
+    data() {
+      return {
       }
-    };
-  </script>
-  
-  <style scoped>
-    div {
-      flex: 1200px;
+    },
+    methods: {
     }
-    button {
-      margin: 10px;
-    }
-    h3 {
-      margin: 40px 0 0;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    li {
-      display: inline-block;
-      margin: 0 10px;
-    }
-    a {
-      color: #42b983;
-    }
-    .search-bar{
-      position: absolute;
-      width: 1167.73px;
-      height: 100px;
-      left: 300px;
-      top: 150px;
-      flex-wrap: nowrap;
-    }
-  
-    .head-name{
-      position: absolute;
-      width: 219px;
-      height: 10px;
-      left: 300px;
-      top: 100px;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 30px;
-      line-height: 36px;
-  
-      color: #000000;
-    }
-  
-    .project-table{
-      position: absolute;
-      width: 1167.73px;
-      height: 514.6px;
-      left: 280px;
-      top: 100px;
-    }
-  </style>
-  
+  };
+</script>
+
+<style scoped>
+.wrapper {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: #fff;
+  width:444px;
+  height: 724px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.input-data{
+margin-bottom: 10px;
+width: 300px;
+}
+
+.small-btn {
+    width: 100px;
+    height: 25px;
+    font-size: 10px;
+    line-height: 1.5;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 25px;
+    background: #33508A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s;
+    cursor: pointer;
+  }
+</style>

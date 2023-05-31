@@ -42,7 +42,7 @@
     import axios from 'axios';
     import Header from './Header.vue';
     import Nav from './Nav.vue'
-    import FindPW from './Find_pw.vue';
+    import FindPW from './FindPw.vue';
 
     export default {
         name: "LogoutChangePw",

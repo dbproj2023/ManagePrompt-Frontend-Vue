@@ -14,7 +14,7 @@
                             <input class="input100" type="password" id="old_pw" name="old_pw" ref="memberIdInput" v-model="oldPW" placeholder="이전 비밀번호">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                <i class="fa fa-lock" aria-hidden="true"></i>
                             </span>
                             </div>
                 
