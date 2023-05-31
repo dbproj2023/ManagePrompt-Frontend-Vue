@@ -84,16 +84,16 @@
     <!-- 프로젝트 테이블 -->   
     <b-card class="ProjectTableCard">
       <el-table v-if="projects.length > 0" class="table-responsive table text-center" header-row-class-name="thead-light" :data="this.projects">
-            <el-table-column label="프로젝트 이름" prop="pro_name" min-width="100px" >
+            <el-table-column label="프로젝트 이름" prop="pro_name" min-width="200px" >
             </el-table-column>
 
-            <el-table-column label="기간" min-width="180px" prop="name">
+            <el-table-column label="기간" min-width="200px" prop="name">
              <template v-slot="{row}">
                <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC">{{row.start_date | moment('YYYY-MM-DD')}} ~ {{row.end_date | moment('YYYY-MM-DD')}}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="예산" prop="budget" min-width="140px"></el-table-column>
+            <el-table-column label="예산" prop="budget" min-width="120px"></el-table-column>
 
             <el-table-column label="발주처명" prop="client_name" min-width="180px"></el-table-column>
             <el-table-column label="진행상태" min-width="200px" prop="status">
