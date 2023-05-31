@@ -1,98 +1,99 @@
 <template>
-  <div>
+<div>
     <div class="result-container">
       <div class="spinner-div" v-if="isLoading">
-      <b-card class="ProjectTableCard" style="height: 800px; width: 1200px;">
-        <div class="spinner-container" style="padding-top: 300px;">
-          <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
+        <b-card class="ProjectTableCard" style="height: 800px; width: 1200px;">
+          <div class="spinner-container" style="padding-top: 300px;">
+            <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
+          </div>
+        </b-card>
+      </div>
+
+      <div v-else class="text-center result-container">
+        <!-- 전체 평가 평점 -->
+        <div >
+        <b-card class="card1" style="margin-right: 10px;">
+            <i class="fa-solid fa-clipboard-list fa-xl"></i>
+            <br>
+            <br>
+            <h6 class="mb-0 text-center" style="margin-bottom: 10px; border-radius: 10px;">{{ this.myName }}의 평가보고서</h6>
+            <hr class="my-3 horizontal dark" />
+            <div class="p-3 pt-0 text-center card-body" style="border-radius: 10px;">
+              <div>
+                <br>
+                <div class="flex-table total-table" style="margin-top: 20px;">
+                  <div class="flex-row">
+                    <div class="flex-cell flex-header">종합 평가</div>
+                    <div class="flex-cell">{{ this.total_avg_rating }}</div>
+                  </div>
+                  <div class="flex-row">
+                    <div class="flex-cell flex-header">업무수행 평가</div>
+                    <div class="flex-cell">{{ this.avg_communication_rating }}</div>
+                  </div>
+                  <div class="flex-row">
+                    <div class="flex-cell flex-header">커뮤니케이션 평가</div>
+                    <div class="flex-cell">{{ this.avg_performance_rating }}</div>
+                  </div>
+                </div>
+                <br>
+                <hr class="my-3 horizontal dark" />
+              </div>
+            </div>
+          </b-card>
         </div>
-      </b-card>
-    </div>
-          
-  <div v-else class="p-3 text-center">
-  <b-card class="card2">
-  <i class="fa-solid fa-clipboard-list fa-xl"></i>   
-  <br>
-  <br>
-  <h6 class="mb-0 text-center" style="margin-bottom: 10px; border-radius: 10px;">  {{ this.myName }}의 평가보고서 </h6>
-  <hr class="my-3 horizontal dark" />
-  <div class="p-3 pt-0 text-center card-body" style="border-radius: 10px;">
-    <div>
-      <br>
-      <div class="flex-table total-table" style="margin-top: 20px;">
-        <div class="flex-row">
-          <div class="flex-cell flex-header">종합 평가</div>
-          <div class="flex-cell">{{ this.total_avg_rating }}</div>
-        </div>
-        <div class="flex-row">
-          <div class="flex-cell flex-header">업무수행 평가</div>
-          <div class="flex-cell">{{ this.avg_communication_rating }}</div>
-        </div>
-        <div class="flex-row">
-          <div class="flex-cell flex-header">커뮤니케이션 평가</div>
-          <div class="flex-cell">{{ this.avg_performance_rating }}</div>
+        <div>
+          <b-card class="card2" title="프로젝트 별 평가결과">
+            <div class="result" v-for="project in project_list" :key="project">
+              <br>
+              <div style="display: flex; align-items: center; text-align: center;">
+                <i class="fa-solid fa-folder-open fa-xl"></i>
+                <h6 style="margin-left: 8px;">{{ project }}</h6>
+              </div>
+
+              <br>
+              <div style="display: flex; width: 600px;">
+                <div>
+                  <div class="flex-cell flex-header">프로젝트 이름</div>
+                </div>
+                <div>
+                  <div class="flex-cell">{{ project }}</div>
+                </div>
+                <div>
+                  <div class="flex-cell flex-header">프로젝트 기간</div>
+                </div>
+                <div>
+                  <div class="flex-cell"> {{ period_list[project]['startDate']}} ~ {{ period_list[project]['endDate']}} </div>
+                </div>
+              </div>
+              <p style="padding-top: 10px; text-align: left;"> PM평가 / 동료평가 </p>
+              <div style="display: flex ;  width: 600px;">
+                <div>
+                  <div class="flex-cell flex-header">PM 업무수행 평가</div>
+                  <div class="flex-cell flex-header">PM 커뮤니케이션 평가</div>
+                </div>
+                <div>
+                  <div class="flex-cell">{{ pm_eval[project][0] }}</div>
+                  <div class="flex-cell">{{ pm_eval[project][1] }}</div>
+                </div>
+                <div>
+                  <div class="flex-cell flex-header">커뮤니케이션 평가</div>
+                  <div class="flex-cell flex-header">업무수행 평가</div>
+                </div>
+                <div>
+                  <div class="flex-cell">{{ cowork_eval[project][0] }}</div>
+                  <div class="flex-cell">{{ cowork_eval[project][1] }}</div>
+                </div>
+              </div>
+              </div>
+          </b-card>
         </div>
       </div>
-      <br>
-      <hr class="my-3 horizontal dark" />
-      
-    </div>
   </div>
-  </b-card>
-</div>
 
-    <div class="result" v-for="project in project_list" :key="project">
-    <b-card class="allresult" title="프로젝트 별 평가결과">
-    <br>
-    <div style="display: flex; align-items: center; text-align: center;">
-      <i class="fa-solid fa-folder-open fa-xl"></i>
-      <h6 style="margin-left: 8px;">{{ project }}</h6>
-    </div>
-
-    <br>
-    <div style="display: flex;">
-      <div>
-        <div class="flex-cell flex-header">프로젝트 이름</div>
-      </div>
-      <div>
-        <div class="flex-cell">{{ project }}</div>
-      </div>
-      <div>
-        <div class="flex-cell flex-header">프로젝트 기간</div>
-      </div>
-      <div>
-        <div class="flex-cell"> {{ period_list[project][0]}} ~ {{ period_list[project][1]}} </div>
-      </div>
-    </div>
-    <p style="padding-top: 10px;"> PM평가 / 동료평가 </p>
-    <div style="display: flex;">
-      <div>
-        <div class="flex-cell flex-header">PM 업무수행 평가</div>
-        <div class="flex-cell flex-header">PM 커뮤니케이션 평가</div>
-      </div>
-      <div>
-        <div class="flex-cell">{{ pm_eval[project][0] }}</div>
-        <div class="flex-cell">{{ pm_eval[project][1] }}</div>
-      </div>
-      <div>
-        <div class="flex-cell flex-header">커뮤니케이션 평가</div>
-        <div class="flex-cell flex-header">업무수행 평가</div>
-      </div>
-      <div>
-        <div class="flex-cell">{{ cowork_eval[project][0] }}</div>
-        <div class="flex-cell">{{ cowork_eval[project][1] }}</div>
-      </div>
-    </div>
-    <br>
-  </b-card>
-</div>
-
-    </div>
   </div>
-
 </template>
-  
-  
+
+    
   <script>
   import axios from "axios"; // http 통신을 위한 라이브러리
   const HOST =  "http://localhost:8080";
@@ -127,51 +128,38 @@
         this.avg_performance_rating =  res.data.all_eval[0].avg_performance_rating
 
         this.myName = res.data.cowork_eval[0].emp_name
+        const allProjects = [...res.data.cowork_eval.map(find => find.pro_name), ...res.data.pm_eval.map(find => find.pro_name)];
+        this.project_list = [...new Set(allProjects)];
 
-        console.log("cowork", res.data.cowork_eval.length);
-        console.log("pm", res.data.pm_eval.length);
+        // 동료평가, PM 평가
+        for (const project of this.project_list) {
+          const coworkEval = res.data.cowork_eval.find(evaluation => evaluation.pro_name === project);
+          const pmEval = res.data.pm_eval.find(evaluation => evaluation.pro_name === project);
 
+          const coworkCommunication = coworkEval ? coworkEval.avg_communication_rating : 0;
+          const coworkPerformance = coworkEval ? coworkEval.avg_performance_rating : 0;
+          this.cowork_eval[project] = [coworkCommunication, coworkPerformance];
 
-        for (let i = 0; i < res.data.cowork_eval.length; i++) {
-          console.log('==========')
-          const proName = res.data.cowork_eval[i].pro_name;
-          const communication1 = res.data.cowork_eval[i].avg_communication_rating ?? 0;
-          const performance1 = res.data.cowork_eval[i].avg_performance_rating ?? 0;
+          const pmCommunication = pmEval ? pmEval.avg_communication_rating : 0;
+          const pmPerformance = pmEval ? pmEval.avg_performance_rating : 0;
+          this.pm_eval[project] = [pmCommunication, pmPerformance];
 
-          const startDate = moment(res.data.cowork_eval[i].start_date).format('YY-MM-DD');
-          const endDate =  moment(res.data.cowork_eval[i].end_date).format('YY-MM-DD');
-          console.log(startDate, endDate);
+          const projectPeriod1 = res.data.cowork_eval.find(evaluation => evaluation.pro_name === project);
+          const projectPeriod2 = res.data.pm_eval.find(evaluation => evaluation.pro_name === project);
 
-          this.project_list.push(proName);
-          this.cowork_eval[proName] = [communication1, performance1];
-          this.period_list[proName] = [startDate, endDate];
+          let startDate = projectPeriod1 ? moment(projectPeriod1.start_date).format('YY-MM-DD') : '';
+          let endDate = projectPeriod1 ? moment(projectPeriod1.end_date).format('YY-MM-DD') : '';
 
-
-
-          let communication2 = 0;
-          let performance2 = 0;
-
-          for (let j=0; j<res.data.pm_eval.length; j++){
-            console.log("==============");
-            console.log(res.data.pm_eval.length);
-            if (proName == res.data.pm_eval[i].pro_name){
-              console.log("=~~~~~~~~~~~``=")
-              console.log(res.data.pm_eval[j].avg_communication_rating);
-              console.log(res.data.pm_eval[j].avg_performance_rating);
-              communication2 = res.data.pm_eval[j].avg_communication_rating;
-              performance2 = res.data.pm_eval[j].avg_performance_rating;
-              console.log(res.data.pm_eval[j].avg_communication_rating);
-              console.log(res.data.pm_eval[j].avg_performance_rating);
-            }
+          if (!startDate && projectPeriod2) {
+            startDate = moment(projectPeriod2.start_date).format('YY-MM-DD');
+            endDate = moment(projectPeriod2.end_date).format('YY-MM-DD');
           }
-          console.log("========================");
-          console.log(proName, communication2,performance2);
-          this.pm_eval[proName] = [communication2, performance2];
-          console.log(this.pm_eval);
 
-          console.log("PM", this.pm_eval);
-        }
-        this.isLoading = false;
+          this.period_list[project] = { startDate, endDate };
+
+          console.log(this.period_list);
+          }
+          this.isLoading = false;
        
       });
     } catch (error) {
@@ -199,17 +187,7 @@
     display: inline-block;
     margin: 0 10px;
   }
-  .card-warpper{
-    display: flex;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 180px;
-    top: 50px;
-    padding: 30px;
-    background-color: #f5f8f9;;
-    /* overflow: auto; 수직 스크롤 생성 */
-  }
+
   
   .table{
     font-size: small;
@@ -228,6 +206,7 @@
     width: 900px;
     min-height: 260px;
   }
+
 
   .spinner-container {
   display: flex;
@@ -262,7 +241,7 @@
 
 .flex-cell {
   flex: 1;
-  padding: 8px;
+  padding: 0px;
   width: 200px;
   height: 40px;
   /* border: 0.5px solid #ccc; */
@@ -272,7 +251,7 @@
 }
 
 
-.flex-header1{
+.flex-header1{ 
   text-align: center;
   /* font-weight: bold; */
   background-color: #f0f0f0;
@@ -293,8 +272,19 @@
   margin: auto;
 }
 
-.card2{
-  padding-left: 0px;
-  height: 375px;
+.card1{
+  align-items: center;
+  height: 360px;
+  width: 300px !important;
+  padding-right: 10px;
+  margin-right: 10px !important;
+  display: 1;
 }
+
+.card2{
+  width: 900px !important;
+}
+
+
+
 </style>

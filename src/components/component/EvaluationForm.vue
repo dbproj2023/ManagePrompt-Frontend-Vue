@@ -234,7 +234,7 @@ mounted(){
     formData.append("communication_rating",parseInt(this.selectedOption_c));
     formData.append("communication_desc", this.commInput);
     formData.append("performance_rating",parseInt(this.selectedOption_p));
-    formData.append("performnace_desc", this.perfomInput);
+    formData.append("performance_desc", this.perfomInput);
 
     for (const [key, value] of formData.entries()) {
         console.log(key, value);
