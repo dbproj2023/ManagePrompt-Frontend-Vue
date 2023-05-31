@@ -5,15 +5,15 @@
       <b-card class="evalCus-card">
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트명</div>
-          <div class="flex-cell">프로젝트 이름</div>
+          <div class="flex-cell">{{ this.client.project_name }}</div>
           <div class="flex-cell flex-header">프로젝트 기간</div>
-          <div class="flex-cell">프로젝트 기간</div>
+          <div class="flex-cell">{{ this.client.project_startdate |moment('YYYY-MM-DD') }} ~ {{  this.client.project_endtdate| moment('YYYY-MM-DD')}}</div>
         </div>
         <div class="flex-row">
           <div class="flex-cell flex-header">프로젝트 담당자(PM)</div>
-          <div class="flex-cell">PM 이름</div>
+          <div class="flex-cell">{{this.client.pm_name}}</div>
           <div class="flex-cell flex-header">발주처명</div>
-          <div class="flex-cell">발주처명</div>
+          <div class="flex-cell">{{ this.client.client_name }}</div>
         </div>
       </b-card>
 
@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="button-container">
-          <b-button  @click="registerEval"  style="margin-top: 10px">평가 등록</b-button>
+          <b-button  @click="registerEval()"  style="margin-top: 10px">평가 등록</b-button>
         </div>
       </b-card>
       </div>
@@ -67,6 +67,8 @@ div {
 </style>
 
 <script>
+import axios from 'axios';
+import moment from 'moment';
 export default {
 name: "Main",
 data() {
@@ -75,11 +77,53 @@ data() {
     perfomInput: '',
     selectedOption_p: '',
     selectedOption_c: '',
-    
+    client: []
   }
+},
+mounted() {
+  const HOST = "http://localhost:8080";
+  const apiUrl = `${HOST}/api/v1/evaluation/client/project`;
+
+  axios.get(apiUrl)
+    .then(res => {
+      console.log(res.data);
+      // Handle the response and assign the client data to the client property
+      this.client = res.data;
+    })
+    .catch(error => {
+      console.error('Failed to retrieve client data:', error);
+    });
 },
 methods: {
   registerEval(){
+    this.isLoading = true;
+    const HOST = "http://localhost:8080";
+    const apiUrl = `${HOST}/api/v1/evaluation/client/create`
+
+    const formData = new FormData();
+    formData.append("communication_rating",parseInt(this.selectedOption_c));
+    formData.append("communication_desc", this.commInput);
+    formData.append("performance_rating",parseInt(this.selectedOption_p));
+    formData.append("performance_desc", this.perfomInput);
+
+    console.log(apiUrl)
+    try {
+          axios
+            .post(apiUrl, formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                console.log("평가 등록 성공!");
+                alert(res.data.message);
+                console.log(res);
+                window.location.reload();
+              }
+            });
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 }
 };
