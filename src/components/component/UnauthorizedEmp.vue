@@ -38,7 +38,7 @@
                       <el-table-column label="권한 지정" prop="auth" min-width="100px">
                         <template slot-scope="scope">
                           <div class="avatar-group">
-                            <button @click="navigateToAccess(scope.row.emp_id, scope.row.emp_name)" style="cursor: pointer">권한</button>
+                            <button @click="navigateToAccess(scope.row.emp_id, scope.row.emp_name)" class="login100-form-btn profile-button eval-button" style="cursor: pointer">권한</button>
                           </div>
                         </template>
                       </el-table-column>
@@ -94,14 +94,21 @@
         this.isLoading = false;
 
         for(let i=0; i<res.data.length; i++) {
-          if(res.data[i].discrete == "승인전") {
-            var obj = {
-              emp_id: res.data[i].emp_id,
-              emp_name: res.data[i].emp_name,
-              auth_id: res.data[i].auth_id,
-            }
-            this.employees.push(obj);
+          var obj = {
+            emp_id: res.data[i].emp_id,
+            emp_name: res.data[i].emp_name,
+            auth_id: res.data[i].auth_id,
           }
+          this.employees.push(obj);
+          
+          // if(res.data[i].discrete == "승인전") {
+          //   var obj = {
+          //     emp_id: res.data[i].emp_id,
+          //     emp_name: res.data[i].emp_name,
+          //     auth_id: res.data[i].auth_id,
+          //   }
+          //   this.employees.push(obj);
+          // }
           console.log(this.employees);
         }
       }).catch ((error) => {

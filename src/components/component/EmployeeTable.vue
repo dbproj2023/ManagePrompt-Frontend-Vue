@@ -384,13 +384,4 @@
     border: none !important;
     border-radius: 10px;
   }
-
-  .profile-button {
-  margin-top: 10px;
-  width: 80px;
-  height: 40px;
-  background-color: #394F85;
-  color: white !important;
-  font-size: 12px;
-  }
 </style>
