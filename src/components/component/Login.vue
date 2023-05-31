@@ -81,7 +81,7 @@
                   if( res.data.accessGrade == '' || res.data.accessGrade == null || res.data.accessGrade == undefined ) {
                     alert(res.data.message);
                   } else {
-                    alert("로그인에 성공했습니다.");
+                    // alert("로그인에 성공했습니다.");
 
                     this.$store.commit('setLogin', true);
                     this.$store.commit('setAccGrade', res.data.accessGrade);
@@ -91,7 +91,7 @@
                     if( res.data.status == 0 ) {
                       // 회원 정보 등록 페이지로 이동
                       this.$router.push('/enroll');
-                    } else if( res.data.status == 4 ) {
+                    } else if( res.data.accessGrade == 4 ) {
                       // 발주처는 고객평가 페이지로 이동
                       this.$router.push('/evaluation/input/customer');
                     } else {
