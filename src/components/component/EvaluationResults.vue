@@ -9,7 +9,7 @@
       </b-card>
     </div>
           
-  <div v-else class="p-3  text-center">
+  <div v-else class="p-3 text-center">
   <b-card class="card2">
   <i class="fa-solid fa-clipboard-list fa-xl"></i>   
   <br>
@@ -19,7 +19,6 @@
   <div class="p-3 pt-0 text-center card-body" style="border-radius: 10px;">
     <div>
       <br>
-
       <div class="flex-table total-table" style="margin-top: 20px;">
         <div class="flex-row">
           <div class="flex-cell flex-header">종합 평가</div>
@@ -50,7 +49,6 @@
       <h6 style="margin-left: 8px;">{{ project }}</h6>
     </div>
 
-    <h6></h6>
     <br>
     <div style="display: flex;">
       <div>
@@ -188,7 +186,7 @@
 </script>
   
   <style scoped>
-  
+
   h3 {
     left: 500px;
     margin: 30px;
@@ -240,6 +238,7 @@
 
  
 .flex-table {
+  height: 100px;
   width: 500px;
   display: flex;
   flex-direction: column;
@@ -251,11 +250,12 @@
 .flex-row {
   display: flex;
   border: 0.5px solid #F6F6F6; 
-
+  height: 150px;
 }
 
 .flex-header{
   /* font-weight: bold; */
+  height: 150px;
   border: 0.5px solid #F6F6F6; 
   background-color: #E8ECEC;
 }
@@ -264,6 +264,7 @@
   flex: 1;
   padding: 8px;
   width: 200px;
+  height: 40px;
   /* border: 0.5px solid #ccc; */
   white-space: pre-wrap;
   text-align: center;
