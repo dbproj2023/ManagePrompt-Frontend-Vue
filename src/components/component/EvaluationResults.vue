@@ -63,7 +63,7 @@
         <div class="flex-cell flex-header">프로젝트 기간</div>
       </div>
       <div>
-        <div class="flex-cell">{{ }}</div>
+        <div class="flex-cell">{{start_date }} ~ {{end_date }}</div>
       </div>
     </div>
     <p style="padding-top: 10px;"> PM평가 / 동료평가 </p>
@@ -140,6 +140,10 @@
           this.cowork_eval[proName] = [communication1, performance1];
           console.log('cowork_eval:', this.cowork_eval);
           console.log('project_list:', this.project_list);
+
+          console.log("=======");
+          console.log(res.data);
+          console.log("=======");
 
           const communication2 = 0;
           const performance2 = 0;
