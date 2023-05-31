@@ -9,18 +9,16 @@
       </b-card>
     </div>
           
-    <div v-else class="p-3 mx-4 text-center card-header">
-  <!-- <div class="icon icon-shape icon-lg bg-gradient-success shadow text-center border-radius-lg" style="margin-left: 80px;"> -->
+  <div v-else class="p-3  text-center">
+  <b-card class="card2">
   <i class="fa-solid fa-clipboard-list fa-xl"></i>   
   <br>
   <br>
-  <h6 class="mb-0 text-center" style="margin-bottom: 10px; border-radius: 10px;"> 평가보고서 </h6>
-  <!-- </div> -->
+  <h6 class="mb-0 text-center" style="margin-bottom: 10px; border-radius: 10px;">  {{ this.myName }}의 평가보고서 </h6>
   <hr class="my-3 horizontal dark" />
   <div class="p-3 pt-0 text-center card-body" style="border-radius: 10px;">
     <div>
       <br>
-      <h6 class="mb-0 text-center"> {{ this.myName }}</h6>
 
       <div class="flex-table total-table" style="margin-top: 20px;">
         <div class="flex-row">
@@ -38,19 +36,21 @@
       </div>
       <br>
       <hr class="my-3 horizontal dark" />
-
+      
     </div>
   </div>
+  </b-card>
 </div>
 
     <div class="result" v-for="project in project_list" :key="project">
     <b-card class="allresult" title="프로젝트 별 평가결과">
     <br>
-    <div style="display: flex; text-align: center; align-items: center;">
+    <div style="display: flex; align-items: center; text-align: center;">
       <i class="fa-solid fa-folder-open fa-xl"></i>
-      <h6>{{ project }}</h6>
+      <h6 style="margin-left: 8px;">{{ project }}</h6>
     </div>
-    <h6>{{ slicedStartDate }}</h6>
+
+    <h6></h6>
     <br>
     <div style="display: flex;">
       <div>
@@ -63,7 +63,7 @@
         <div class="flex-cell flex-header">프로젝트 기간</div>
       </div>
       <div>
-        <div class="flex-cell">{{start_date }} ~ {{end_date }}</div>
+        <div class="flex-cell"> {{ period_list[project][0]}} ~ {{ period_list[project][1]}} </div>
       </div>
     </div>
     <p style="padding-top: 10px;"> PM평가 / 동료평가 </p>
@@ -98,6 +98,7 @@
   <script>
   import axios from "axios"; // http 통신을 위한 라이브러리
   const HOST =  "http://localhost:8080";
+  import moment from "moment";
   
   export default {
     name: "Detail",
@@ -109,6 +110,7 @@
           cowork_eval: {},
           pm_eval: {},
           project_list: [],
+          period_list: {},
           avg_communication_rating:0, 
           total_avg_rating: 0,
           avg_performance_rating: 0,
@@ -136,14 +138,14 @@
           const communication1 = res.data.cowork_eval[i].avg_communication_rating ?? 0;
           const performance1 = res.data.cowork_eval[i].avg_performance_rating ?? 0;
 
+          const startDate = moment(res.data.cowork_eval[i].start_date).format('YY-MM-DD');
+          const endDate =  moment(res.data.cowork_eval[i].end_date).format('YY-MM-DD');
+          console.log(startDate, endDate);
+
+
           this.project_list.push(proName);
           this.cowork_eval[proName] = [communication1, performance1];
-          console.log('cowork_eval:', this.cowork_eval);
-          console.log('project_list:', this.project_list);
-
-          console.log("=======");
-          console.log(res.data);
-          console.log("=======");
+          this.period_list[proName] = [startDate, endDate];
 
           const communication2 = 0;
           const performance2 = 0;
@@ -154,10 +156,7 @@
               performance2 = res.data.pm_eval[i].avg_performance_rating;
             }
           }
-
-
           this.pm_eval[proName] = [communication2, performance2];
-          console.log("akldjldkaalk", this.pm_eval, this.cowork_eval);
         }
 
         this.isLoading = false;
@@ -169,19 +168,7 @@
     }
     },
     computed: {
-    slicedStartDate() {
-      // console.log(res.data.projectEvaluationList)
-        // if (res.data.projectEvaluationList[0].startDate && res.data.projectEvaluationList[0].endDate) {
-        //   const startyear = res.data.projectEvaluationList[0].startDate.slice(2, 10);
-        //   // const startmonth = projectEvaluationList[0].startDate.slice(5, 7);
-        //   // const startday = projectEvaluationList[0].startDate.slice(8, 10);
 
-        //   const endyear = res.data.projectEvaluationList[0].startDate.slice(2, 10);
-        //   // const endmonth =projectEvaluationList[0].startDate.slice(5, 7);
-        //   // const endday = projectEvaluationList[0].startDate.slice(8, 10);
-        //   return `${startyear} ~ ${endyear}`}
-        // return '';
-      }
   }
 }
 </script>
@@ -225,6 +212,7 @@
   }
 
   .result{
+    padding-top: 18px;
     width: 900px;
     min-height: 260px;
   }
@@ -284,8 +272,14 @@
   background-color: #FFFFFF;
 }
 
+
 .total-table{
   width: 250px;
   margin: auto;
+}
+
+.card2{
+  padding-left: 0px;
+  height: 375px;
 }
 </style>

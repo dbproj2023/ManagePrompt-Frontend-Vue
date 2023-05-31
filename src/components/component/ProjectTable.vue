@@ -97,11 +97,11 @@
 
             <el-table-column label="발주처명" prop="client_name" min-width="180px"></el-table-column>
 
-            <el-table-column label="진행상태" min-width="200px">
+            <el-table-column label="진행상태" min-width="200px"  prop="status">
               <template v-slot="{ row }">          
                 <badge class="badge-dot mr-4" type="">
                   <i :class="`bg-${projectStatus(row.start_date, row.end_date)[1]}`"></i>
-                  <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC"> {{projectStatus(row.start_date, row.end_date)[0]}} </span>
+                  <span class="font-weight-600 name mb-0 text-sm "  style="color: #939CAC" prop="status"> {{projectStatus(row.start_date, row.end_date)[0]}} </span>
                 </badge>
               </template>
             </el-table-column>
@@ -261,7 +261,7 @@ const HOST =  "http://localhost:8080";
       //     this.project_list.push( obj );
       // }
       
-        // //  상태 검색 수정 안됨 ㄱ- 하
+        //  상태 검색 수정 안됨 ㄱ- 하
         // if (this.selectedStatus != ''){
         //   this.projects = this.projects.filter(project => {
         //     console.log()
@@ -272,7 +272,16 @@ const HOST =  "http://localhost:8080";
         // })
         // .catch((error) => {
         //   console.error('Failed to fetch data:', error);
-         });
+        //  });
+
+        if (this.selectedStatus !== '') {
+          console.log('adjfklajklfalk')
+          console.log(this.projects.status);
+         return this.projects.filter(project => project.status === this.selectedStatus);
+        } else {
+        return this.projects;
+      }
+    })
     },
     navigateToDetail(id) {
       this.$router.push(`/project/detail/${id}`);
@@ -292,7 +301,6 @@ const HOST =  "http://localhost:8080";
       const currentDate = moment().format('YYYY-MM-DD');
       const startDate = moment(rowstartDate).format('YYYY-MM-DD');
       const endDate = moment(rowendDate).format('YYYY-MM-DD');
-
 
       if (startDate === endDate){
         return ["취소", 'secondary']

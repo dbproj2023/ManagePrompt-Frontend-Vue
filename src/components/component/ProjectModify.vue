@@ -9,7 +9,7 @@
         </div>
       </div>
       <div v-else>
-      <h2 style="text-align: center;">프로젝트 추가</h2>
+      <h2 style="text-align: center;">프로젝트 수정</h2>
       <br>
       <br>
       <b-form-input class="input-data" v-model="proName" placeholder="프로젝트 이름"></b-form-input>      
