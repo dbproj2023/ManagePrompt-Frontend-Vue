@@ -40,7 +40,7 @@
 
       <div>
         <button type="button" @click="createEmpId()">사번 생성</button>
-        <b-form-input class="input-data" v-model="empId" placeholder="사번"></b-form-input>
+        <b-form-input class="input-data" v-model="empId" placeholder="사번" readonly></b-form-input>
         <button type="button" @click="checkEmpId()">중복 확인</button>
       </div>
       
@@ -51,13 +51,13 @@
 
       <div>
         <button type="button" @click="createAuthId()">아이디 생성</button>
-        <b-form-input class="input-data" v-model="authId" placeholder="아이디"></b-form-input>
+        <b-form-input class="input-data" v-model="authId" placeholder="아이디" readonly></b-form-input>
         <button type="button" @click="checkAuthId()">중복 확인</button>
       </div>
 
       <div>
         <button type="button" @click="createAuthPw()">비밀번호 생성</button>
-        <b-form-input class="input-data" v-model="authPw" placeholder="비밀번호"></b-form-input>
+        <b-form-input class="input-data" v-model="authPw" placeholder="비밀번호" readonly></b-form-input>
         <!-- <button type="button" @click="checkAuthPw()">중복 확인</button> -->
       </div>
 
@@ -70,7 +70,7 @@
       </div>
       
       <div>
-        <b-form-input class="input-data" v-model="empWorkEx" placeholder="경력"></b-form-input>
+        <b-form-input type="number" class="input-data" v-model="empWorkEx" placeholder="경력"></b-form-input>
       </div>
 
       <div>
@@ -116,15 +116,9 @@
     },
     methods: {
       enrollSubmit() {
-        const validate_empId = /^\d{8}$/
-        const validate_pw = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/
-
         console.log("test code empId : ", this.empId)
         if( this.empId == '' ) {
             alert("사번을 생성해 주세요.");
-            return;
-        } else if( !validate_empId.test(this.empId) ) {
-            alert("사번을 정확히 입력해 주세요.");
             return;
         }
 
@@ -141,9 +135,6 @@
         if( this.authId == '' ) {
             alert("아이디를 생성해 주세요.");
             return;
-        } else if( this.authId.length < 6 || this.authId.length > 12 ) {
-            alert("아이디는 6자리 이상, 12자리 이하로 생성해야 합니다.");
-            return;
         }
         
         if( this.clickAuthId == false ) {
@@ -154,8 +145,28 @@
         if( this.authPw == '' ) {
             alert("비밀번호를 생성해 주세요.");
             return;
-        } else if( !validate_pw.test(this.authPw) ) {
-            alert("비밀번호는 8글자 이상, 20글자 이하이며 영문, 숫자, 특수문자가 포함되어야 합니다.");
+        }
+
+        const validateSsn = /\d{6}\-[1-4]\d{6}/;
+        if( this.empSsn == '' ) {
+            alert("주민등록번호를 입력해 주세요.");
+            return;
+        } else if( !this.empSsn.test(validateSsn) ) {
+            alert("주민등록번호의 형식에 맞게 입력해주세요. (XXXXXX-XXXXXXX)")
+        }
+
+        if( this.empEdu == '' ) {
+            alert("학력을 입력해 주세요.");
+            return;
+        }
+
+        if( this.empWorkEx == '' ) {
+            alert("경력을 입력해 주세요.");
+            return;
+        }
+
+        if( this.empSkill == '' ) {
+            alert("스킬을 입력해 주세요.");
             return;
         }
 
@@ -226,15 +237,10 @@
       checkEmpId() {
         this.clickEmpId = true;
 
-        const validate_empId = /^\d{8}$/
-
         console.log("test code empId : ", this.empId)
         if( this.empId == '' ) {
           alert("사번을 생성해 주세요.")
           return;
-        } else if( !validate_empId.test(this.empId) ) {
-          alert("사번을 정확히 입력해 주세요.")
-          return
         }
 
         let formData = new FormData();
@@ -245,7 +251,7 @@
           if( res.data == true ){
             alert("이미 등록된 사번입니다. 다시 생성해 주세요.")
           } else {
-            alert("등록 가능한 사번입니다.")  // 만들어 준 사번
+            alert("등록 가능한 사번입니다.")
           }
         });
       },
@@ -271,9 +277,6 @@
         if( this.authId == '' ) {
           alert("아이디를 생성해 주세요.")
           return
-        } else if( this.authId.length < 6 || this.authId.length > 12 ) {
-          alert("아이디는 6자리 이상, 12자리 이하로 생성해야 합니다.")
-          return
         }
 
         let formData = new FormData();
@@ -295,13 +298,8 @@
       },
       checkAuthPw() {
         // 비밀번호 생성 버튼 누르면 비밀번호 형식에 맞게 랜덤 생성해서 화면에 띄우기 -> authPw가 되는 것
-        const validate_pw = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/
-        
         if( this.authPw == '' ) {
           this.messageAuthPw = "비밀번호를 생성해 주세요.";
-          return;
-        } else if( !validate_pw.test(this.authPw) ) {
-          this.messageAuthPw = "비밀번호는 8글자 이상, 20글자 이하이며 영문, 숫자, 특수문자가 포함되어야 합니다.";
           return;
         } else {
           this.messageAuthPw = "";
