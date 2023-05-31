@@ -161,7 +161,7 @@
             </el-table-column>
 
             <el-table-column label="기간" prop="job">
-              <template v-slot="{ row }">
+              <template v-slot="{ row }"> 
                 <el-input  type="date" v-model="row.startDate" placeholder="YY-MM-DD ~ YY-MM-DD"></el-input>
                 <el-input  type="date" v-model="row.endDate" placeholder="YY-MM-DD ~ YY-MM-DD"></el-input>
               </template>
@@ -264,7 +264,6 @@ export default {
   }
 
 }
-    // this.project = this.projects.find((project) => project.id === projectId);
     ,
     onChange(e) {
       this.searchType = e.target.value;
@@ -275,24 +274,30 @@ export default {
       goToProjectModify() {
       this.$router.push(`/project/${this.project.proId}/modify`);
     },
+    // 프로젝트 참여 기간 수정
       editPeriod(row) {
         this.$set(row, 'isEditing', true);
-        this.$set(row, 'editing', `${row.startDate.slice(0, 10)}~${row.endDate.slice(0, 10)}`);
+        // this.$set(row, 'editing', `${row.startDate || moment('YYYY-MM-DD')}~${row.endDate || moment('YYYY-MM-DD')}`);
+        // this.$set(row,'editing',`${moment(row.startDate).format('YYYY-MM-DD')}~${moment(row.endDate).format('YYYY-MM-DD')}`);
+        const start_date = row.startDate || moment('YYYY-MM-DD');
+        const end_date = row.endDate || moment('YYYY-MM-DD')
+        console.log(start_date, end_date);
+        this.$set(row, 'editing', `${start_date }~${end_date}`);
         this.$nextTick(() => {
           const inputEl = this.$refs.periodInput.$refs.input;
           inputEl.focus();
         });
       },
+      //  프로젝트 참여 기간 저장
       savePeriod(row) {
         this.$set(row, 'isEditing', false);
         // Extract the start and end dates from the edited value
         const [start, end] = row.editing.split('~');
-        // Perform any necessary validation or formatting on the dates
-        // ...
-        // Update the row's start and end dates
+
         row.startDate = start;
         row.endDate = end;
       }, 
+      // 직무 수정
       editRole(row) {
         this.$set(row, 'isEditing', true);
         this.$set(row, 'editing', `${row.roleId.roleName}`);
@@ -301,6 +306,7 @@ export default {
           inputEl.focus();
         });
       },
+      //  ㅈ
       saveRole(row) {
         this.$set(row, 'isEditing', false);
         const role = row.editing;
@@ -442,14 +448,12 @@ export default {
     },
   computed:{
     averageValues(){
-      console.log("안녕하세요")
       console.log(this.project.empEvaluationList);
 
       if (this.project.empEvaluationList.length === 0) {
         return 0
       }
 
-      console.log("jhhjjjjj")
       console.log(this.project.empEvaluationList , this.project.empEvaluationList.length)
 
       for (let i =0; i<this.project.empEvaluationList.length; i++){
