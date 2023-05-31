@@ -1,6 +1,6 @@
 <template>
   <div id="Main">
-    <!-- <img src="../assets/img/그림1.png" class="full-image"> -->
+    <img src="../assets/img/main.png" class="full-image">
 
   </div>
 </template>
