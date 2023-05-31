@@ -14,7 +14,7 @@ import ProjectInput from './components/component/ProjectInput.vue'
 // src/components/component/ProjectInput.vue
 // import Project_detail from './components/component/Project_detail.vue'
 import ProjectModify from './components/component/ProjectModify.vue'
-import Change_pw from './components/component/Change_pw.vue'
+import ChangePw from './components/component/ChangePw.vue'
 import LogoutChangePw from './components/component/LogoutChangePw.vue'
 import Access from './components/component/Access.vue'
 import FindAccount from './components/component/FindAccount.vue'
@@ -99,7 +99,7 @@ export default new Router({
         },
         {
             path: '/changePw',
-            component: Change_pw
+            component: ChangePw
         },
         {
             path: '/logoutChangePw',

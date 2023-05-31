@@ -38,11 +38,6 @@ export default {
       alert("접근 권한이 없습니다.");
       this.$router.go(-1);
     }
-    // else if( path.startsWith('/enroll') && status === 1 ) {
-    //   console.log("test code /enroll")
-    //   alert("접근 권한이 없습니다.");
-    //   this.$router.go(-1);
-    // }
     // 권한 2(관리자) 이상 프로젝트 관리 페이지 접근 가능
     else if( path.startsWith('/project') && accGrade >= 3 ) {
       alert("접근 권한이 없습니다.");
