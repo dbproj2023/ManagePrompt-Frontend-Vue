@@ -10,14 +10,6 @@
                             비밀번호 변경
                             </span>
                 
-                            <!-- <div class="wrap-input100 validate-input m-b-16">
-                            <input class="input100" type="password" id="old_pw" name="old_pw" ref="memberIdInput" v-model="oldPw" placeholder="이전 비밀번호">
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                            </span>
-                            </div> -->
-                
                             <div class="wrap-input100 validate-input m-b-16">
                             <input class="input100" type="password" id="new_pw" name="new_pw" ref="memberIdInput" v-model="newPw" placeholder="새로운 비밀번호">
                             <span class="focus-input100"></span>
@@ -61,7 +53,6 @@
         data() {
             return {
                 authId: "",
-                // oldPw: "",
                 newPw: "",
                 newPwRe: ""
             }
@@ -73,7 +64,6 @@
             sendData() {
                 const formData = new FormData();
                 formData.append('id', this.authId);
-                // formData.append('old_pw', this.oldPw);
                 formData.append('new_pw', this.newPw);
                 formData.append('new_pw_re', this.newPwRe);
 
@@ -86,8 +76,6 @@
                         this.$router.push('/login');
                     } else if(res.data.status == 1) { // 비밀번호 일치하지 않음
                         alert(res.data.message);
-                    // } else {
-                    //     alert(res.data.message);
                     }
                 }).catch((error) => {
                     console.error('Failed to fetch data:', error);
